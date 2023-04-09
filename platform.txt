@@ -1,4 +1,4 @@
-name=Multix UPDI4AVR UPDI :: High-Voltage Programmer
+name=MultiX Zinnia UPDI4AVR Programmer
 version=0.0.1
 
 archive_file_path={build.path}/{archive_file}
@@ -88,7 +88,6 @@ tools.avrdude.bootloader.fuse8=-U fuse8:w:{bootloader.BOOTSIZE}:m
 tools.avrdude.bootloader.locks=-U lock:w:{bootloader.LOCKKEY}:m
 tools.avrdude.bootloader.params.quiet=-q -q
 tools.avrdude.bootloader.params.verbose=-v
-tools.avrdude.bootloader.file=hex/UPDI4AVR_FW753B.hex
 tools.avrdude.bootloader.pattern="{cmd.path}" -C "{config.path}" -v -p {build.mcu} -c {protocol} {program.extra_params} {bootloader.fuse0} {bootloader.fuse1} {bootloader.fuse2} {bootloader.fuse5} {bootloader.fuse6} {bootloader.fuse7} {bootloader.fuse8} -e -U "flash:w:{runtime.platform.path}/bootloaders/{bootloader.file}:i"
 tools.avrdude.cmd.path={path}/bin/avrdude
 tools.avrdude.config.path={runtime.platform.path}/avrdude.conf.updi

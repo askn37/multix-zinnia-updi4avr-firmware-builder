@@ -1,1 +1,1 @@
-# multix-updi4avr-programmer
+# multix-zinnia-updi4avr-programmer
