@@ -1,4 +1,4 @@
-name=MultiX Zinnia UPDI4AVR Programmer
+name=MultiX Zinnia UPDI4AVR Firmware Builder
 version=0.0.1
 
 archive_file_path={build.path}/{archive_file}
