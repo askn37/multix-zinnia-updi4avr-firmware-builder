@@ -18,7 +18,7 @@ MZU2306.bootloader.eesave_bit=1
 MZU2306.bootloader.reset_bit=11
 MZU2306.bootloader.tool=avrdude
 MZU2306.bootloader.programed_type=
-MZU2306.build.console_select=-DSerial=Serial0A
+MZU2306.build.console_select=-DSerial=Serial1B
 MZU2306.build.export_merged_output=false
 MZU2306.build.text_section_start=.text=0x0
 MZU2306.build.buildopt=-DNDEBUG
