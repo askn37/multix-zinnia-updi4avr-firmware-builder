@@ -155,16 +155,19 @@ bool NVM::write_memory (void) {
     }
   }
   else {
+    /* ここは 1byte単位書込で通る */
+    uint8_t data = JTAG2::packet.body[10];
     switch (mem_type) {
       /* FUSES/LOCKBITS 領域 */
       /* 常に奇数量絶対アドレス指定の特殊書込 */
       case JTAG2::MTYPE_LOCK_BITS :     // 0xB3
       case JTAG2::MTYPE_FUSE_BITS : {   // 0xB2
+        if (UPDI::ld8(start_addr) == data && UPDI_LASTH == 0) return true;
         if (bit_is_set(UPDI_NVMCTRL, UPDI::UPDI_GEN3_bp))
-          return NVM::write_fuse_v3(start_addr, JTAG2::packet.body[10]);
+          return NVM::write_fuse_v3(start_addr, data);
         if (bit_is_set(UPDI_NVMCTRL, UPDI::UPDI_GEN2_bp))
-          return NVM::write_fuse_v2(start_addr, JTAG2::packet.body[10]);
-        return NVM::write_fuse(start_addr, JTAG2::packet.body[10]);
+          return NVM::write_fuse_v2(start_addr, data);
+        return NVM::write_fuse(start_addr, data);
       }
       /* USERROW/USERSIG 領域 */
       case JTAG2::MTYPE_USERSIG : {     // 0xC5
@@ -175,7 +178,7 @@ bool NVM::write_memory (void) {
         /* NVMCTRL v3 */
         if (bit_is_set(UPDI_NVMCTRL, UPDI::UPDI_GEN3_bp)) {
           /* アドレス先頭かつ0xFF書込ならページ消去 */
-          if (((uint8_t)start_addr & 63) == 0 && JTAG2::packet.body[10] == 0xFF) {
+          if (((uint8_t)start_addr & 63) == 0 && data == 0xFF) {
             NVM::nvm_wait_v3();
             if (!UPDI::st8(start_addr, 0xFF)) return false;
             if (!NVM::nvm_ctrl_v3(NVM::NVM_V3_CMD_FLPER)) return false;
@@ -184,7 +187,7 @@ bool NVM::write_memory (void) {
           /* Flash は偶数単位でしか書けないため偶数化する */
           /* 他方のバイトには0xFFを補完 */
           if ((uint8_t)start_addr & 1) {
-            JTAG2::packet.body[11] = JTAG2::packet.body[10];
+            JTAG2::packet.body[11] = data;
             JTAG2::packet.body[10] = 0xFF;
             (uint8_t)start_addr--;
           }
@@ -199,7 +202,7 @@ bool NVM::write_memory (void) {
         /* NVMCTRL v2 */
         if (bit_is_set(UPDI_NVMCTRL, UPDI::UPDI_GEN2_bp)) {
           /* アドレス先頭かつ0xFF書込ならページ消去 */
-          if (((uint8_t)start_addr & 63) == 0 && JTAG2::packet.body[10] == 0xFF) {
+          if (((uint8_t)start_addr & 63) == 0 && data == 0xFF) {
             if (!NVM::nvm_ctrl_v2(NVM::NVM_V2_CMD_FLPER)) return false;
             if (!UPDI::st8(start_addr, 0xFF)) return false;
             return true;
@@ -207,7 +210,7 @@ bool NVM::write_memory (void) {
           /* Flash は偶数単位でしか書けないため偶数化する */
           /* 他方のバイトには0xFFを補完 */
           if ((uint8_t)start_addr & 1) {
-            JTAG2::packet.body[11] = JTAG2::packet.body[10];
+            JTAG2::packet.body[11] = data;
             JTAG2::packet.body[10] = 0xFF;
             (uint8_t)start_addr--;
           }
