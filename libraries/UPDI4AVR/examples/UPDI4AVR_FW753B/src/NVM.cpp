@@ -288,11 +288,11 @@ uint8_t NVM::nvm_wait_v3 (void) {
  * NVMCTRL制御
  */
 
+/* NVMCTRL v0 */
 bool NVM::nvm_ctrl (uint8_t nvmcmd) {
   return UPDI::st8(NVM::NVMCTRL_REG_CTRLA, nvmcmd);
 }
 
-/* NVMCTRL v0 */
 bool nvm_ctrl_change (uint8_t nvmcmd) {
   if (UPDI::ld8(NVM::NVMCTRL_REG_CTRLA) == nvmcmd) return true;
   if (!NVM::nvm_ctrl(NVM::NVM_V2_CMD_NOCMD)) return false;
