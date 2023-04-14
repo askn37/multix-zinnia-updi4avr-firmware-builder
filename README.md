@@ -19,7 +19,6 @@
 ## ボードマネージャー設定
 
 - メニューバーから「ツール」「ボード選択」から`MultiX Zinnia UPDI4AVR Firmware Builder`を選択
-- メニューバーから「ツール」「書込装置」で`SerialUPDI over USB`を選択
 - メニューバーから「ツール」「シリアルポート」で`UPDI4AVR Programmer`に接続されたポートを選択
 
 ## ファームウェアアップデート（推奨される手順）
@@ -27,6 +26,7 @@
 - `UPDI4AVR Programmer`の`SW3`を`FW`側にセットして作業PCにUSBケーブルで接続
   - `UPDI4AVR Programmer`のLEDがハートビート明滅を始める
 - メニューバーから「ツール」「Variant」で望むファームウェアを選択
+- メニューバーから「ツール」「書込装置」で`SerialUPDI over USB`を選択
 - メニューバーから「ツール」「__ブートローダーを書き込む__」を選択
   - ファームウェア書換中は`UPDI4AVR Programmer`のLEDは消灯する
   - ファームウェア書換が完了すると`UPDI4AVR Programmer`のLEDはハートビート明滅を始める
@@ -34,6 +34,33 @@
 
 この手順はビルド済のファームウェアを`UPDI4AVR Programmer`本体に書き込む。
 「アップロード」ボタンをクリックすると現在IDEで表示中の任意のスケッチが書き込まれるが、これは誤った手順になるので注意。
+
+## UPDI4AVRのファームウェアバージョン確認方法
+
+- Arduino IDEの場合：対象デバイスを繋がず、__書込装置に`UPDI4AVR over Serial`を選択して「ブートローダーを書き込む」__
+- CLIの場合：*avrdude*にパスが通っているなら、対象デバイスを繋がずに次のようなコマンドを実行する。
+
+```plain
+avrdude -p avr64ea32 -c updi4avr -P <実際のCOMポート> -v
+```
+
+何れの場合も（対象デバイスがないため）エラーで終了するが、それに先立って`UPDI4AVR`の個体情報をコンソールに表示する。
+
+```plain
+Programmer Type : JTAGMKII_PDI
+Description     : JTAGv2 to UPDI bridge
+M_MCU HW version: 1
+M_MCU FW version: 2.01
+S_MCU HW version: 1
+S_MCU FW version: 7.53
+Serial number   : 4a:34:0f:a6:28:3f
+Vtarget         : 5.0 V
+```
+
+`S_MCU FW version`が現在実行中の`UPDI4AVR`FWバージョン、`Serial number`が`UPDI4AVR`ハードウェア固有識別子を示す。
+`Vtarget`は実際に`VDD/VTG`端子で観測される電源電圧を示す。
+
+> `Serial number`はFWを変更しても（消去しても）失われることなく不変。
 
 ## ファームウェアビルド＆アップロード
 
