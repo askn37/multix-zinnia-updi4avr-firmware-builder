@@ -221,7 +221,7 @@ namespace NVM {
     , NVMCTRL_REG_ADDRH    = 0x1009
     , NVMCTRL_REG_ADDRZ    = 0x100A
   };
-  /* NVMCTRL v1 */
+  /* NVMCTRL v0 */
   enum nvm_control_e {
       NVM_CMD_WP   = 1
     , NVM_CMD_ER   = 2
@@ -308,6 +308,7 @@ namespace NVM {
 
   uint8_t nvm_wait (void);
   bool nvm_ctrl (uint8_t nvmcmd);
+
   bool write_fuse (uint16_t addr, uint8_t data);
   bool write_eeprom (uint32_t start_addr, size_t byte_count);
   bool write_flash (uint32_t start_addr, size_t byte_count);

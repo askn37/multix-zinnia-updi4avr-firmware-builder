@@ -140,9 +140,10 @@
 #define LEDG_EVOUT_MUX    PORTMUX_EVSYSROUTEA
 #define LEDG_EVOUT_ALT    PORTMUX_EVOUTA_ALT1_gc
 
+/* PA5 == CCL_LUT3_OUT */
 #define LEDY_PIN          PIN_PA5
 #define LEDY_PORT         PORTA
-#define LEDY_PIN_CONFIG   ( PORT_ISC_INPUT_DISABLE_gc )
+#define LEDY_PIN_CONFIG   ( PORT_ISC_INTDISABLE_gc )
 #define LEDY_PIN_ON       HIGH
 #define LEDY_PIN_OFF      LOW
 

@@ -452,7 +452,7 @@ bool NVM::write_flash (uint32_t start_addr, size_t byte_count) {
     UPDI::SEND(*p++);
     UPDI::SEND(*p++);
   } while (--byte_count);
-  UPDI::guardtime();
+  // UPDI::guardtime();
 
   /* disable RSD mode */
   if (!UPDI::set_cs_ctra(UPDI::UPDI_SET_GTVAL_2)) return false;
@@ -489,7 +489,7 @@ bool NVM::write_flash_v2 (uint32_t start_addr, size_t byte_count) {
     UPDI::SEND(*p++);
     UPDI::SEND(*p++);
   } while (--byte_count);
-  UPDI::guardtime();
+  // UPDI::guardtime();
 
   /* disable RSD mode */
   if (!UPDI::set_cs_ctra(UPDI::UPDI_SET_GTVAL_2)) return false;
@@ -525,7 +525,7 @@ bool NVM::write_flash_v3 (uint32_t start_addr, size_t byte_count) {
     UPDI::SEND(*p++);
     UPDI::SEND(*p++);
   } while (--byte_count);
-  UPDI::guardtime();
+  // UPDI::guardtime();
 
   /* disable RSD mode */
   if (!UPDI::set_cs_ctra(UPDI::UPDI_SET_GTVAL_2)) return false;
