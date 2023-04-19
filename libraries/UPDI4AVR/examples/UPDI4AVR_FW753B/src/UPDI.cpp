@@ -266,7 +266,6 @@ bool UPDI::enter_userrow (void) {
  * HVパルス印加
  */
 void HV_Pulse (void) {
-  // UPDI_USART.CTRLB = UPDI_USART_OFF;
   TIM::HV_Pulse_ON();
   openDrainWrite(TRST_PIN, LOW);
   delay_micros(2000);
@@ -277,7 +276,7 @@ void HV_Pulse (void) {
     delay_micros(800);
     digitalWrite(HV8_PIN, LOW);
   }
-  else if (bit_is_clear(UPDI_NVMCTRL, UPDI::UPDI_LOWF_bp)) {
+  else {
     digitalWrite(HV12_PIN, HIGH);
     delay_micros(800);
     digitalWrite(HV12_PIN, LOW);
@@ -298,7 +297,7 @@ void HV_Pulse (void) {
 
 bool UPDI::chip_erase (void) {
   /* Send HV Pulse */
-  if (bit_is_clear(UPDI_CONTROL, UPDI_PROG_bp)) HV_Pulse();
+  if (bit_is_clear(UPDI_CONTROL, UPDI_INFO_bp)) HV_Pulse();
 
   /* send nvmprog_key */
   if (!UPDI::send_bytes(UPDI::nvmprog_key, sizeof(UPDI::nvmprog_key))) return false;
@@ -439,9 +438,14 @@ bool UPDI::runtime (uint8_t updi_cmd) {
         break;
       }
       case UPDI::UPDI_CMD_WRITE_MEMORY : {
-        if (bit_is_clear(UPDI_CONTROL, UPDI_PROG_bp)) break;
-        if (UPDI::is_sys_stat(UPDI::UPDI_SYS_LOCKSTATUS)) break;
-        if (!(UPDI_LASTL & UPDI::UPDI_SYS_NVMPROG)) break;
+        if (bit_is_clear(UPDI_CONTROL, UPDI_PROG_bp)) {
+          /* USERROW だけは非PROG状態でも処理を通す */
+          if (JTAG2::packet.body[1] != JTAG2::MTYPE_USERSIG) break;
+        }
+        else {
+          if (UPDI::is_sys_stat(UPDI::UPDI_SYS_LOCKSTATUS)) break;
+          if (!(UPDI_LASTL & UPDI::UPDI_SYS_NVMPROG)) break;
+        }
         _result = NVM::write_memory();
         break;
       }

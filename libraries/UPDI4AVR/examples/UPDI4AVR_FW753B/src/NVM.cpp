@@ -15,6 +15,7 @@ namespace NVM {
   volatile uint32_t nvm_flash_offset    = 0;
   volatile uint32_t nvm_eeprom_offset   = 0;
   volatile uint32_t nvm_user_sig_offset = 0;
+  volatile uint32_t nvm_data_offset     = 0;
   volatile uint16_t flash_page_size     = 0;
   struct fuse_packet_t { uint16_t data; uint16_t addr; };
   static uint8_t set_ptr[] = {
@@ -74,6 +75,11 @@ bool NVM::read_memory (void) {
       }
       /* USERROW/USERSIG */
       case JTAG2::MTYPE_USERSIG : {       // 0xC5
+
+        /* デバイス施錠されている場合の特殊書込直後 */
+        if (bit_is_set(UPDI_CONTROL, UPDI::UPDI_URWR_bp))
+          return NVM::read_userrow_dummy(byte_count);
+
         start_addr += NVM::nvm_user_sig_offset;
         break;
       }
@@ -125,6 +131,11 @@ bool NVM::write_memory (void) {
       }
       /* USERROW/USERSIG 領域 */
       case JTAG2::MTYPE_USERSIG : {     // 0xC5
+
+        /* デバイス施錠されている場合 */
+        if (bit_is_clear(UPDI_CONTROL, UPDI::UPDI_PROG_bp))
+          return NVM::write_userrow(byte_count);
+
         start_addr += NVM::nvm_user_sig_offset;
         /* AVR_DA/DB/DD/EA is Flash */
         /* この系統は Flash として実装されている */
@@ -238,9 +249,9 @@ bool NVM::write_memory (void) {
  */
 
 bool NVM::read_flash (uint32_t start_addr, size_t byte_count) {
-  uint8_t* p = &JTAG2::packet.body[1];
   byte_count >>= 1;
   if (byte_count == 0 || byte_count > 256) return false;
+  uint8_t* p = &JTAG2::packet.body[1];
   if (!UPDI::send_repeat_header(
     (UPDI::UPDI_LD | UPDI::UPDI_DATA2),
     start_addr,
@@ -258,12 +269,25 @@ bool NVM::read_flash (uint32_t start_addr, size_t byte_count) {
  */
 
 bool NVM::read_data (uint32_t start_addr, size_t byte_count) {
-  uint8_t* p = &JTAG2::packet.body[1];
   if (byte_count == 0 || byte_count > 256) return false;
+  uint8_t* p = &JTAG2::packet.body[1];
   if (!UPDI::send_repeat_header(
     (UPDI::UPDI_LD | UPDI::UPDI_DATA1),
     start_addr, byte_count)) return false;
   do { *p++ = UPDI::RECV(); } while (--byte_count);
+  return true;
+}
+
+/*
+ * 施錠デバイスの USERROW ダミー応答
+ */
+
+bool NVM::read_userrow_dummy (size_t byte_count) {
+  if (byte_count == 0 || byte_count > 256) return false;
+  uint8_t* p = &JTAG2::packet.body[1];
+  uint8_t* q = &JTAG2::packet.body[266];
+  do { *p++ = *q++; } while (--byte_count);
+  UPDI_CONTROL &= ~_BV(UPDI::UPDI_URWR_bp);
   return true;
 }
 
@@ -531,6 +555,41 @@ bool NVM::write_flash_v3 (uint32_t start_addr, size_t byte_count) {
   if (!UPDI::set_cs_ctra(UPDI::UPDI_SET_GTVAL_2)) return false;
 
   return NVM::nvm_ctrl_v3(NVM::NVM_V3_CMD_FLPW);
+}
+
+/*
+ * 施錠デバイス USERROW 書込
+ *
+ * 条件；nvm_data_offset が正しく設定されていなければならない
+ * 制約：実メモリの読み戻しは出来ない
+ *      そこでバッファ後方にコピーを取っておく
+ */
+
+bool NVM::write_userrow (size_t byte_count) {
+  if (!UPDI::enter_userrow()) return false;
+
+  /* setting register pointer */
+  _CAPS32(set_ptr[2])->dword = NVM::nvm_data_offset;
+  set_repeat[2] = (uint8_t)byte_count - 1;
+  if (!UPDI::send_bytes(set_ptr, sizeof(set_ptr) - 1)) return false;
+  if (UPDI::UPDI_ACK != UPDI::RECV()) return false;
+  if (!UPDI::send_bytes(set_repeat, sizeof(set_repeat))) return false;
+
+  /* page buffer stored */
+  uint8_t* p = &JTAG2::packet.body[10];
+  uint8_t* q = &JTAG2::packet.body[266];
+  do {
+    *q++ = *p;
+    if (!UPDI::SEND(*p++)) return false;
+    if (UPDI::UPDI_ACK != UPDI::RECV()) return false;
+  } while (--byte_count);
+
+  UPDI::set_cs_stat(UPDI::UPDI_CS_ASI_SYS_CTRLA, UPDI::UPDI_SET_UROWDONE);
+  do{ delay_micros(100); } while (UPDI::is_sys_stat(UPDI::UPDI_SYS_UROWPROG));
+  UPDI::set_cs_stat(UPDI::UPDI_CS_ASI_KEY_STATUS, UPDI::UPDI_KEY_UROWWRITE);
+  if (!UPDI::updi_reset(true) || !UPDI::updi_reset(false)) return false;
+  UPDI_CONTROL |= _BV(UPDI::UPDI_URWR_bp);
+  return true;
 }
 
 // end of code

@@ -77,17 +77,18 @@ namespace TIM {
 
 namespace UPDI {
   enum updi_control_e {       /* UPDI_CONTROL bitposition */
-      UPDI_INFO_bp      = 0   /* UPDI通信許可で真 */
-    , UPDI_PROG_bp      = 1   /* UPDI書込許可で真（偽==デバイス施錠）*/
-    , UPDI_ERFM_bp      = 2   /* 消去操作実行で真 */
-    , UPDI_ERHV_bp      = 3   /* HV操作実行で真 */
-    , UPDI_FCHV_bp      = 4   /* HV強制許可 */
-    , UPDI_TERM_bp      = 6   /* terminal mode */
+      UPDI_INFO_bp      = 0   /*  1 UPDI通信許可で真 */
+    , UPDI_PROG_bp      = 1   /*  2 UPDI書込許可で真（偽==デバイス施錠）*/
+    , UPDI_ERFM_bp      = 2   /*  4 消去操作実行で真 */
+    , UPDI_ERHV_bp      = 3   /*  8 HV操作実行で真 */
+    , UPDI_FCHV_bp      = 4   /* 16 HV強制許可 */
+    , UPDI_URWR_bp      = 5   /* 32 USERROW特殊書込 */
+    , UPDI_TERM_bp      = 6   /* 64 terminal mode */
   };
   enum updi_nvmctrl_p {
-      UPDI_LOWF_bp      = 0   /* Flash先頭が0x4000で真（==megaAVR）*/
-    , UPDI_GEN2_bp      = 1   /* AVR_Dx以降で真（偽==FlashはData空間内）HV==8V */
-    , UPDI_GEN3_bp      = 2   /* AVR_Exで真（偽==FlashはData空間内）*/
+      UPDI_LOWF_bp      = 0   /*  1 Flash先頭が0x4000で真（==megaAVR）*/
+    , UPDI_GEN2_bp      = 1   /*  2 AVR_Dx以降で真（偽==FlashはData空間内）HV==8V */
+    , UPDI_GEN3_bp      = 2   /*  4 AVR_Exで真（偽==FlashはData空間内）*/
   };
 
   enum updi_command_e {
@@ -144,7 +145,7 @@ namespace UPDI {
       UPDI_KEY_UROWWRITE        = 0x20  // ASI_KEY_STATUS
     , UPDI_KEY_NVMPROG          = 0x10
     , UPSI_KEY_CHIPERASE        = 0x08
-    , UPDI_SYS_RSTSYS           = 0x20
+    , UPDI_SYS_RSTSYS           = 0x20  // ASI_SYS_STATUS
     , UPDI_SYS_INSLEEP          = 0x10
     , UPDI_SYS_NVMPROG          = 0x08
     , UPDI_SYS_UROWPROG         = 0x04
@@ -298,6 +299,7 @@ namespace NVM {
   extern volatile uint32_t nvm_flash_offset;
   extern volatile uint32_t nvm_user_sig_offset;
   extern volatile uint32_t nvm_eeprom_offset;
+  extern volatile uint32_t nvm_data_offset;
   extern volatile uint16_t flash_page_size;
 
   bool read_memory (void);
@@ -305,6 +307,7 @@ namespace NVM {
 
   bool read_data (uint32_t start_addr, size_t byte_count);
   bool read_flash (uint32_t start_addr, size_t byte_count);
+  bool read_userrow_dummy (size_t byte_count);
 
   uint8_t nvm_wait (void);
   bool nvm_ctrl (uint8_t nvmcmd);
@@ -323,6 +326,8 @@ namespace NVM {
   bool write_fuse_v3 (uint16_t addr, uint8_t data);
   bool write_eeprom_v3 (uint32_t start_addr, size_t byte_count);
   bool write_flash_v3 (uint32_t start_addr, size_t byte_count);
+
+  bool write_userrow (size_t byte_count);
 
 } // end of NVM
 

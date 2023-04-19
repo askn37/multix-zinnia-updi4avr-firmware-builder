@@ -305,7 +305,10 @@ inline void JTAG2::process_command (void) {
       if (UPDI::check_sig()) break;
       /* terminal mode でなければLED高速点滅 */
       if (bit_is_clear(UPDI_CONTROL, UPDI::UPDI_TERM_bp)) TIM::LED_Fast();
-      if (bit_is_clear(UPDI_CONTROL, UPDI::UPDI_PROG_bp)
+
+      /* PROG状態かUSERROW応答可能な場合はメモリ読出処理へ */
+      if ((bit_is_clear(UPDI_CONTROL, UPDI::UPDI_PROG_bp)
+        && bit_is_clear(UPDI_CONTROL, UPDI::UPDI_URWR_bp))
       || !UPDI::runtime(UPDI::UPDI_CMD_READ_MEMORY)) {
         JTAG2::set_response(JTAG2::RSP_ILLEGAL_MCU_STATE);
       }
@@ -349,7 +352,7 @@ inline void JTAG2::process_command (void) {
       NVM::nvm_eeprom_offset   = _CAPS32(packet.body[12])->dword;
     //NVM::nvm_fuse_offset     = _CAPS32(packet.body[16])->dword;
       NVM::nvm_user_sig_offset = _CAPS32(packet.body[24])->dword;
-    //NVM::nvm_data_offset     = _CAPS32(packet.body[32])->dword;
+      NVM::nvm_data_offset     = _CAPS32(packet.body[32])->dword;
       NVM::flash_page_size     = _CAPS16(packet.body[42])->word;
     //NVM::eeprom_page_size    = packet.body[46];
       // AVR_DA/DB/DD/EA
