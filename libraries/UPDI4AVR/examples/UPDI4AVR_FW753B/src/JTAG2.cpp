@@ -294,7 +294,7 @@ inline void JTAG2::process_command (void) {
       UPDI::updi_activate();
       JTAG2::set_response(JTAG2::RSP_OK);
       if (!(c & _BV(UPDI::UPDI_INFO_bp)) && bit_is_set(UPDI_CONTROL, UPDI::UPDI_INFO_bp))
-        packet.size = 19;
+        packet.size = 20;
       TIM::LED_Blink();
       /* terminal mode 許可時は WDTを無効にする */
       if (bit_is_set(UPDI_CONTROL, UPDI::UPDI_TERM_bp)) SYS::WDT_OFF();

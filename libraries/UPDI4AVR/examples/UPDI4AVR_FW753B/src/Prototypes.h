@@ -77,18 +77,18 @@ namespace TIM {
 
 namespace UPDI {
   enum updi_control_e {       /* UPDI_CONTROL bitposition */
-      UPDI_INFO_bp      = 0   /*  1 UPDI通信許可で真 */
-    , UPDI_PROG_bp      = 1   /*  2 UPDI書込許可で真（偽==デバイス施錠）*/
-    , UPDI_ERFM_bp      = 2   /*  4 消去操作実行で真 */
-    , UPDI_ERHV_bp      = 3   /*  8 HV操作実行で真 */
-    , UPDI_FCHV_bp      = 4   /* 16 HV強制許可 */
-    , UPDI_URWR_bp      = 5   /* 32 USERROW特殊書込 */
-    , UPDI_TERM_bp      = 6   /* 64 terminal mode */
+      UPDI_INFO_bp      = 0   /*   1 UPDI通信許可で真 */
+    , UPDI_PROG_bp      = 1   /*   2 UPDI書込許可で真（偽==デバイス施錠）*/
+    , UPDI_ERFM_bp      = 2   /*   4 消去操作実行で真 */
+    , UPDI_ERHV_bp      = 3   /*   8 HV操作実行で真 */
+    , UPDI_FCHV_bp      = 4   /*  16 HV強制許可 */
+    , UPDI_URWR_bp      = 5   /*  32 USERROW特殊書込 */
+    , UPDI_TERM_bp      = 6   /*  64 terminal mode */
   };
   enum updi_nvmctrl_p {
-      UPDI_LOWF_bp      = 0   /*  1 Flash先頭が0x4000で真（==megaAVR）*/
-    , UPDI_GEN2_bp      = 1   /*  2 AVR_Dx以降で真（偽==FlashはData空間内）HV==8V */
-    , UPDI_GEN3_bp      = 2   /*  4 AVR_Exで真（偽==FlashはData空間内）*/
+      UPDI_LOWF_bp      = 5   /*  32 Flash先頭が0x4000で真（==megaAVR）*/
+    , UPDI_GEN2_bp      = 6   /*  64 AVR_Dx以降で真（偽==FlashはData空間内）HV==8V */
+    , UPDI_GEN3_bp      = 7   /* 128 AVR_Exで真（偽==FlashはData空間内）*/
   };
 
   enum updi_command_e {

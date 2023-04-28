@@ -327,7 +327,7 @@ bool UPDI::chip_erase (void) {
 
 bool UPDI::enter_updi (bool skip) {
   static uint8_t set_ptr[] = { UPDI::UPDI_SYNCH, UPDI::UPDI_SIB_128 };
-  uint8_t* _p = &JTAG2::packet.body[3];
+  uint8_t* _p = &JTAG2::packet.body[4];
   size_t _len = 16;
   if (!skip) {
     /* HV制御強制許可 */
@@ -350,7 +350,7 @@ bool UPDI::enter_updi (bool skip) {
     if (!UPDI::set_cs_ctra(UPDI::UPDI_SET_GTVAL_2)) return false;
     if (!UPDI::send_bytes(set_ptr, sizeof(set_ptr))) return false;
     while (_len--) *_p++ = UPDI::RECV();
-    switch (JTAG2::packet.body[3]) {
+    switch (JTAG2::packet.body[4]) {
       case 'm' : {              // 'megaAVR' series
         /* megaAVR SIB = 'megaAVR P:0D:1-3' */
         UPDI_NVMCTRL |= _BV(UPDI::UPDI_LOWF_bp);
@@ -362,10 +362,12 @@ bool UPDI::enter_updi (bool skip) {
         NVM::nvm_flash_offset = 0x8000;
         break;
       }
+      case ' ' :
       case 'A' : {              // 'AVR_Dx' series
         /* AVR Dx SIB = 'AVR     P:2D:1-3' */
         /* AVR Ex SIB = 'AVR     P:3D:1-3' */
-        if (JTAG2::packet.body[13] == '3') {
+        /* AVR DA SIB = '    AVR P:2D:1-3' (最初期ロット) */
+        if (JTAG2::packet.body[14] == '3') {
           // 'AVR_Ex' series
           UPDI_NVMCTRL |= _BV(UPDI::UPDI_GEN3_bp);
         }
@@ -373,7 +375,9 @@ bool UPDI::enter_updi (bool skip) {
         NVM::nvm_flash_offset = 0x800000;
         break;
       }
-      default : return false;
+      default : {
+        return false;
+      }
     }
     UPDI_CONTROL |= _BV(UPDI::UPDI_INFO_bp);
   }
