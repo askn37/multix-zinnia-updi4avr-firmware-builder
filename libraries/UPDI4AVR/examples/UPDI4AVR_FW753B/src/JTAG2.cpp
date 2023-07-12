@@ -355,8 +355,8 @@ inline void JTAG2::process_command (void) {
       NVM::nvm_data_offset     = _CAPS32(packet.body[32])->dword;
       NVM::flash_page_size     = _CAPS16(packet.body[42])->word;
     //NVM::eeprom_page_size    = packet.body[46];
-      // AVR_DA/DB/DD/EA
-      if (_CAPS32(NVM::nvm_user_sig_offset)->bytes[0] == 0x80) {
+      // AVR_DA/DB/DD/EA/EB
+      if (_CAPS32(NVM::nvm_user_sig_offset)->bytes[1] != 0x13) {
         NVM::nvm_flash_offset  = 0x800000;
         UPDI_NVMCTRL |= _BV(UPDI::UPDI_GEN2_bp);
       }
