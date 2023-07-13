@@ -86,7 +86,8 @@ namespace UPDI {
     , UPDI_TERM_bp      = 6   /*  64 terminal mode */
   };
   enum updi_nvmctrl_p {
-      UPDI_LOWF_bp      = 5   /*  32 Flash先頭が0x4000で真（==megaAVR）*/
+      UPDI_BROW_bp      = 4   /*  16 BOOTROWが存在すると真 (AVR_EB) */
+    , UPDI_LOWF_bp      = 5   /*  32 Flash先頭が0x4000で真（==megaAVR）*/
     , UPDI_GEN2_bp      = 6   /*  64 AVR_Dx以降で真（偽==FlashはData空間内）HV==8V */
     , UPDI_GEN3_bp      = 7   /* 128 AVR_Exで真（偽==FlashはData空間内）*/
   };
@@ -294,6 +295,11 @@ namespace NVM {
       BASE_NVMCTRL = 0x1000
     , BASE_FUSE    = 0x1050
     , BASE_SIGROW  = 0x1100
+  };
+  enum avr_base_eb_addr_e {
+      EB_SIGROW    = 0x1080
+    , EB_USERROW   = 0x1200
+    , EB_BOOTROW   = 0x1300
   };
 
   extern volatile uint32_t nvm_flash_offset;

@@ -232,7 +232,9 @@ inline bool UPDI::updi_reset (bool logic) {
 bool UPDI::check_sig (void) {
   uint8_t mem_type  = JTAG2::packet.body[1];
   uint8_t s = _CAPS32(JTAG2::packet.body[2])->bytes[0];
-  uint8_t a = _CAPS32(JTAG2::packet.body[6])->bytes[0] - NVM::BASE_SIGROW;
+  uint8_t a = _CAPS32(JTAG2::packet.body[6])->bytes[0]
+    - (bit_is_set(UPDI_NVMCTRL, UPDI_BROW_bp) ? (uint8_t)NVM::EB_SIGROW
+                                              : (uint8_t)NVM::BASE_SIGROW);
   uint8_t c;
   if (bit_is_clear(UPDI_CONTROL, UPDI_PROG_bp) && mem_type == JTAG2::MTYPE_SIGN_JTAG && s == 1) {
     JTAG2::packet.body[0] = JTAG2::RSP_MEMORY;

@@ -1,12 +1,12 @@
 
-/var/folders/mz/_z9vt_y13rdf9tt_4qkvv0k40000gn/T/arduino_build_74450/UPDI4AVR_FW753B.ino.elf:     file format elf32-avr
+/var/folders/mz/_z9vt_y13rdf9tt_4qkvv0k40000gn/T/arduino_build_26683/UPDI4AVR_FW753B.ino.elf:     file format elf32-avr
 
 
 Disassembly of section .data:
 
 00803800 <__data_start>:
 __data_start():
-  803800:	55 c8       	rjmp	.-3926   	; 0x8028ac <UPDI::nvmprog_key+0x7f8f7a>
+  803800:	55 c8       	rjmp	.-3926   	; 0x8028ac <UPDI::nvmprog_key+0x7f8f68>
   803802:	00 c3       	rjmp	.+1536   	; 0x803e04 <__bss_end+0x38c>
   803804:	04 55       	subi	r16, 0x54	; 84
 
@@ -179,7 +179,7 @@ __do_copy_data():
       dc:	18 e3       	ldi	r17, 0x38	; 56
       de:	a0 e0       	ldi	r26, 0x00	; 0
       e0:	b8 e3       	ldi	r27, 0x38	; 56
-      e2:	ec e3       	ldi	r30, 0x3C	; 60
+      e2:	ee e4       	ldi	r30, 0x4E	; 78
       e4:	f9 e1       	ldi	r31, 0x19	; 25
       e6:	02 c0       	rjmp	.+4      	; 0xec <__do_copy_data+0x10>
       e8:	05 90       	lpm	r0, Z+
@@ -206,7 +206,7 @@ __do_clear_bss():
 ../../../../crt1/gcrt1.S:314
      102:	0e 94 f0 08 	call	0x11e0	; 0x11e0 <main>
 ../../../../crt1/gcrt1.S:315
-     106:	0c 94 8d 0c 	jmp	0x191a	; 0x191a <_exit>
+     106:	0c 94 96 0c 	jmp	0x192c	; 0x192c <_exit>
 
 0000010a <__bad_interrupt>:
 __vector_22():
@@ -222,17 +222,17 @@ _ZN4UPDI4RECVEv():
 
 uint8_t UPDI::RECV (void) {
   loop_until_bit_is_set(UPDI_USART.STATUS, USART_RXCIF_bp);
-     10c:	80 91 04 08 	lds	r24, 0x0804	; 0x800804 <UPDI::nvmprog_key+0x7f6ed2>
+     10c:	80 91 04 08 	lds	r24, 0x0804	; 0x800804 <UPDI::nvmprog_key+0x7f6ec0>
      110:	87 ff       	sbrs	r24, 7
      112:	fc cf       	rjmp	.-8      	; 0x10c <UPDI::RECV()>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:44
   UPDI_LASTH = UPDI_USART.RXDATAH ^ 0x80;
-     114:	80 91 01 08 	lds	r24, 0x0801	; 0x800801 <UPDI::nvmprog_key+0x7f6ecf>
+     114:	80 91 01 08 	lds	r24, 0x0801	; 0x800801 <UPDI::nvmprog_key+0x7f6ebd>
      118:	80 58       	subi	r24, 0x80	; 128
      11a:	8f bb       	out	0x1f, r24	; 31
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:45
   return UPDI_LASTL = UPDI_USART.RXDATAL;
-     11c:	80 91 00 08 	lds	r24, 0x0800	; 0x800800 <UPDI::nvmprog_key+0x7f6ece>
+     11c:	80 91 00 08 	lds	r24, 0x0800	; 0x800800 <UPDI::nvmprog_key+0x7f6ebc>
      120:	8e bb       	out	0x1e, r24	; 30
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:46
 }
@@ -252,19 +252,19 @@ bool UPDI::SEND (uint8_t _data) {
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:56
   bool _r;
   loop_until_bit_is_set(UPDI_USART.STATUS, USART_DREIF_bp);
-     128:	80 91 04 08 	lds	r24, 0x0804	; 0x800804 <UPDI::nvmprog_key+0x7f6ed2>
+     128:	80 91 04 08 	lds	r24, 0x0804	; 0x800804 <UPDI::nvmprog_key+0x7f6ec0>
      12c:	85 ff       	sbrs	r24, 5
      12e:	fc cf       	rjmp	.-8      	; 0x128 <UPDI::SEND(unsigned char)+0x4>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:57
   UPDI_USART.STATUS = USART_TXCIF_bm;
      130:	80 e4       	ldi	r24, 0x40	; 64
-     132:	80 93 04 08 	sts	0x0804, r24	; 0x800804 <UPDI::nvmprog_key+0x7f6ed2>
+     132:	80 93 04 08 	sts	0x0804, r24	; 0x800804 <UPDI::nvmprog_key+0x7f6ec0>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:58
   UPDI_USART.TXDATAL = _data;
-     136:	c0 93 02 08 	sts	0x0802, r28	; 0x800802 <UPDI::nvmprog_key+0x7f6ed0>
+     136:	c0 93 02 08 	sts	0x0802, r28	; 0x800802 <UPDI::nvmprog_key+0x7f6ebe>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:59
   loop_until_bit_is_set(UPDI_USART.STATUS, USART_TXCIF_bp);
-     13a:	80 91 04 08 	lds	r24, 0x0804	; 0x800804 <UPDI::nvmprog_key+0x7f6ed2>
+     13a:	80 91 04 08 	lds	r24, 0x0804	; 0x800804 <UPDI::nvmprog_key+0x7f6ec0>
      13e:	86 ff       	sbrs	r24, 6
      140:	fc cf       	rjmp	.-8      	; 0x13a <UPDI::SEND(unsigned char)+0x16>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:60
@@ -353,7 +353,7 @@ bool UPDI::set_cs_stat (const uint8_t code, uint8_t data) {
 
 00000196 <UPDI::enter_updi(bool) [clone .part.4]>:
 _ZN4UPDI10enter_updiEb.part.4():
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:328
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:330
 
 /*
  * UPDI制御開始
@@ -363,7 +363,7 @@ bool UPDI::enter_updi (bool skip) {
      196:	0f 93       	push	r16
      198:	1f 93       	push	r17
      19a:	cf 93       	push	r28
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:351
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:353
     else
       UPDI::BREAK();
   }
@@ -380,7 +380,7 @@ bool UPDI::enter_updi (bool skip) {
      1aa:	59 f1       	breq	.+86     	; 0x202 <UPDI::enter_updi(bool) [clone .part.4]+0x6c>
      1ac:	0f e6       	ldi	r16, 0x6F	; 111
      1ae:	18 e3       	ldi	r17, 0x38	; 56
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:352
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:354
     while (_len--) *_p++ = UPDI::RECV();
      1b0:	88 e3       	ldi	r24, 0x38	; 56
      1b2:	0f 37       	cpi	r16, 0x7F	; 127
@@ -391,7 +391,7 @@ bool UPDI::enter_updi (bool skip) {
      1bc:	81 93       	st	Z+, r24
      1be:	8f 01       	movw	r16, r30
      1c0:	f7 cf       	rjmp	.-18     	; 0x1b0 <UPDI::enter_updi(bool) [clone .part.4]+0x1a>
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:353
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:355
     switch (JTAG2::packet.body[4]) {
      1c2:	80 91 6f 38 	lds	r24, 0x386F	; 0x80386f <JTAG2::packet+0xc>
      1c6:	81 34       	cpi	r24, 0x41	; 65
@@ -399,7 +399,7 @@ bool UPDI::enter_updi (bool skip) {
      1ca:	20 f4       	brcc	.+8      	; 0x1d4 <UPDI::enter_updi(bool) [clone .part.4]+0x3e>
      1cc:	80 32       	cpi	r24, 0x20	; 32
      1ce:	f1 f0       	breq	.+60     	; 0x20c <UPDI::enter_updi(bool) [clone .part.4]+0x76>
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:379
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:381
         UPDI_NVMCTRL |= _BV(UPDI::UPDI_GEN2_bp);
         NVM::nvm_flash_offset = 0x800000;
         break;
@@ -408,7 +408,7 @@ bool UPDI::enter_updi (bool skip) {
         return false;
      1d0:	c0 e0       	ldi	r28, 0x00	; 0
      1d2:	17 c0       	rjmp	.+46     	; 0x202 <UPDI::enter_updi(bool) [clone .part.4]+0x6c>
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:353
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:355
   }
   if (bit_is_clear(UPDI_CONTROL, UPDI::UPDI_INFO_bp)) {
     if (!UPDI::set_cs_ctra(UPDI::UPDI_SET_GTVAL_2)) return false;
@@ -419,7 +419,7 @@ bool UPDI::enter_updi (bool skip) {
      1d6:	39 f0       	breq	.+14     	; 0x1e6 <UPDI::enter_updi(bool) [clone .part.4]+0x50>
      1d8:	84 37       	cpi	r24, 0x74	; 116
      1da:	d1 f7       	brne	.-12     	; 0x1d0 <UPDI::enter_updi(bool) [clone .part.4]+0x3a>
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:362
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:364
         NVM::nvm_flash_offset = 0x4000;
         break;
       }
@@ -431,7 +431,7 @@ bool UPDI::enter_updi (bool skip) {
      1e0:	a0 e0       	ldi	r26, 0x00	; 0
      1e2:	b0 e0       	ldi	r27, 0x00	; 0
      1e4:	05 c0       	rjmp	.+10     	; 0x1f0 <UPDI::enter_updi(bool) [clone .part.4]+0x5a>
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:356
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:358
     if (!UPDI::send_bytes(set_ptr, sizeof(set_ptr))) return false;
     while (_len--) *_p++ = UPDI::RECV();
     switch (JTAG2::packet.body[4]) {
@@ -439,13 +439,13 @@ bool UPDI::enter_updi (bool skip) {
         /* megaAVR SIB = 'megaAVR P:0D:1-3' */
         UPDI_NVMCTRL |= _BV(UPDI::UPDI_LOWF_bp);
      1e6:	ed 9a       	sbi	0x1d, 5	; 29
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:357
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:359
         NVM::nvm_flash_offset = 0x4000;
      1e8:	80 e0       	ldi	r24, 0x00	; 0
      1ea:	90 e4       	ldi	r25, 0x40	; 64
      1ec:	a0 e0       	ldi	r26, 0x00	; 0
      1ee:	b0 e0       	ldi	r27, 0x00	; 0
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:375
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:377
         if (JTAG2::packet.body[14] == '3') {
           // 'AVR_Ex' series
           UPDI_NVMCTRL |= _BV(UPDI::UPDI_GEN3_bp);
@@ -456,7 +456,7 @@ bool UPDI::enter_updi (bool skip) {
      1f4:	90 93 52 38 	sts	0x3852, r25	; 0x803852 <NVM::nvm_flash_offset+0x1>
      1f8:	a0 93 53 38 	sts	0x3853, r26	; 0x803853 <NVM::nvm_flash_offset+0x2>
      1fc:	b0 93 54 38 	sts	0x3854, r27	; 0x803854 <NVM::nvm_flash_offset+0x3>
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:382
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:384
       }
       default : {
         return false;
@@ -464,7 +464,7 @@ bool UPDI::enter_updi (bool skip) {
     }
     UPDI_CONTROL |= _BV(UPDI::UPDI_INFO_bp);
      200:	e0 9a       	sbi	0x1c, 0	; 28
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:385
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:387
   }
   return true;
 }
@@ -473,7 +473,7 @@ bool UPDI::enter_updi (bool skip) {
      206:	1f 91       	pop	r17
      208:	0f 91       	pop	r16
      20a:	08 95       	ret
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:370
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:372
       case ' ' :
       case 'A' : {              // 'AVR_Dx' series
         /* AVR Dx SIB = 'AVR     P:2D:1-3' */
@@ -483,15 +483,15 @@ bool UPDI::enter_updi (bool skip) {
      20c:	80 91 79 38 	lds	r24, 0x3879	; 0x803879 <JTAG2::packet+0x16>
      210:	83 33       	cpi	r24, 0x33	; 51
      212:	09 f4       	brne	.+2      	; 0x216 <UPDI::enter_updi(bool) [clone .part.4]+0x80>
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:372
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:374
           // 'AVR_Ex' series
           UPDI_NVMCTRL |= _BV(UPDI::UPDI_GEN3_bp);
      214:	ef 9a       	sbi	0x1d, 7	; 29
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:374
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:376
         }
         UPDI_NVMCTRL |= _BV(UPDI::UPDI_GEN2_bp);
      216:	ee 9a       	sbi	0x1d, 6	; 29
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:375
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:377
         NVM::nvm_flash_offset = 0x800000;
      218:	80 e0       	ldi	r24, 0x00	; 0
      21a:	90 e0       	ldi	r25, 0x00	; 0
@@ -807,18 +807,18 @@ void LED_TCB1 (uint8_t mode, uint16_t ccmp) {
      350:	95 e5       	ldi	r25, 0x55	; 85
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:162
     TCB1_CCMP = ccmp;
-     352:	80 93 9c 0a 	sts	0x0A9C, r24	; 0x800a9c <UPDI::nvmprog_key+0x7f716a>
-     356:	90 93 9d 0a 	sts	0x0A9D, r25	; 0x800a9d <UPDI::nvmprog_key+0x7f716b>
-     35a:	10 92 9a 0a 	sts	0x0A9A, r1	; 0x800a9a <UPDI::nvmprog_key+0x7f7168>
+     352:	80 93 9c 0a 	sts	0x0A9C, r24	; 0x800a9c <UPDI::nvmprog_key+0x7f7158>
+     356:	90 93 9d 0a 	sts	0x0A9D, r25	; 0x800a9d <UPDI::nvmprog_key+0x7f7159>
+     35a:	10 92 9a 0a 	sts	0x0A9A, r1	; 0x800a9a <UPDI::nvmprog_key+0x7f7156>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:163
     TCB1_CNT = 0;
-     35e:	10 92 9b 0a 	sts	0x0A9B, r1	; 0x800a9b <UPDI::nvmprog_key+0x7f7169>
+     35e:	10 92 9b 0a 	sts	0x0A9B, r1	; 0x800a9b <UPDI::nvmprog_key+0x7f7157>
      362:	8f e4       	ldi	r24, 0x4F	; 79
-     364:	80 93 90 0a 	sts	0x0A90, r24	; 0x800a90 <UPDI::nvmprog_key+0x7f715e>
+     364:	80 93 90 0a 	sts	0x0A90, r24	; 0x800a90 <UPDI::nvmprog_key+0x7f714c>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:164
     TCB1_CTRLA = TCB_RUNSTDBY_bm | TCB_ENABLE_bm | TCB_CLKSEL_EVENT_gc;
      368:	81 e0       	ldi	r24, 0x01	; 1
-     36a:	80 93 a9 01 	sts	0x01A9, r24	; 0x8001a9 <UPDI::nvmprog_key+0x7f6877>
+     36a:	80 93 a9 01 	sts	0x01A9, r24	; 0x8001a9 <UPDI::nvmprog_key+0x7f6865>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:165
     LEDG_EVOUT = EVSYS_USER_CHANNEL0_gc;
      36e:	08 95       	ret
@@ -843,18 +843,18 @@ void LED_TCB1 (uint8_t mode, uint16_t ccmp) {
      380:	98 e0       	ldi	r25, 0x08	; 8
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:162
     TCB1_CCMP = ccmp;
-     382:	80 93 9c 0a 	sts	0x0A9C, r24	; 0x800a9c <UPDI::nvmprog_key+0x7f716a>
-     386:	90 93 9d 0a 	sts	0x0A9D, r25	; 0x800a9d <UPDI::nvmprog_key+0x7f716b>
-     38a:	10 92 9a 0a 	sts	0x0A9A, r1	; 0x800a9a <UPDI::nvmprog_key+0x7f7168>
+     382:	80 93 9c 0a 	sts	0x0A9C, r24	; 0x800a9c <UPDI::nvmprog_key+0x7f7158>
+     386:	90 93 9d 0a 	sts	0x0A9D, r25	; 0x800a9d <UPDI::nvmprog_key+0x7f7159>
+     38a:	10 92 9a 0a 	sts	0x0A9A, r1	; 0x800a9a <UPDI::nvmprog_key+0x7f7156>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:163
     TCB1_CNT = 0;
-     38e:	10 92 9b 0a 	sts	0x0A9B, r1	; 0x800a9b <UPDI::nvmprog_key+0x7f7169>
+     38e:	10 92 9b 0a 	sts	0x0A9B, r1	; 0x800a9b <UPDI::nvmprog_key+0x7f7157>
      392:	8f e4       	ldi	r24, 0x4F	; 79
-     394:	80 93 90 0a 	sts	0x0A90, r24	; 0x800a90 <UPDI::nvmprog_key+0x7f715e>
+     394:	80 93 90 0a 	sts	0x0A90, r24	; 0x800a90 <UPDI::nvmprog_key+0x7f714c>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:164
     TCB1_CTRLA = TCB_RUNSTDBY_bm | TCB_ENABLE_bm | TCB_CLKSEL_EVENT_gc;
      398:	81 e0       	ldi	r24, 0x01	; 1
-     39a:	80 93 a9 01 	sts	0x01A9, r24	; 0x8001a9 <UPDI::nvmprog_key+0x7f6877>
+     39a:	80 93 a9 01 	sts	0x01A9, r24	; 0x8001a9 <UPDI::nvmprog_key+0x7f6865>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:165
     LEDG_EVOUT = EVSYS_USER_CHANNEL0_gc;
      39e:	08 95       	ret
@@ -879,13 +879,13 @@ _ZN3TIM12Timeout_StopEv():
 
 void TIM::Timeout_Stop (void) {
   ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
-     3a4:	10 92 80 0a 	sts	0x0A80, r1	; 0x800a80 <UPDI::nvmprog_key+0x7f714e>
+     3a4:	10 92 80 0a 	sts	0x0A80, r1	; 0x800a80 <UPDI::nvmprog_key+0x7f713c>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:138
     TCB0_CTRLA = 0;
      3a8:	91 e0       	ldi	r25, 0x01	; 1
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:139
     TCB0_INTFLAGS = TCB_CAPT_bm;
-     3aa:	90 93 86 0a 	sts	0x0A86, r25	; 0x800a86 <UPDI::nvmprog_key+0x7f7154>
+     3aa:	90 93 86 0a 	sts	0x0A86, r25	; 0x800a86 <UPDI::nvmprog_key+0x7f7142>
 __iRestore():
      3ae:	8f bf       	out	0x3f, r24	; 63
 _ZN3TIM12Timeout_StopEv():
@@ -911,14 +911,14 @@ _ZN3SYS7WDT_SETEh():
 
 void SYS::WDT_SET (uint8_t _wdt_period) {
   loop_until_bit_is_clear(WDT_STATUS, WDT_SYNCBUSY_bp);
-     3b4:	90 91 01 01 	lds	r25, 0x0101	; 0x800101 <UPDI::nvmprog_key+0x7f67cf>
+     3b4:	90 91 01 01 	lds	r25, 0x0101	; 0x800101 <UPDI::nvmprog_key+0x7f67bd>
      3b8:	90 fd       	sbrc	r25, 0
      3ba:	fc cf       	rjmp	.-8      	; 0x3b4 <SYS::WDT_SET(unsigned char)>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/SYS.cpp:134
   _PROTECTED_WRITE(WDT_CTRLA, _wdt_period);
      3bc:	98 ed       	ldi	r25, 0xD8	; 216
      3be:	94 bf       	out	0x34, r25	; 52
-     3c0:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <UPDI::nvmprog_key+0x7f67ce>
+     3c0:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <UPDI::nvmprog_key+0x7f67bc>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/NVM.cpp:317
  * NVMCTRL制御
  */
@@ -1256,16 +1256,16 @@ put():
 
 uint8_t JTAG2::put (uint8_t _data) {
   loop_until_bit_is_set(JTAG_USART.STATUS, USART_DREIF_bp);
-     4f4:	30 91 24 08 	lds	r19, 0x0824	; 0x800824 <UPDI::nvmprog_key+0x7f6ef2>
+     4f4:	30 91 24 08 	lds	r19, 0x0824	; 0x800824 <UPDI::nvmprog_key+0x7f6ee0>
      4f8:	35 ff       	sbrs	r19, 5
      4fa:	fc cf       	rjmp	.-8      	; 0x4f4 <JTAG2::answer_transfer()+0x9a>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:107
   JTAG_USART.STATUS = USART_TXCIF_bm;
-     4fc:	90 93 24 08 	sts	0x0824, r25	; 0x800824 <UPDI::nvmprog_key+0x7f6ef2>
+     4fc:	90 93 24 08 	sts	0x0824, r25	; 0x800824 <UPDI::nvmprog_key+0x7f6ee0>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:108
   return JTAG_USART.TXDATAL = _data;
-     500:	80 93 22 08 	sts	0x0822, r24	; 0x800822 <UPDI::nvmprog_key+0x7f6ef0>
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:392
+     500:	80 93 22 08 	sts	0x0822, r24	; 0x800822 <UPDI::nvmprog_key+0x7f6ede>
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:394
 /*
  * プログラミング制御開始
  *
@@ -1276,7 +1276,7 @@ bool UPDI::enter_prog (void) {
 
 00000506 <UPDI::enter_prog()>:
 _ZN4UPDI10enter_progEv():
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:393
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:395
   if (bit_is_clear(UPDI_CONTROL, UPDI::UPDI_PROG_bp)) {
      506:	cf 93       	push	r28
      508:	e1 99       	sbic	0x1c, 1	; 28
@@ -1292,7 +1292,7 @@ is_sys_stat():
      50c:	60 e2       	ldi	r22, 0x20	; 32
      50e:	8b e0       	ldi	r24, 0x0B	; 11
      510:	e5 de       	rcall	.-566    	; 0x2dc <UPDI::is_cs_stat(unsigned char, unsigned char)>
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:394
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:396
  *
  */
 
@@ -1302,10 +1302,10 @@ bool UPDI::enter_prog (void) {
      512:	c8 2f       	mov	r28, r24
 _ZN4UPDI10enter_progEv():
      514:	81 11       	cpse	r24, r1
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:395
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:397
     if (!(UPDI_LASTL & UPDI::UPDI_SYS_NVMPROG)) {
      516:	fa cf       	rjmp	.-12     	; 0x50c <UPDI::enter_prog()+0x6>
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:396
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:398
       if (UPDI_LASTL & UPDI::UPDI_SYS_LOCKSTATUS) return false;
      518:	f3 99       	sbic	0x1e, 3	; 30
      51a:	2c c0       	rjmp	.+88     	; 0x574 <UPDI::enter_prog()+0x6e>
@@ -1320,7 +1320,7 @@ inline bool UPDI::is_key_stat (const uint8_t check) {
      51e:	2d c0       	rjmp	.+90     	; 0x57a <UPDI::enter_prog()+0x74>
 is_key_stat():
      520:	60 e1       	ldi	r22, 0x10	; 16
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:397
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:399
 bool UPDI::enter_prog (void) {
   if (bit_is_clear(UPDI_CONTROL, UPDI::UPDI_PROG_bp)) {
     while (UPDI::is_sys_stat(UPDI::UPDI_SYS_RSTSYS));
@@ -1330,13 +1330,13 @@ bool UPDI::enter_prog (void) {
      522:	87 e0       	ldi	r24, 0x07	; 7
      524:	db de       	rcall	.-586    	; 0x2dc <UPDI::is_cs_stat(unsigned char, unsigned char)>
 _ZN4UPDI10enter_progEv():
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:398
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:400
         if (!UPDI::send_bytes(UPDI::nvmprog_key, sizeof(UPDI::nvmprog_key))) return false;
      526:	81 11       	cpse	r24, r1
      528:	12 c0       	rjmp	.+36     	; 0x54e <UPDI::enter_prog()+0x48>
      52a:	6a e0       	ldi	r22, 0x0A	; 10
      52c:	70 e0       	ldi	r23, 0x00	; 0
-     52e:	82 e3       	ldi	r24, 0x32	; 50
+     52e:	84 e4       	ldi	r24, 0x44	; 68
      530:	99 e9       	ldi	r25, 0x99	; 153
      532:	10 de       	rcall	.-992    	; 0x154 <UPDI::send_bytes(unsigned char const*, unsigned int)>
 /Users/askn/Library/Arduino15/packages/MultiX-Zinnia/hardware/UPDI4AVR/0.2.3/cores/megaAVR/api/delay_busywait.h:31
@@ -1365,7 +1365,7 @@ inline bool UPDI::is_key_stat (const uint8_t check) {
 is_key_stat():
      544:	60 e1       	ldi	r22, 0x10	; 16
      546:	87 e0       	ldi	r24, 0x07	; 7
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:399
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:401
     while (UPDI::is_sys_stat(UPDI::UPDI_SYS_RSTSYS));
     if (!(UPDI_LASTL & UPDI::UPDI_SYS_NVMPROG)) {
       if (UPDI_LASTL & UPDI::UPDI_SYS_LOCKSTATUS) return false;
@@ -1375,7 +1375,7 @@ is_key_stat():
      548:	c9 de       	rcall	.-622    	; 0x2dc <UPDI::is_cs_stat(unsigned char, unsigned char)>
 _ZN4UPDI10enter_progEv():
      54a:	88 23       	and	r24, r24
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:401
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:403
       }
       if (!UPDI::updi_reset(true) || !UPDI::updi_reset(false)) return false;
      54c:	a9 f3       	breq	.-22     	; 0x538 <UPDI::enter_prog()+0x32>
@@ -1409,7 +1409,7 @@ inline bool UPDI::is_sys_stat (const uint8_t check) {
 _ZN4UPDI10enter_progEv():
      570:	88 23       	and	r24, r24
      572:	a9 f3       	breq	.-22     	; 0x55e <UPDI::enter_prog()+0x58>
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:402
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:404
       if (!UPDI::is_key_stat(UPDI::UPDI_KEY_NVMPROG)) {
         if (!UPDI::send_bytes(UPDI::nvmprog_key, sizeof(UPDI::nvmprog_key))) return false;
         do{ delay_micros(100); } while (!UPDI::is_key_stat(UPDI::UPDI_KEY_NVMPROG));
@@ -1418,25 +1418,25 @@ _ZN4UPDI10enter_progEv():
       do{ delay_micros(100); } while (!UPDI::is_sys_stat(UPDI::UPDI_SYS_NVMPROG));
      574:	e0 9a       	sbi	0x1c, 0	; 28
      576:	e1 9a       	sbi	0x1c, 1	; 28
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:404
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:406
     }
     UPDI_CONTROL |= _BV(UPDI::UPDI_INFO_bp);
      578:	c1 e0       	ldi	r28, 0x01	; 1
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:405
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:407
     UPDI_CONTROL |= _BV(UPDI::UPDI_PROG_bp);
      57a:	8c 2f       	mov	r24, r28
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:407
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:409
   }
   return true;
      57c:	cf 91       	pop	r28
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:408
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:410
 }
      57e:	08 95       	ret
 
 00000580 <HV_Pulse()>:
 _Z8HV_Pulsev():
      580:	80 e3       	ldi	r24, 0x30	; 48
-     582:	80 93 01 0a 	sts	0x0A01, r24	; 0x800a01 <UPDI::nvmprog_key+0x7f70cf>
+     582:	80 93 01 0a 	sts	0x0A01, r24	; 0x800a01 <UPDI::nvmprog_key+0x7f70bd>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:200
 /*
  * HVチャージポンプ駆動制御
@@ -1446,7 +1446,7 @@ void TIM::HV_Pulse_ON (void) {
   TCA0_SPLIT_CTRLB = TCA_SPLIT_HCMP0EN_bm | TCA_SPLIT_HCMP1EN_bm;
      586:	21 9a       	sbi	0x04, 1	; 4
 delay_micros():
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:270
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:272
 /*
  * HVパルス印加
  */
@@ -1463,7 +1463,7 @@ void HV_Pulse (void) {
 _Z8HV_Pulsev():
      594:	21 98       	cbi	0x04, 1	; 4
 delay_micros():
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:272
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:274
   delay_micros(2000);
   openDrainWrite(TRST_PIN, HIGH);
      596:	87 e8       	ldi	r24, 0x87	; 135
@@ -1475,13 +1475,13 @@ delay_micros():
      5a0:	00 00       	nop
 _Z8HV_Pulsev():
      5a2:	ee 9b       	sbis	0x1d, 6	; 29
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:274
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:276
   delay_micros(2000);
   if (bit_is_set(UPDI_NVMCTRL, UPDI::UPDI_GEN2_bp)) {
      5a4:	1a c0       	rjmp	.+52     	; 0x5da <HV_Pulse()+0x5a>
      5a6:	2d 9a       	sbi	0x05, 5	; 5
 delay_micros():
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:275
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:277
     digitalWrite(HV8_PIN, HIGH);
      5a8:	8f ec       	ldi	r24, 0xCF	; 207
 /Users/askn/Library/Arduino15/packages/MultiX-Zinnia/hardware/UPDI4AVR/0.2.3/cores/megaAVR/api/delay_busywait.h:31
@@ -1493,10 +1493,10 @@ delay_micros():
 _Z8HV_Pulsev():
      5b4:	2d 98       	cbi	0x05, 5	; 5
 HV_Pulse_OFF():
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:277
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:279
     delay_micros(800);
     digitalWrite(HV8_PIN, LOW);
-     5b6:	10 92 01 0a 	sts	0x0A01, r1	; 0x800a01 <UPDI::nvmprog_key+0x7f70cf>
+     5b6:	10 92 01 0a 	sts	0x0A01, r1	; 0x800a01 <UPDI::nvmprog_key+0x7f70bd>
 _Z8HV_Pulsev():
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:204
 }
@@ -1504,7 +1504,7 @@ _Z8HV_Pulsev():
 void TIM::HV_Pulse_OFF (void) {
   TCA0_SPLIT_CTRLB = 0;
      5ba:	88 ee       	ldi	r24, 0xE8	; 232
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:285
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:287
     digitalWrite(HV12_PIN, HIGH);
     delay_micros(800);
     digitalWrite(HV12_PIN, LOW);
@@ -1512,28 +1512,28 @@ void TIM::HV_Pulse_OFF (void) {
   TIM::HV_Pulse_OFF();
   UPDI_USART.BAUD = UPDI_BAUD_SHORT_BREAK;
      5bc:	93 e0       	ldi	r25, 0x03	; 3
-     5be:	80 93 08 08 	sts	0x0808, r24	; 0x800808 <UPDI::nvmprog_key+0x7f6ed6>
-     5c2:	90 93 09 08 	sts	0x0809, r25	; 0x800809 <UPDI::nvmprog_key+0x7f6ed7>
+     5be:	80 93 08 08 	sts	0x0808, r24	; 0x800808 <UPDI::nvmprog_key+0x7f6ec4>
+     5c2:	90 93 09 08 	sts	0x0809, r25	; 0x800809 <UPDI::nvmprog_key+0x7f6ec5>
      5c6:	80 e0       	ldi	r24, 0x00	; 0
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:286
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:288
   UPDI::SEND(UPDI::UPDI_NOP);
      5c8:	ad dd       	rcall	.-1190   	; 0x124 <UPDI::SEND(unsigned char)>
      5ca:	80 eb       	ldi	r24, 0xB0	; 176
      5cc:	90 e0       	ldi	r25, 0x00	; 0
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:287
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:289
   UPDI_USART.BAUD = UPDI_BAUD_CALC;
-     5ce:	80 93 08 08 	sts	0x0808, r24	; 0x800808 <UPDI::nvmprog_key+0x7f6ed6>
-     5d2:	90 93 09 08 	sts	0x0809, r25	; 0x800809 <UPDI::nvmprog_key+0x7f6ed7>
+     5ce:	80 93 08 08 	sts	0x0808, r24	; 0x800808 <UPDI::nvmprog_key+0x7f6ec4>
+     5d2:	90 93 09 08 	sts	0x0809, r25	; 0x800809 <UPDI::nvmprog_key+0x7f6ec5>
      5d6:	e3 9a       	sbi	0x1c, 3	; 28
      5d8:	08 95       	ret
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:288
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:290
   UPDI_CONTROL |= _BV(UPDI::UPDI_ERHV_bp);
      5da:	0e 9a       	sbi	0x01, 6	; 1
 delay_micros():
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:289
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:291
 }
      5dc:	8f ec       	ldi	r24, 0xCF	; 207
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:280
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:282
     digitalWrite(HV8_PIN, HIGH);
     delay_micros(800);
     digitalWrite(HV8_PIN, LOW);
@@ -1552,12 +1552,12 @@ _Z8HV_Pulsev():
 
 000005ec <UPDI::updi_activate()>:
 _ZN4UPDI13updi_activateEv():
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:282
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:284
     delay_micros(800);
     digitalWrite(HV12_PIN, LOW);
      5ec:	cf 93       	push	r28
      5ee:	df 93       	push	r29
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:414
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:416
 
 /*
  * UPDI許認可
@@ -1569,11 +1569,11 @@ bool UPDI::updi_activate (void) {
      5f4:	de b7       	in	r29, 0x3e	; 62
      5f6:	83 e0       	ldi	r24, 0x03	; 3
      5f8:	89 83       	std	Y+1, r24	; 0x01
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:415
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:417
   volatile uint8_t count = 3;
      5fa:	89 81       	ldd	r24, Y+1	; 0x01
      5fc:	81 50       	subi	r24, 0x01	; 1
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:416
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:418
   while (--count && bit_is_clear(UPDI_CONTROL, UPDI_PROG_bp)) {
      5fe:	89 83       	std	Y+1, r24	; 0x01
      600:	88 23       	and	r24, r24
@@ -1600,11 +1600,11 @@ void delay_millis (uint32_t _ms) {
      61a:	00 00       	nop
 _ZN4UPDI13updi_activateEv():
      61c:	88 e3       	ldi	r24, 0x38	; 56
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:418
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:420
     delay_millis(100);
     if (setjmp(TIM::CONTEXT) == 0) {
      61e:	98 e3       	ldi	r25, 0x38	; 56
-     620:	0e 94 4d 0c 	call	0x189a	; 0x189a <setjmp>
+     620:	0e 94 56 0c 	call	0x18ac	; 0x18ac <setjmp>
      624:	89 2b       	or	r24, r25
      626:	09 f0       	breq	.+2      	; 0x62a <UPDI::updi_activate()+0x3e>
      628:	3b c0       	rjmp	.+118    	; 0x6a0 <UPDI::updi_activate()+0xb4>
@@ -1652,7 +1652,7 @@ Timeout_Start():
      64a:	e6 e8       	ldi	r30, 0x86	; 134
      64c:	fa e0       	ldi	r31, 0x0A	; 10
      64e:	20 83       	st	Z, r18
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:334
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:336
   static uint8_t set_ptr[] = { UPDI::UPDI_SYNCH, UPDI::UPDI_SIB_128 };
   uint8_t* _p = &JTAG2::packet.body[4];
   size_t _len = 16;
@@ -1660,11 +1660,11 @@ Timeout_Start():
     /* HV制御強制許可 */
     if (bit_is_set(UPDI_CONTROL, UPDI_FCHV_bp)) {
      650:	2f e0       	ldi	r18, 0x0F	; 15
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:335
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:337
       HV_Pulse();
      652:	e0 e8       	ldi	r30, 0x80	; 128
      654:	fa e0       	ldi	r31, 0x0A	; 10
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:338
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:340
 
       /* send nvmprog_key */
       if (!UPDI::send_bytes(UPDI::nvmprog_key, sizeof(UPDI::nvmprog_key))) return false;
@@ -1677,8 +1677,8 @@ enter_updi():
      65e:	90 df       	rcall	.-224    	; 0x580 <HV_Pulse()>
      660:	6a e0       	ldi	r22, 0x0A	; 10
      662:	70 e0       	ldi	r23, 0x00	; 0
-     664:	82 e3       	ldi	r24, 0x32	; 50
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:341
+     664:	84 e4       	ldi	r24, 0x44	; 68
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:343
 
       /* restart target : change mode */
       if (!UPDI::updi_reset(true) || !UPDI::updi_reset(false)) return false;
@@ -1700,7 +1700,7 @@ delay_millis():
      680:	86 e8       	ldi	r24, 0x86	; 134
      682:	91 e0       	ldi	r25, 0x01	; 1
      684:	31 50       	subi	r19, 0x01	; 1
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:349
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:351
       delay_millis(50);
     }
     else
@@ -1709,7 +1709,7 @@ delay_millis():
   if (bit_is_clear(UPDI_CONTROL, UPDI::UPDI_INFO_bp)) {
      686:	80 40       	sbci	r24, 0x00	; 0
      688:	90 40       	sbci	r25, 0x00	; 0
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:350
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:352
     if (!UPDI::set_cs_ctra(UPDI::UPDI_SET_GTVAL_2)) return false;
      68a:	e1 f7       	brne	.-8      	; 0x684 <UPDI::updi_activate()+0x98>
      68c:	00 c0       	rjmp	.+0      	; 0x68e <UPDI::updi_activate()+0xa2>
@@ -1717,7 +1717,7 @@ delay_millis():
 enter_updi():
      690:	e0 99       	sbic	0x1c, 0	; 28
      692:	05 c0       	rjmp	.+10     	; 0x69e <UPDI::updi_activate()+0xb2>
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:420
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:422
   volatile uint8_t count = 3;
   while (--count && bit_is_clear(UPDI_CONTROL, UPDI_PROG_bp)) {
     delay_millis(100);
@@ -1727,13 +1727,13 @@ enter_updi():
      694:	76 dd       	rcall	.-1300   	; 0x182 <UPDI::set_cs_ctra(unsigned char) [clone .constprop.1]>
      696:	88 23       	and	r24, r24
      698:	19 f0       	breq	.+6      	; 0x6a0 <UPDI::updi_activate()+0xb4>
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:422
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:424
     }
     TIM::Timeout_Stop();
      69a:	7d dd       	rcall	.-1286   	; 0x196 <UPDI::enter_updi(bool) [clone .part.4]>
 _ZN4UPDI13updi_activateEv():
      69c:	81 11       	cpse	r24, r1
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:425
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:427
 
     /* 2周目以降は JPショートならHV制御強制を許可 */
     if (!digitalRead(JP_SENSE_PIN)) UPDI_CONTROL |= _BV(UPDI::UPDI_FCHV_bp);
@@ -1741,19 +1741,19 @@ _ZN4UPDI13updi_activateEv():
      6a0:	7f de       	rcall	.-770    	; 0x3a0 <TIM::Timeout_Stop()>
      6a2:	53 99       	sbic	0x0a, 3	; 10
      6a4:	aa cf       	rjmp	.-172    	; 0x5fa <UPDI::updi_activate()+0xe>
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:427
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:429
   }
   return bit_is_set(UPDI_CONTROL, UPDI_PROG_bp);
      6a6:	e4 9a       	sbi	0x1c, 4	; 28
      6a8:	a8 cf       	rjmp	.-176    	; 0x5fa <UPDI::updi_activate()+0xe>
      6aa:	8c b3       	in	r24, 0x1c	; 28
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:428
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:430
 }
      6ac:	86 95       	lsr	r24
      6ae:	81 70       	andi	r24, 0x01	; 1
      6b0:	0f 90       	pop	r0
      6b2:	df 91       	pop	r29
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:347
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:349
 
       /* wait enable : chip erase mode success */
       delay_millis(50);
@@ -2269,7 +2269,7 @@ _ZN3NVM14write_flash_v2Emj():
 000008d8 <UPDI::runtime(unsigned char)>:
 _ZN4UPDI7runtimeEh():
      8d8:	bf 92       	push	r11
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:434
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:436
 
 /*
  * UPDI制御プロセス
@@ -2291,14 +2291,14 @@ bool UPDI::runtime (uint8_t updi_cmd) {
      8f2:	de bf       	out	0x3e, r29	; 62
      8f4:	8e 83       	std	Y+6, r24	; 0x06
      8f6:	1d 82       	std	Y+5, r1	; 0x05
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:435
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:437
   volatile bool _result = false;
      8f8:	88 e3       	ldi	r24, 0x38	; 56
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:437
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:439
   uint16_t limit = 4000;
   if (setjmp(TIM::CONTEXT) == 0) {
      8fa:	98 e3       	ldi	r25, 0x38	; 56
-     8fc:	ce d7       	rcall	.+3996   	; 0x189a <setjmp>
+     8fc:	d7 d7       	rcall	.+4014   	; 0x18ac <setjmp>
      8fe:	89 2b       	or	r24, r25
      900:	09 f0       	breq	.+2      	; 0x904 <UPDI::runtime(unsigned char)+0x2c>
      902:	06 c1       	rjmp	.+524    	; 0xb10 <UPDI::runtime(unsigned char)+0x238>
@@ -2314,25 +2314,25 @@ Timeout_Start():
 
 void TIM::Timeout_Start (uint16_t _ms) {
   ATOMIC_BLOCK(ATOMIC_RESTORESTATE) {
-     908:	10 92 8a 0a 	sts	0x0A8A, r1	; 0x800a8a <UPDI::nvmprog_key+0x7f7158>
+     908:	10 92 8a 0a 	sts	0x0A8A, r1	; 0x800a8a <UPDI::nvmprog_key+0x7f7146>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:128
     TCB0_CNT = 0;
-     90c:	10 92 8b 0a 	sts	0x0A8B, r1	; 0x800a8b <UPDI::nvmprog_key+0x7f7159>
+     90c:	10 92 8b 0a 	sts	0x0A8B, r1	; 0x800a8b <UPDI::nvmprog_key+0x7f7147>
      910:	28 ee       	ldi	r18, 0xE8	; 232
      912:	33 e0       	ldi	r19, 0x03	; 3
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:129
     TCB0_CCMP = _ms >> 2;
-     914:	20 93 8c 0a 	sts	0x0A8C, r18	; 0x800a8c <UPDI::nvmprog_key+0x7f715a>
-     918:	30 93 8d 0a 	sts	0x0A8D, r19	; 0x800a8d <UPDI::nvmprog_key+0x7f715b>
+     914:	20 93 8c 0a 	sts	0x0A8C, r18	; 0x800a8c <UPDI::nvmprog_key+0x7f7148>
+     918:	30 93 8d 0a 	sts	0x0A8D, r19	; 0x800a8d <UPDI::nvmprog_key+0x7f7149>
      91c:	81 e0       	ldi	r24, 0x01	; 1
-     91e:	80 93 85 0a 	sts	0x0A85, r24	; 0x800a85 <UPDI::nvmprog_key+0x7f7153>
+     91e:	80 93 85 0a 	sts	0x0A85, r24	; 0x800a85 <UPDI::nvmprog_key+0x7f7141>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:130
     TCB0_INTCTRL = TCB_CAPT_bm;
-     922:	80 93 86 0a 	sts	0x0A86, r24	; 0x800a86 <UPDI::nvmprog_key+0x7f7154>
+     922:	80 93 86 0a 	sts	0x0A86, r24	; 0x800a86 <UPDI::nvmprog_key+0x7f7142>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:131
     TCB0_INTFLAGS = TCB_CAPT_bm;
      926:	8f e0       	ldi	r24, 0x0F	; 15
-     928:	80 93 80 0a 	sts	0x0A80, r24	; 0x800a80 <UPDI::nvmprog_key+0x7f714e>
+     928:	80 93 80 0a 	sts	0x0A80, r24	; 0x800a80 <UPDI::nvmprog_key+0x7f713c>
 __iRestore():
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:132
     TCB0_CTRLA = TCB_ENABLE_bm | TCB_CLKSEL_EVENT_gc;
@@ -2347,7 +2347,7 @@ static __inline__ void __iRestore(const  uint8_t *__s)
 {
     SREG = *__s;
      930:	83 30       	cpi	r24, 0x03	; 3
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:439
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:441
     TIM::Timeout_Start(limit);
     switch (updi_cmd) {
      932:	09 f4       	brne	.+2      	; 0x936 <UPDI::runtime(unsigned char)+0x5e>
@@ -2410,7 +2410,7 @@ bool NVM::read_memory (void) {
      976:	65 c0       	rjmp	.+202    	; 0xa42 <UPDI::runtime(unsigned char)+0x16a>
      978:	18 f0       	brcs	.+6      	; 0x980 <UPDI::runtime(unsigned char)+0xa8>
      97a:	82 5b       	subi	r24, 0xB2	; 178
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:303
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:305
 bool UPDI::chip_erase (void) {
   /* Send HV Pulse */
   if (bit_is_clear(UPDI_CONTROL, UPDI_INFO_bp)) HV_Pulse();
@@ -2524,7 +2524,7 @@ bool NVM::read_userrow_dummy (size_t byte_count) {
   UPDI_CONTROL &= ~_BV(UPDI::UPDI_URWR_bp);
      9e8:	81 e0       	ldi	r24, 0x01	; 1
 _ZN4UPDI7runtimeEh():
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:464
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:466
           _result = UPDI::chip_erase();
         }
         break;
@@ -2681,7 +2681,7 @@ read_memory():
      a8c:	80 91 5b 38 	lds	r24, 0x385B	; 0x80385b <NVM::nvm_user_sig_offset>
      a90:	90 91 5c 38 	lds	r25, 0x385C	; 0x80385c <NVM::nvm_user_sig_offset+0x1>
      a94:	a0 91 5d 38 	lds	r26, 0x385D	; 0x80385d <NVM::nvm_user_sig_offset+0x2>
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:445
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:447
       case UPDI::UPDI_CMD_READ_MEMORY : {
         _result = NVM::read_memory();
         break;
@@ -2689,7 +2689,7 @@ read_memory():
       case UPDI::UPDI_CMD_WRITE_MEMORY : {
         if (bit_is_clear(UPDI_CONTROL, UPDI_PROG_bp)) {
      a98:	b0 91 5e 38 	lds	r27, 0x385E	; 0x80385e <NVM::nvm_user_sig_offset+0x3>
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:447
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:449
           /* USERROW だけは非PROG状態でも処理を通す */
           if (JTAG2::packet.body[1] != JTAG2::MTYPE_USERSIG) break;
      a9c:	da cf       	rjmp	.-76     	; 0xa52 <UPDI::runtime(unsigned char)+0x17a>
@@ -2802,7 +2802,7 @@ inline bool UPDI::is_sys_stat (const uint8_t check) {
      b00:	87 c0       	rjmp	.+270    	; 0xc10 <UPDI::runtime(unsigned char)+0x338>
 is_sys_stat():
      b02:	61 e0       	ldi	r22, 0x01	; 1
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:450
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:452
         if (bit_is_clear(UPDI_CONTROL, UPDI_PROG_bp)) {
           /* USERROW だけは非PROG状態でも処理を通す */
           if (JTAG2::packet.body[1] != JTAG2::MTYPE_USERSIG) break;
@@ -2812,11 +2812,11 @@ is_sys_stat():
      b04:	8b e0       	ldi	r24, 0x0B	; 11
      b06:	ea db       	rcall	.-2092   	; 0x2dc <UPDI::is_cs_stat(unsigned char, unsigned char)>
 _ZN4UPDI7runtimeEh():
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:451
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:453
           if (!(UPDI_LASTL & UPDI::UPDI_SYS_NVMPROG)) break;
      b08:	81 11       	cpse	r24, r1
      b0a:	02 c0       	rjmp	.+4      	; 0xb10 <UPDI::runtime(unsigned char)+0x238>
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:469
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:471
         _result = UPDI::Target_Reset(true) && UPDI::Target_Reset(false);
         break;
       }
@@ -2824,15 +2824,15 @@ _ZN4UPDI7runtimeEh():
   }
   TIM::Timeout_Stop();
      b0c:	f3 99       	sbic	0x1e, 3	; 30
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:470
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:472
   UPDI_USART.CTRLB = UPDI_USART_ON;
      b0e:	cd cf       	rjmp	.-102    	; 0xaaa <UPDI::runtime(unsigned char)+0x1d2>
      b10:	47 dc       	rcall	.-1906   	; 0x3a0 <TIM::Timeout_Stop()>
      b12:	88 ec       	ldi	r24, 0xC8	; 200
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:471
-  wdt_reset();
-     b14:	80 93 06 08 	sts	0x0806, r24	; 0x800806 <UPDI::nvmprog_key+0x7f6ed4>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:473
+  wdt_reset();
+     b14:	80 93 06 08 	sts	0x0806, r24	; 0x800806 <UPDI::nvmprog_key+0x7f6ec2>
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:475
   return _result;
 }
      b18:	a8 95       	wdr
@@ -3204,7 +3204,7 @@ write_eeprom():
         if (bit_is_clear(UPDI_CONTROL, UPDI::UPDI_PROG_bp))
      caa:	83 e0       	ldi	r24, 0x03	; 3
      cac:	8c db       	rcall	.-2280   	; 0x3c6 <NVM::nvm_ctrl(unsigned char)>
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:258
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:260
 /*
  * USERROW/USERSIG 特殊書込準備
  */
@@ -3221,11 +3221,11 @@ write_memory():
      cba:	8d c0       	rjmp	.+282    	; 0xdd6 <UPDI::runtime(unsigned char)+0x4fe>
 enter_userrow():
      cbc:	6a e0       	ldi	r22, 0x0A	; 10
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:260
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:262
   /* restart target : change mode */
   if (!UPDI::updi_reset(true) || !UPDI::updi_reset(false)) return false;
      cbe:	70 e0       	ldi	r23, 0x00	; 0
-     cc0:	8e e1       	ldi	r24, 0x1E	; 30
+     cc0:	80 e3       	ldi	r24, 0x30	; 48
      cc2:	99 e9       	ldi	r25, 0x99	; 153
      cc4:	47 da       	rcall	.-2930   	; 0x154 <UPDI::send_bytes(unsigned char const*, unsigned int)>
      cc6:	88 23       	and	r24, r24
@@ -3252,7 +3252,7 @@ inline bool UPDI::is_sys_stat (const uint8_t check) {
 delay_micros():
      ce0:	89 ef       	ldi	r24, 0xF9	; 249
      ce2:	90 e0       	ldi	r25, 0x00	; 0
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:261
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:263
 bool UPDI::enter_userrow (void) {
   /* send urowwrite_key */
   if (!UPDI::send_bytes(UPDI::urowwrite_key, sizeof(UPDI::urowwrite_key))) return false;
@@ -3433,7 +3433,7 @@ set_cs_stat():
   UPDI_CONTROL |= _BV(UPDI::UPDI_URWR_bp);
      db8:	cd d9       	rcall	.-3174   	; 0x154 <UPDI::send_bytes(unsigned char const*, unsigned int)>
 write_userrow():
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:453
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:455
         }
         else {
           if (UPDI::is_sys_stat(UPDI::UPDI_SYS_LOCKSTATUS)) break;
@@ -4067,7 +4067,7 @@ write_eeprom():
     1064:	f7 01       	movw	r30, r14
     1066:	81 91       	ld	r24, Z+
     1068:	7f 01       	movw	r14, r30
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:457
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:459
         }
         _result = NVM::write_memory();
         break;
@@ -4078,7 +4078,7 @@ write_eeprom():
     106c:	88 23       	and	r24, r24
     106e:	09 f4       	brne	.+2      	; 0x1072 <UPDI::runtime(unsigned char)+0x79a>
     1070:	bb cd       	rjmp	.-1162   	; 0xbe8 <UPDI::runtime(unsigned char)+0x310>
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:458
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:460
           && _CAPS32(JTAG2::packet.body[2])->dword == 0) {
     1072:	4c d8       	rcall	.-3944   	; 0x10c <UPDI::RECV()>
     1074:	80 34       	cpi	r24, 0x40	; 64
@@ -4090,7 +4090,7 @@ write_eeprom():
     1080:	14 ce       	rjmp	.-984    	; 0xcaa <UPDI::runtime(unsigned char)+0x3d2>
 _ZN4UPDI7runtimeEh():
     1082:	e3 e6       	ldi	r30, 0x63	; 99
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:300
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:302
  * HV制御はここを通る時のみ行われる
  */
 
@@ -4099,7 +4099,7 @@ bool UPDI::chip_erase (void) {
   if (bit_is_clear(UPDI_CONTROL, UPDI_INFO_bp)) HV_Pulse();
     1084:	f8 e3       	ldi	r31, 0x38	; 56
     1086:	81 85       	ldd	r24, Z+9	; 0x09
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:303
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:305
 
   /* send nvmprog_key */
   if (!UPDI::send_bytes(UPDI::nvmprog_key, sizeof(UPDI::nvmprog_key))) return false;
@@ -4111,7 +4111,7 @@ bool UPDI::chip_erase (void) {
     1092:	b5 85       	ldd	r27, Z+13	; 0x0d
     1094:	89 2b       	or	r24, r25
     1096:	8a 2b       	or	r24, r26
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:306
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:308
 
   /* send erase_key */
   if (!UPDI::send_bytes(UPDI::erase_key, sizeof(UPDI::erase_key))) return false;
@@ -4123,9 +4123,9 @@ chip_erase():
     10a0:	31 c0       	rjmp	.+98     	; 0x1104 <UPDI::runtime(unsigned char)+0x82c>
     10a2:	6a e0       	ldi	r22, 0x0A	; 10
     10a4:	70 e0       	ldi	r23, 0x00	; 0
-    10a6:	82 e3       	ldi	r24, 0x32	; 50
+    10a6:	84 e4       	ldi	r24, 0x44	; 68
     10a8:	99 e9       	ldi	r25, 0x99	; 153
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:309
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:311
 
   /* restart target : change mode */
   if (!UPDI::updi_reset(true) || !UPDI::updi_reset(false)) return false;
@@ -4135,7 +4135,7 @@ chip_erase():
     10b0:	67 cc       	rjmp	.-1842   	; 0x980 <UPDI::runtime(unsigned char)+0xa8>
     10b2:	6a e0       	ldi	r22, 0x0A	; 10
     10b4:	70 e0       	ldi	r23, 0x00	; 0
-    10b6:	88 e2       	ldi	r24, 0x28	; 40
+    10b6:	8a e3       	ldi	r24, 0x3A	; 58
     10b8:	99 e9       	ldi	r25, 0x99	; 153
     10ba:	4c d8       	rcall	.-3944   	; 0x154 <UPDI::send_bytes(unsigned char const*, unsigned int)>
     10bc:	88 23       	and	r24, r24
@@ -4180,7 +4180,7 @@ inline bool UPDI::is_sys_stat (const uint8_t check) {
     10de:	00 c0       	rjmp	.+0      	; 0x10e0 <UPDI::runtime(unsigned char)+0x808>
     10e0:	00 00       	nop
 delay_micros():
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:314
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:316
   if (!UPDI::updi_reset(true) || !UPDI::updi_reset(false)) return false;
 
   /* wait enable : chip erase mode success */
@@ -4189,19 +4189,19 @@ delay_micros():
   do{ delay_micros(100); } while (UPDI::is_sys_stat(UPDI::UPDI_SYS_LOCKSTATUS));
     10e2:	e9 ef       	ldi	r30, 0xF9	; 249
     10e4:	f0 e0       	ldi	r31, 0x00	; 0
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:315
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:317
   UPDI_CONTROL |= _BV(UPDI::UPDI_ERFM_bp);
     10e6:	31 97       	sbiw	r30, 0x01	; 1
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:317
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:319
 
   if (bit_is_set(UPDI_CONTROL, UPDI::UPDI_INFO_bp)) {
     10e8:	f1 f7       	brne	.-4      	; 0x10e6 <UPDI::runtime(unsigned char)+0x80e>
     10ea:	00 c0       	rjmp	.+0      	; 0x10ec <UPDI::runtime(unsigned char)+0x814>
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:318
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:320
     UPDI_CONTROL &= ~_BV(UPDI::UPDI_PROG_bp);
     10ec:	00 00       	nop
 is_sys_stat():
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:321
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:323
     return UPDI::enter_prog();
   }
   return UPDI::enter_updi(true) && UPDI::enter_prog();
@@ -4209,7 +4209,7 @@ is_sys_stat():
     10f0:	8b e0       	ldi	r24, 0x0B	; 11
     10f2:	f4 d8       	rcall	.-3608   	; 0x2dc <UPDI::is_cs_stat(unsigned char, unsigned char)>
 chip_erase():
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:300
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:302
  * HV制御はここを通る時のみ行われる
  */
 
@@ -4219,7 +4219,7 @@ bool UPDI::chip_erase (void) {
     10f4:	81 11       	cpse	r24, r1
     10f6:	f5 cf       	rjmp	.-22     	; 0x10e2 <UPDI::runtime(unsigned char)+0x80a>
     10f8:	e2 9a       	sbi	0x1c, 2	; 28
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:349
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:351
       delay_millis(50);
     }
     else
@@ -4228,7 +4228,7 @@ bool UPDI::chip_erase (void) {
   if (bit_is_clear(UPDI_CONTROL, UPDI::UPDI_INFO_bp)) {
     10fa:	e0 9b       	sbis	0x1c, 0	; 28
     10fc:	05 c0       	rjmp	.+10     	; 0x1108 <UPDI::runtime(unsigned char)+0x830>
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:350
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:352
     if (!UPDI::set_cs_ctra(UPDI::UPDI_SET_GTVAL_2)) return false;
     10fe:	e1 98       	cbi	0x1c, 1	; 28
     1100:	02 da       	rcall	.-3068   	; 0x506 <UPDI::enter_prog()>
@@ -4238,7 +4238,7 @@ bool UPDI::chip_erase (void) {
 enter_updi():
     1108:	e0 99       	sbic	0x1c, 0	; 28
     110a:	fa cf       	rjmp	.-12     	; 0x1100 <UPDI::runtime(unsigned char)+0x828>
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:321
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:323
 
   if (bit_is_set(UPDI_CONTROL, UPDI::UPDI_INFO_bp)) {
     UPDI_CONTROL &= ~_BV(UPDI::UPDI_PROG_bp);
@@ -4248,7 +4248,7 @@ enter_updi():
     110c:	3a d8       	rcall	.-3980   	; 0x182 <UPDI::set_cs_ctra(unsigned char) [clone .constprop.1]>
     110e:	88 23       	and	r24, r24
     1110:	09 f4       	brne	.+2      	; 0x1114 <UPDI::runtime(unsigned char)+0x83c>
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:464
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:466
           _result = UPDI::chip_erase();
         }
         break;
@@ -4285,11 +4285,11 @@ __vector_13():
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:282
   TCB0_INTFLAGS = TCB_CAPT_bm;
     112c:	11 24       	eor	r1, r1
-    112e:	10 92 80 0a 	sts	0x0A80, r1	; 0x800a80 <UPDI::nvmprog_key+0x7f714e>
+    112e:	10 92 80 0a 	sts	0x0A80, r1	; 0x800a80 <UPDI::nvmprog_key+0x7f713c>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:283
   longjmp(TIM::CONTEXT, 2);
     1132:	81 e0       	ldi	r24, 0x01	; 1
-    1134:	80 93 86 0a 	sts	0x0A86, r24	; 0x800a86 <UPDI::nvmprog_key+0x7f7154>
+    1134:	80 93 86 0a 	sts	0x0A86, r24	; 0x800a86 <UPDI::nvmprog_key+0x7f7142>
     1138:	62 e0       	ldi	r22, 0x02	; 2
     113a:	70 e0       	ldi	r23, 0x00	; 0
     113c:	88 e3       	ldi	r24, 0x38	; 56
@@ -4301,7 +4301,7 @@ __vector_13():
 
 ISR(portIntrruptVector(RTS_SENSE_PIN)) {
     113e:	98 e3       	ldi	r25, 0x38	; 56
-    1140:	cc d3       	rcall	.+1944   	; 0x18da <longjmp>
+    1140:	d5 d3       	rcall	.+1962   	; 0x18ec <longjmp>
 
 00001142 <__vector_6>:
 __vector_6():
@@ -4332,12 +4332,12 @@ __vector_6():
 
 ISR(portIntrruptVector(RTS_SENSE_PIN)) {
   portRegister(RTS_SENSE_PIN).INTFLAGS =
-    1164:	80 91 09 04 	lds	r24, 0x0409	; 0x800409 <UPDI::nvmprog_key+0x7f6ad7>
+    1164:	80 91 09 04 	lds	r24, 0x0409	; 0x800409 <UPDI::nvmprog_key+0x7f6ac5>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:252
   portRegister(RTS_SENSE_PIN).INTFLAGS;
 
   if ( digitalRead(RTS_SENSE_PIN) ) {
-    1168:	80 93 09 04 	sts	0x0409, r24	; 0x800409 <UPDI::nvmprog_key+0x7f6ad7>
+    1168:	80 93 09 04 	sts	0x0409, r24	; 0x800409 <UPDI::nvmprog_key+0x7f6ac5>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/SYS.cpp:87
 /*
  * 本体リセット
@@ -4358,7 +4358,7 @@ System_Reset():
     UPDI::Target_Reset(false);
   }
 }
-    1176:	90 93 41 00 	sts	0x0041, r25	; 0x800041 <UPDI::nvmprog_key+0x7f670f>
+    1176:	90 93 41 00 	sts	0x0041, r25	; 0x800041 <UPDI::nvmprog_key+0x7f66fd>
 __vector_6():
     117a:	ff 91       	pop	r31
     117c:	ef 91       	pop	r30
@@ -4427,7 +4427,7 @@ ISR(portIntrruptVector(SW_SENSE_PIN), ISR_NAKED) {
   /* ターゲットリセットON */
   UPDI::Target_Reset(true);
     11b4:	88 e0       	ldi	r24, 0x08	; 8
-    11b6:	80 93 06 08 	sts	0x0806, r24	; 0x800806 <UPDI::nvmprog_key+0x7f6ed4>
+    11b6:	80 93 06 08 	sts	0x0806, r24	; 0x800806 <UPDI::nvmprog_key+0x7f6ec2>
 delay_micros():
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:221
   UPDI_USART.CTRLB = UPDI_USART_OFF;
@@ -4440,7 +4440,7 @@ delay_micros():
     11c4:	00 00       	nop
 __vector_7():
     11c6:	01 9a       	sbi	0x00, 1	; 0
-    11c8:	10 92 11 04 	sts	0x0411, r1	; 0x800411 <UPDI::nvmprog_key+0x7f6adf>
+    11c8:	10 92 11 04 	sts	0x0411, r1	; 0x800411 <UPDI::nvmprog_key+0x7f6acd>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:227
 
   /* チャタリング抑制 */
@@ -4469,7 +4469,7 @@ System_Reset():
   /* 押している間は待機 */
   while (!digitalRead(SW_SENSE_PIN));
     11da:	84 bf       	out	0x34, r24	; 52
-    11dc:	90 93 41 00 	sts	0x0041, r25	; 0x800041 <UPDI::nvmprog_key+0x7f670f>
+    11dc:	90 93 41 00 	sts	0x0041, r25	; 0x800041 <UPDI::nvmprog_key+0x7f66fd>
 
 000011e0 <main>:
 main():
@@ -4506,7 +4506,7 @@ _CLKCTRL_SETUP():
     11fa:	41 e0       	ldi	r20, 0x01	; 1
     11fc:	50 e0       	ldi	r21, 0x00	; 0
     11fe:	84 bf       	out	0x34, r24	; 52
-    1200:	40 93 61 00 	sts	0x0061, r20	; 0x800061 <UPDI::nvmprog_key+0x7f672f>
+    1200:	40 93 61 00 	sts	0x0061, r20	; 0x800061 <UPDI::nvmprog_key+0x7f671d>
 setup():
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/SYS.cpp:17
 #include <avr/io.h>
@@ -4516,13 +4516,13 @@ void SYS::setup (void) {
   /* ターゲットリセット開放 */
   pinControlRegister(TRST_PIN) = TRST_PIN_CONFIG;
     1204:	8c e0       	ldi	r24, 0x0C	; 12
-    1206:	80 93 31 04 	sts	0x0431, r24	; 0x800431 <UPDI::nvmprog_key+0x7f6aff>
+    1206:	80 93 31 04 	sts	0x0431, r24	; 0x800431 <UPDI::nvmprog_key+0x7f6aed>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/SYS.cpp:20
 
   /* 出力方向ポート */
   PORTA_DIRSET = _BV(pinPosition(HVP1_PIN))
     120a:	88 ef       	ldi	r24, 0xF8	; 248
-    120c:	80 93 01 04 	sts	0x0401, r24	; 0x800401 <UPDI::nvmprog_key+0x7f6acf>
+    120c:	80 93 01 04 	sts	0x0401, r24	; 0x800401 <UPDI::nvmprog_key+0x7f6abd>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/SYS.cpp:25
                | _BV(pinPosition(HVP2_PIN))
                | _BV(pinPosition(HV12_PIN))
@@ -4530,72 +4530,72 @@ void SYS::setup (void) {
                | _BV(pinPosition(LEDY_PIN));
   PORTB_DIRSET = _BV(pinPosition(HV8_PIN));
     1210:	80 e2       	ldi	r24, 0x20	; 32
-    1212:	80 93 21 04 	sts	0x0421, r24	; 0x800421 <UPDI::nvmprog_key+0x7f6aef>
+    1212:	80 93 21 04 	sts	0x0421, r24	; 0x800421 <UPDI::nvmprog_key+0x7f6add>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/SYS.cpp:28
 
   /* USART 切替 LOW=ターゲット開通（PG_Disable） */
   PORTC_DIRSET = _BV(pinPosition(PGEN_PIN));
     1216:	81 e0       	ldi	r24, 0x01	; 1
-    1218:	80 93 41 04 	sts	0x0441, r24	; 0x800441 <UPDI::nvmprog_key+0x7f6b0f>
+    1218:	80 93 41 04 	sts	0x0441, r24	; 0x800441 <UPDI::nvmprog_key+0x7f6afd>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/SYS.cpp:31
 
   /* LED 出力 */
   LEDG_EVOUT_MUX = LEDG_EVOUT_ALT;          /* OUT:PA7 */
-    121c:	80 93 e0 05 	sts	0x05E0, r24	; 0x8005e0 <UPDI::nvmprog_key+0x7f6cae>
+    121c:	80 93 e0 05 	sts	0x05E0, r24	; 0x8005e0 <UPDI::nvmprog_key+0x7f6c9c>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/SYS.cpp:32
   PORTMUX_CCLROUTEA = PORTMUX_LUT3_ALT1_gc; /* OUT:PA5 IN:PC0,PC1,PC2 */
     1220:	98 e0       	ldi	r25, 0x08	; 8
-    1222:	90 93 e1 05 	sts	0x05E1, r25	; 0x8005e1 <UPDI::nvmprog_key+0x7f6caf>
+    1222:	90 93 e1 05 	sts	0x05E1, r25	; 0x8005e1 <UPDI::nvmprog_key+0x7f6c9d>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/SYS.cpp:33
   PORTA_OUTSET = _BV(pinPosition(LEDG_PIN))
     1226:	30 ea       	ldi	r19, 0xA0	; 160
-    1228:	30 93 05 04 	sts	0x0405, r19	; 0x800405 <UPDI::nvmprog_key+0x7f6ad3>
+    1228:	30 93 05 04 	sts	0x0405, r19	; 0x800405 <UPDI::nvmprog_key+0x7f6ac1>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/SYS.cpp:37
                | _BV(pinPosition(LEDY_PIN));
 
   /* USART代替選択 */
   PORTMUX_USARTROUTEA = JTAG_PMUX_ALT | UPDI_PMUX_ALT;
     122c:	35 e0       	ldi	r19, 0x05	; 5
-    122e:	30 93 e2 05 	sts	0x05E2, r19	; 0x8005e2 <UPDI::nvmprog_key+0x7f6cb0>
+    122e:	30 93 e2 05 	sts	0x05E2, r19	; 0x8005e2 <UPDI::nvmprog_key+0x7f6c9e>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/SYS.cpp:40
 
   /* JTAG ポート */
   pinControlRegister(JTAG_TXD_PIN) = JTAG_TXD_CONFIG;
-    1232:	90 93 52 04 	sts	0x0452, r25	; 0x800452 <UPDI::nvmprog_key+0x7f6b20>
+    1232:	90 93 52 04 	sts	0x0452, r25	; 0x800452 <UPDI::nvmprog_key+0x7f6b0e>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/SYS.cpp:41
   pinControlRegister(JTAG_RXD_PIN) = JTAG_RXD_CONFIG;
-    1236:	90 93 51 04 	sts	0x0451, r25	; 0x800451 <UPDI::nvmprog_key+0x7f6b1f>
+    1236:	90 93 51 04 	sts	0x0451, r25	; 0x800451 <UPDI::nvmprog_key+0x7f6b0d>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/SYS.cpp:44
 
   /* UPDI ポート */
   pinControlRegister(UPDI_TDAT_PIN) = UPDI_TDAT_CONFIG;
-    123a:	90 93 11 04 	sts	0x0411, r25	; 0x800411 <UPDI::nvmprog_key+0x7f6adf>
+    123a:	90 93 11 04 	sts	0x0411, r25	; 0x800411 <UPDI::nvmprog_key+0x7f6acd>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/SYS.cpp:47
 
   /* HV 発生器 */
   pinControlRegister(HVP1_PIN) = HVP1_PIN_CONFIG;
-    123e:	20 93 13 04 	sts	0x0413, r18	; 0x800413 <UPDI::nvmprog_key+0x7f6ae1>
+    123e:	20 93 13 04 	sts	0x0413, r18	; 0x800413 <UPDI::nvmprog_key+0x7f6acf>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/SYS.cpp:48
   pinControlRegister(HVP2_PIN) = HVP2_PIN_CONFIG;
     1242:	44 e8       	ldi	r20, 0x84	; 132
-    1244:	40 93 14 04 	sts	0x0414, r20	; 0x800414 <UPDI::nvmprog_key+0x7f6ae2>
+    1244:	40 93 14 04 	sts	0x0414, r20	; 0x800414 <UPDI::nvmprog_key+0x7f6ad0>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/SYS.cpp:51
 
   /* SW1 割込許可 */
   pinControlRegister(SW_SENSE_PIN) = SW_SENSE_CONFIG;
     1248:	4d e0       	ldi	r20, 0x0D	; 13
-    124a:	40 93 30 04 	sts	0x0430, r20	; 0x800430 <UPDI::nvmprog_key+0x7f6afe>
+    124a:	40 93 30 04 	sts	0x0430, r20	; 0x800430 <UPDI::nvmprog_key+0x7f6aec>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/SYS.cpp:54
 
   /* RTS 認識 */
   pinControlRegister(RTS_SENSE_PIN) = RTS_SENSE_CONFIG;
     124e:	49 e0       	ldi	r20, 0x09	; 9
-    1250:	40 93 12 04 	sts	0x0412, r20	; 0x800412 <UPDI::nvmprog_key+0x7f6ae0>
+    1250:	40 93 12 04 	sts	0x0412, r20	; 0x800412 <UPDI::nvmprog_key+0x7f6ace>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/SYS.cpp:57
 
   /* JP1 認識 */
   pinControlRegister(JP_SENSE_PIN) = JP_SENSE_CONFIG;
-    1254:	90 93 53 04 	sts	0x0453, r25	; 0x800453 <UPDI::nvmprog_key+0x7f6b21>
+    1254:	90 93 53 04 	sts	0x0453, r25	; 0x800453 <UPDI::nvmprog_key+0x7f6b0f>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/SYS.cpp:60
 
   /* 状態変数初期化 */
@@ -4612,32 +4612,32 @@ void SYS::setup (void) {
 
   EVSYS_CHANNEL0 = EVSYS_CHANNEL0_CCL_LUT0_gc;
     125c:	90 e1       	ldi	r25, 0x10	; 16
-    125e:	90 93 90 01 	sts	0x0190, r25	; 0x800190 <UPDI::nvmprog_key+0x7f685e>
+    125e:	90 93 90 01 	sts	0x0190, r25	; 0x800190 <UPDI::nvmprog_key+0x7f684c>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:48
   EVSYS_CHANNEL1 = EVSYS_CHANNEL1_RTC_PIT_DIV128_gc;
     1262:	9a e0       	ldi	r25, 0x0A	; 10
-    1264:	90 93 91 01 	sts	0x0191, r25	; 0x800191 <UPDI::nvmprog_key+0x7f685f>
+    1264:	90 93 91 01 	sts	0x0191, r25	; 0x800191 <UPDI::nvmprog_key+0x7f684d>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:49
   EVSYS_CHANNEL2 = EVSYS_CHANNEL2_CCL_LUT1_gc;
     1268:	91 e1       	ldi	r25, 0x11	; 17
-    126a:	90 93 92 01 	sts	0x0192, r25	; 0x800192 <UPDI::nvmprog_key+0x7f6860>
+    126a:	90 93 92 01 	sts	0x0192, r25	; 0x800192 <UPDI::nvmprog_key+0x7f684e>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:50
   EVSYS_CHANNEL3 = EVSYS_CHANNEL3_PORTA_PIN5_gc;
     126e:	9d e4       	ldi	r25, 0x4D	; 77
-    1270:	90 93 93 01 	sts	0x0193, r25	; 0x800193 <UPDI::nvmprog_key+0x7f6861>
+    1270:	90 93 93 01 	sts	0x0193, r25	; 0x800193 <UPDI::nvmprog_key+0x7f684f>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:51
   EVSYS_USERTCB0COUNT = EVSYS_USER_CHANNEL1_gc;
     1274:	92 e0       	ldi	r25, 0x02	; 2
-    1276:	90 93 b1 01 	sts	0x01B1, r25	; 0x8001b1 <UPDI::nvmprog_key+0x7f687f>
+    1276:	90 93 b1 01 	sts	0x01B1, r25	; 0x8001b1 <UPDI::nvmprog_key+0x7f686d>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:52
   EVSYS_USERTCB1COUNT = EVSYS_USER_CHANNEL1_gc;
-    127a:	90 93 b3 01 	sts	0x01B3, r25	; 0x8001b3 <UPDI::nvmprog_key+0x7f6881>
+    127a:	90 93 b3 01 	sts	0x01B3, r25	; 0x8001b3 <UPDI::nvmprog_key+0x7f686f>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:53
   EVSYS_USERCCLLUT0A  = EVSYS_USER_CHANNEL3_gc;
-    127e:	20 93 a0 01 	sts	0x01A0, r18	; 0x8001a0 <UPDI::nvmprog_key+0x7f686e>
+    127e:	20 93 a0 01 	sts	0x01A0, r18	; 0x8001a0 <UPDI::nvmprog_key+0x7f685c>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:54
   EVSYS_USERCCLLUT1A  = EVSYS_USER_CHANNEL3_gc;
-    1282:	20 93 a2 01 	sts	0x01A2, r18	; 0x8001a2 <UPDI::nvmprog_key+0x7f6870>
+    1282:	20 93 a2 01 	sts	0x01A2, r18	; 0x8001a2 <UPDI::nvmprog_key+0x7f685e>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:61
   /*
    * CCL/LUT構築
@@ -4645,34 +4645,34 @@ void SYS::setup (void) {
 
   /* TRUTH0: 010 is ON */
   CCL_TRUTH0    = CCL_TRUTH_2_bm;
-    1286:	20 93 cb 01 	sts	0x01CB, r18	; 0x8001cb <UPDI::nvmprog_key+0x7f6899>
+    1286:	20 93 cb 01 	sts	0x01CB, r18	; 0x8001cb <UPDI::nvmprog_key+0x7f6887>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:62
   CCL_LUT0CTRLC = CCL_INSEL0_EVENTA_gc;
     128a:	93 e0       	ldi	r25, 0x03	; 3
-    128c:	90 93 ca 01 	sts	0x01CA, r25	; 0x8001ca <UPDI::nvmprog_key+0x7f6898>
+    128c:	90 93 ca 01 	sts	0x01CA, r25	; 0x8001ca <UPDI::nvmprog_key+0x7f6886>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:63
   CCL_LUT0CTRLB = CCL_INSEL1_TCB1_gc;                       /* IN1:POS */
     1290:	20 ec       	ldi	r18, 0xC0	; 192
-    1292:	20 93 c9 01 	sts	0x01C9, r18	; 0x8001c9 <UPDI::nvmprog_key+0x7f6897>
+    1292:	20 93 c9 01 	sts	0x01C9, r18	; 0x8001c9 <UPDI::nvmprog_key+0x7f6885>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:64
   CCL_LUT0CTRLA = CCL_ENABLE_bm;
-    1296:	80 93 c8 01 	sts	0x01C8, r24	; 0x8001c8 <UPDI::nvmprog_key+0x7f6896>
+    1296:	80 93 c8 01 	sts	0x01C8, r24	; 0x8001c8 <UPDI::nvmprog_key+0x7f6884>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:67
 
   /* TRUTH1: 001 010 is ON */
   CCL_TRUTH1    = CCL_TRUTH_1_bm | CCL_TRUTH_2_bm;
     129a:	26 e0       	ldi	r18, 0x06	; 6
-    129c:	20 93 cf 01 	sts	0x01CF, r18	; 0x8001cf <UPDI::nvmprog_key+0x7f689d>
+    129c:	20 93 cf 01 	sts	0x01CF, r18	; 0x8001cf <UPDI::nvmprog_key+0x7f688b>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:68
   CCL_LUT1CTRLC = CCL_INSEL0_EVENTA_gc;
-    12a0:	90 93 ce 01 	sts	0x01CE, r25	; 0x8001ce <UPDI::nvmprog_key+0x7f689c>
+    12a0:	90 93 ce 01 	sts	0x01CE, r25	; 0x8001ce <UPDI::nvmprog_key+0x7f688a>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:69
   CCL_LUT1CTRLB = CCL_INSEL0_TCA0_gc | CCL_INSEL1_TCB1_gc;  /* IN0:POS IN1:POS */
     12a4:	2a ec       	ldi	r18, 0xCA	; 202
-    12a6:	20 93 cd 01 	sts	0x01CD, r18	; 0x8001cd <UPDI::nvmprog_key+0x7f689b>
+    12a6:	20 93 cd 01 	sts	0x01CD, r18	; 0x8001cd <UPDI::nvmprog_key+0x7f6889>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:70
   CCL_LUT1CTRLA = CCL_ENABLE_bm;
-    12aa:	80 93 cc 01 	sts	0x01CC, r24	; 0x8001cc <UPDI::nvmprog_key+0x7f689a>
+    12aa:	80 93 cc 01 	sts	0x01CC, r24	; 0x8001cc <UPDI::nvmprog_key+0x7f6888>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:76
 
   /* TRUTH3: 001 010 is ON */
@@ -4681,28 +4681,28 @@ void SYS::setup (void) {
   /* CCL_INSEL2_IO_gc     : USART1TX normal HIGH */
   CCL_TRUTH3    = (uint8_t) ~CCL_TRUTH_7_bm;
     12ae:	2f e7       	ldi	r18, 0x7F	; 127
-    12b0:	20 93 d7 01 	sts	0x01D7, r18	; 0x8001d7 <UPDI::nvmprog_key+0x7f68a5>
+    12b0:	20 93 d7 01 	sts	0x01D7, r18	; 0x8001d7 <UPDI::nvmprog_key+0x7f6893>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:77
   CCL_LUT3CTRLC = CCL_INSEL2_IO_gc;
-    12b4:	30 93 d6 01 	sts	0x01D6, r19	; 0x8001d6 <UPDI::nvmprog_key+0x7f68a4>
+    12b4:	30 93 d6 01 	sts	0x01D6, r19	; 0x8001d6 <UPDI::nvmprog_key+0x7f6892>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:78
   CCL_LUT3CTRLB = CCL_INSEL0_USART0_gc | CCL_INSEL1_IO_gc;
     12b8:	28 e5       	ldi	r18, 0x58	; 88
-    12ba:	20 93 d5 01 	sts	0x01D5, r18	; 0x8001d5 <UPDI::nvmprog_key+0x7f68a3>
+    12ba:	20 93 d5 01 	sts	0x01D5, r18	; 0x8001d5 <UPDI::nvmprog_key+0x7f6891>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:79
   CCL_LUT3CTRLA = CCL_ENABLE_bm | CCL_OUTEN_bm;
     12be:	21 e4       	ldi	r18, 0x41	; 65
-    12c0:	20 93 d4 01 	sts	0x01D4, r18	; 0x8001d4 <UPDI::nvmprog_key+0x7f68a2>
+    12c0:	20 93 d4 01 	sts	0x01D4, r18	; 0x8001d4 <UPDI::nvmprog_key+0x7f6890>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:82
 
   /* CCL 有効化 */
   CCL_CTRLA = CCL_RUNSTDBY_bm | CCL_ENABLE_bm;
-    12c4:	20 93 c0 01 	sts	0x01C0, r18	; 0x8001c0 <UPDI::nvmprog_key+0x7f688e>
+    12c4:	20 93 c0 01 	sts	0x01C0, r18	; 0x8001c0 <UPDI::nvmprog_key+0x7f687c>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:85
 
   /* RTC_PIT 有効化 */
   RTC_PITCTRLA = RTC_PITEN_bm;
-    12c8:	80 93 50 01 	sts	0x0150, r24	; 0x800150 <UPDI::nvmprog_key+0x7f681e>
+    12c8:	80 93 50 01 	sts	0x0150, r24	; 0x800150 <UPDI::nvmprog_key+0x7f680c>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:92
   /*
    * タイマー
@@ -4710,34 +4710,34 @@ void SYS::setup (void) {
 
   /* TCA0 */
   TCA0_SPLIT_CTRLD = TCA_SPLIT_SPLITM_bm;
-    12cc:	80 93 03 0a 	sts	0x0A03, r24	; 0x800a03 <UPDI::nvmprog_key+0x7f70d1>
+    12cc:	80 93 03 0a 	sts	0x0A03, r24	; 0x800a03 <UPDI::nvmprog_key+0x7f70bf>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:93
   TCA0_SPLIT_LPER  = TCA0_STEP - 2;
     12d0:	29 e8       	ldi	r18, 0x89	; 137
-    12d2:	20 93 26 0a 	sts	0x0A26, r18	; 0x800a26 <UPDI::nvmprog_key+0x7f70f4>
+    12d2:	20 93 26 0a 	sts	0x0A26, r18	; 0x800a26 <UPDI::nvmprog_key+0x7f70e2>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:94
   TCA0_SPLIT_LCMP0 = TCA0_STEP / 2;
     12d6:	25 e4       	ldi	r18, 0x45	; 69
-    12d8:	20 93 28 0a 	sts	0x0A28, r18	; 0x800a28 <UPDI::nvmprog_key+0x7f70f6>
+    12d8:	20 93 28 0a 	sts	0x0A28, r18	; 0x800a28 <UPDI::nvmprog_key+0x7f70e4>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:95
   TCA0_SPLIT_HPER  = 1;
-    12dc:	80 93 27 0a 	sts	0x0A27, r24	; 0x800a27 <UPDI::nvmprog_key+0x7f70f5>
+    12dc:	80 93 27 0a 	sts	0x0A27, r24	; 0x800a27 <UPDI::nvmprog_key+0x7f70e3>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:96
   TCA0_SPLIT_HCMP0 = 1;     /* WOA3=PA3 */
-    12e0:	80 93 29 0a 	sts	0x0A29, r24	; 0x800a29 <UPDI::nvmprog_key+0x7f70f7>
+    12e0:	80 93 29 0a 	sts	0x0A29, r24	; 0x800a29 <UPDI::nvmprog_key+0x7f70e5>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:97
   TCA0_SPLIT_HCMP1 = 1;     /* WOA4=PA4 */
-    12e4:	80 93 2b 0a 	sts	0x0A2B, r24	; 0x800a2b <UPDI::nvmprog_key+0x7f70f9>
+    12e4:	80 93 2b 0a 	sts	0x0A2B, r24	; 0x800a2b <UPDI::nvmprog_key+0x7f70e7>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:98
   TCA0_SPLIT_CTRLA = TCA_SPLIT_RUNSTDBY_bm | TCA_SPLIT_ENABLE_bm | TCA_SPLIT_CLKSEL_DIV1024_gc;
     12e8:	3f e8       	ldi	r19, 0x8F	; 143
-    12ea:	30 93 00 0a 	sts	0x0A00, r19	; 0x800a00 <UPDI::nvmprog_key+0x7f70ce>
+    12ea:	30 93 00 0a 	sts	0x0A00, r19	; 0x800a00 <UPDI::nvmprog_key+0x7f70bc>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:101
 
   /* TCB1 */
   TCB1_CTRLB = TCB_CNTMODE_PWM8_gc;
     12ee:	37 e0       	ldi	r19, 0x07	; 7
-    12f0:	30 93 91 0a 	sts	0x0A91, r19	; 0x800a91 <UPDI::nvmprog_key+0x7f715f>
+    12f0:	30 93 91 0a 	sts	0x0A91, r19	; 0x800a91 <UPDI::nvmprog_key+0x7f714d>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:110
    *
    * RTS Deactive なら ハートビート
@@ -4746,7 +4746,7 @@ void SYS::setup (void) {
 
   if ( digitalRead(RTS_SENSE_PIN) ) {
     12f4:	12 9b       	sbis	0x02, 2	; 2
-    12f6:	90 c0       	rjmp	.+288    	; 0x1418 <main+0x238>
+    12f6:	8f c0       	rjmp	.+286    	; 0x1416 <main+0x236>
 LED_HeartBeat():
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:150
  * LED動作切替
@@ -4765,18 +4765,18 @@ void TIM::LED_HeartBeat (void) {
     TCB1_CCMP = TCB1_HBEAT;
     1304:	4a e8       	ldi	r20, 0x8A	; 138
     1306:	55 e4       	ldi	r21, 0x45	; 69
-    1308:	40 93 9c 0a 	sts	0x0A9C, r20	; 0x800a9c <UPDI::nvmprog_key+0x7f716a>
-    130c:	50 93 9d 0a 	sts	0x0A9D, r21	; 0x800a9d <UPDI::nvmprog_key+0x7f716b>
+    1308:	40 93 9c 0a 	sts	0x0A9C, r20	; 0x800a9c <UPDI::nvmprog_key+0x7f7158>
+    130c:	50 93 9d 0a 	sts	0x0A9D, r21	; 0x800a9d <UPDI::nvmprog_key+0x7f7159>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:153
     TCB1_CNT = 0;
-    1310:	10 92 9a 0a 	sts	0x0A9A, r1	; 0x800a9a <UPDI::nvmprog_key+0x7f7168>
-    1314:	10 92 9b 0a 	sts	0x0A9B, r1	; 0x800a9b <UPDI::nvmprog_key+0x7f7169>
+    1310:	10 92 9a 0a 	sts	0x0A9A, r1	; 0x800a9a <UPDI::nvmprog_key+0x7f7156>
+    1314:	10 92 9b 0a 	sts	0x0A9B, r1	; 0x800a9b <UPDI::nvmprog_key+0x7f7157>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:154
     TCB1_CTRLA = TCB_RUNSTDBY_bm | TCB_ENABLE_bm | TCB_CLKSEL_TCA0_gc;
-    1318:	20 93 90 0a 	sts	0x0A90, r18	; 0x800a90 <UPDI::nvmprog_key+0x7f715e>
+    1318:	20 93 90 0a 	sts	0x0A90, r18	; 0x800a90 <UPDI::nvmprog_key+0x7f714c>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:155
     LEDG_EVOUT = EVSYS_USER_CHANNEL2_gc;
-    131c:	90 93 a9 01 	sts	0x01A9, r25	; 0x8001a9 <UPDI::nvmprog_key+0x7f6877>
+    131c:	90 93 a9 01 	sts	0x01A9, r25	; 0x8001a9 <UPDI::nvmprog_key+0x7f6865>
 setup():
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:82
   };
@@ -4789,19 +4789,19 @@ void JTAG2::setup (void) {
     1322:	f0 e0       	ldi	r31, 0x00	; 0
     1324:	85 91       	lpm	r24, Z+
     1326:	94 91       	lpm	r25, Z
-    1328:	80 93 28 08 	sts	0x0828, r24	; 0x800828 <UPDI::nvmprog_key+0x7f6ef6>
-    132c:	90 93 29 08 	sts	0x0829, r25	; 0x800829 <UPDI::nvmprog_key+0x7f6ef7>
+    1328:	80 93 28 08 	sts	0x0828, r24	; 0x800828 <UPDI::nvmprog_key+0x7f6ee4>
+    132c:	90 93 29 08 	sts	0x0829, r25	; 0x800829 <UPDI::nvmprog_key+0x7f6ee5>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:83
   JTAG_USART.CTRLA = JTAG_USART_CTRLA;
-    1330:	10 92 25 08 	sts	0x0825, r1	; 0x800825 <UPDI::nvmprog_key+0x7f6ef3>
+    1330:	10 92 25 08 	sts	0x0825, r1	; 0x800825 <UPDI::nvmprog_key+0x7f6ee1>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:84
   JTAG_USART.CTRLC = JTAG_USART_CTRLC;
     1334:	83 e0       	ldi	r24, 0x03	; 3
-    1336:	80 93 27 08 	sts	0x0827, r24	; 0x800827 <UPDI::nvmprog_key+0x7f6ef5>
+    1336:	80 93 27 08 	sts	0x0827, r24	; 0x800827 <UPDI::nvmprog_key+0x7f6ee3>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:85
   JTAG_USART.CTRLB = JTAG_USART_OFF;
     133a:	88 e8       	ldi	r24, 0x88	; 136
-    133c:	80 93 26 08 	sts	0x0826, r24	; 0x800826 <UPDI::nvmprog_key+0x7f6ef4>
+    133c:	80 93 26 08 	sts	0x0826, r24	; 0x800826 <UPDI::nvmprog_key+0x7f6ee2>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:29
 void UPDI::guardtime (void) {
   delay_micros(UPDI_GUARDTIME);
@@ -4811,25 +4811,25 @@ void UPDI::setup (void) {
   UPDI_USART.BAUD  = UPDI_BAUD_CALC;
     1340:	80 eb       	ldi	r24, 0xB0	; 176
     1342:	90 e0       	ldi	r25, 0x00	; 0
-    1344:	80 93 08 08 	sts	0x0808, r24	; 0x800808 <UPDI::nvmprog_key+0x7f6ed6>
-    1348:	90 93 09 08 	sts	0x0809, r25	; 0x800809 <UPDI::nvmprog_key+0x7f6ed7>
+    1344:	80 93 08 08 	sts	0x0808, r24	; 0x800808 <UPDI::nvmprog_key+0x7f6ec4>
+    1348:	90 93 09 08 	sts	0x0809, r25	; 0x800809 <UPDI::nvmprog_key+0x7f6ec5>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:30
   UPDI_USART.CTRLA = UPDI_USART_CTRLA;
     134c:	8a e0       	ldi	r24, 0x0A	; 10
-    134e:	80 93 05 08 	sts	0x0805, r24	; 0x800805 <UPDI::nvmprog_key+0x7f6ed3>
+    134e:	80 93 05 08 	sts	0x0805, r24	; 0x800805 <UPDI::nvmprog_key+0x7f6ec1>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:31
   UPDI_USART.CTRLC = UPDI_USART_CTRLC;
     1352:	8b e2       	ldi	r24, 0x2B	; 43
-    1354:	80 93 07 08 	sts	0x0807, r24	; 0x800807 <UPDI::nvmprog_key+0x7f6ed5>
+    1354:	80 93 07 08 	sts	0x0807, r24	; 0x800807 <UPDI::nvmprog_key+0x7f6ec3>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:32
   UPDI_USART.CTRLB = UPDI_USART_ON;
     1358:	88 ec       	ldi	r24, 0xC8	; 200
-    135a:	80 93 06 08 	sts	0x0806, r24	; 0x800806 <UPDI::nvmprog_key+0x7f6ed4>
+    135a:	80 93 06 08 	sts	0x0806, r24	; 0x800806 <UPDI::nvmprog_key+0x7f6ec2>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:35
 
   /* ソフトリセット後は ターゲットのリセットを解除 */
   if ( bit_is_set(RSTCTRL_RSTFR, RSTCTRL_SWRF_bp) ) UPDI::Target_Reset(false);
-    135e:	80 91 40 00 	lds	r24, 0x0040	; 0x800040 <UPDI::nvmprog_key+0x7f670e>
+    135e:	80 91 40 00 	lds	r24, 0x0040	; 0x800040 <UPDI::nvmprog_key+0x7f66fc>
     1362:	84 ff       	sbrs	r24, 4
     1364:	03 c0       	rjmp	.+6      	; 0x136c <main+0x18c>
     1366:	80 e0       	ldi	r24, 0x00	; 0
@@ -4843,12 +4843,12 @@ ready():
 void SYS::ready (void) {
   RSTCTRL_RSTFR = 0xFF;
     136c:	8f ef       	ldi	r24, 0xFF	; 255
-    136e:	80 93 40 00 	sts	0x0040, r24	; 0x800040 <UPDI::nvmprog_key+0x7f670e>
+    136e:	80 93 40 00 	sts	0x0040, r24	; 0x800040 <UPDI::nvmprog_key+0x7f66fc>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/SYS.cpp:122
 
   /* 初期化中に検出された非同期割込をクリアする */
   portRegister(RTS_SENSE_PIN).INTFLAGS = 0xFF;
-    1372:	80 93 09 04 	sts	0x0409, r24	; 0x800409 <UPDI::nvmprog_key+0x7f6ad7>
+    1372:	80 93 09 04 	sts	0x0409, r24	; 0x800409 <UPDI::nvmprog_key+0x7f6ac5>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/SYS.cpp:125
 
   /* 割込許可 */
@@ -4863,8 +4863,8 @@ get_parameter():
       packet.body[1] = PARAM_EMU_MODE_VAL;
       packet.size_word[0] = 2;
     1378:	e2 e0       	ldi	r30, 0x02	; 2
-    137a:	2e 2e       	mov	r2, r30
-    137c:	31 2c       	mov	r3, r1
+    137a:	ce 2e       	mov	r12, r30
+    137c:	d1 2c       	mov	r13, r1
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:261
       packet.size_word[0] = 2;
       break;
@@ -4873,10 +4873,10 @@ get_parameter():
       _CAPS16(packet.body[1])->word = SYS::get_vcc();
       packet.size_word[0] = 3;
     137e:	f3 e0       	ldi	r31, 0x03	; 3
-    1380:	cf 2e       	mov	r12, r31
-    1382:	d1 2c       	mov	r13, r1
+    1380:	2f 2e       	mov	r2, r31
+    1382:	31 2c       	mov	r3, r1
 check_sig():
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:246
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:248
     else if (a == 1) c = bit_is_set(UPDI_NVMCTRL, UPDI_GEN2_bp) ? 'A'
                        : bit_is_set(UPDI_NVMCTRL, UPDI_LOWF_bp) ? 'm' : 't';
     else if (a == 2) c = bit_is_set(UPDI_NVMCTRL, UPDI_GEN3_bp) ? '3'
@@ -4909,12 +4909,12 @@ get():
 
 uint8_t JTAG2::get (void) {
   loop_until_bit_is_set(JTAG_USART.STATUS, USART_RXCIF_bp);
-    1398:	80 91 24 08 	lds	r24, 0x0824	; 0x800824 <UPDI::nvmprog_key+0x7f6ef2>
+    1398:	80 91 24 08 	lds	r24, 0x0824	; 0x800824 <UPDI::nvmprog_key+0x7f6ee0>
     139c:	87 ff       	sbrs	r24, 7
     139e:	fc cf       	rjmp	.-8      	; 0x1398 <main+0x1b8>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:102
   return JTAG_USART.RXDATAL;
-    13a0:	80 91 20 08 	lds	r24, 0x0820	; 0x800820 <UPDI::nvmprog_key+0x7f6eee>
+    13a0:	80 91 20 08 	lds	r24, 0x0820	; 0x800820 <UPDI::nvmprog_key+0x7f6edc>
 packet_receive():
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:126
   uint16_t _crc = ~0;
@@ -4938,12 +4938,12 @@ get():
 
 uint8_t JTAG2::get (void) {
   loop_until_bit_is_set(JTAG_USART.STATUS, USART_RXCIF_bp);
-    13b0:	80 91 24 08 	lds	r24, 0x0824	; 0x800824 <UPDI::nvmprog_key+0x7f6ef2>
+    13b0:	80 91 24 08 	lds	r24, 0x0824	; 0x800824 <UPDI::nvmprog_key+0x7f6ee0>
     13b4:	87 ff       	sbrs	r24, 7
     13b6:	fc cf       	rjmp	.-8      	; 0x13b0 <main+0x1d0>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:102
   return JTAG_USART.RXDATAL;
-    13b8:	80 91 20 08 	lds	r24, 0x0820	; 0x800820 <UPDI::nvmprog_key+0x7f6eee>
+    13b8:	80 91 20 08 	lds	r24, 0x0820	; 0x800820 <UPDI::nvmprog_key+0x7f6edc>
 packet_receive():
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:130
   /* 受信待ち（無限ループ）*/
@@ -4953,47 +4953,46 @@ packet_receive():
   /* 最初の7byte */
   for (int8_t i = 0; i < 7; i++) *p++ = get();
     13bc:	81 93       	st	Z+, r24
-    13be:	8b e6       	ldi	r24, 0x6B	; 107
-    13c0:	98 e3       	ldi	r25, 0x38	; 56
-    13c2:	8e 17       	cp	r24, r30
-    13c4:	9f 07       	cpc	r25, r31
-    13c6:	a1 f7       	brne	.-24     	; 0x13b0 <main+0x1d0>
+    13be:	28 e3       	ldi	r18, 0x38	; 56
+    13c0:	eb 36       	cpi	r30, 0x6B	; 107
+    13c2:	f2 07       	cpc	r31, r18
+    13c4:	a9 f7       	brne	.-22     	; 0x13b0 <main+0x1d0>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:133
 
   /* STX 確認 */
   if (packet.stx != JTAG2::TOKEN) return false;
-    13c8:	80 91 6a 38 	lds	r24, 0x386A	; 0x80386a <JTAG2::packet+0x7>
-    13cc:	8e 30       	cpi	r24, 0x0E	; 14
-    13ce:	21 f7       	brne	.-56     	; 0x1398 <main+0x1b8>
+    13c6:	80 91 6a 38 	lds	r24, 0x386A	; 0x80386a <JTAG2::packet+0x7>
+    13ca:	8e 30       	cpi	r24, 0x0E	; 14
+    13cc:	29 f7       	brne	.-54     	; 0x1398 <main+0x1b8>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:136
 
   /* パケット長確認 */
   if (packet.size > sizeof(packet.body)) return false;
-    13d0:	80 91 66 38 	lds	r24, 0x3866	; 0x803866 <JTAG2::packet+0x3>
-    13d4:	90 91 67 38 	lds	r25, 0x3867	; 0x803867 <JTAG2::packet+0x4>
-    13d8:	a0 91 68 38 	lds	r26, 0x3868	; 0x803868 <JTAG2::packet+0x5>
-    13dc:	b0 91 69 38 	lds	r27, 0x3869	; 0x803869 <JTAG2::packet+0x6>
-    13e0:	8a 30       	cpi	r24, 0x0A	; 10
-    13e2:	92 40       	sbci	r25, 0x02	; 2
-    13e4:	a1 05       	cpc	r26, r1
-    13e6:	b1 05       	cpc	r27, r1
-    13e8:	b8 f6       	brcc	.-82     	; 0x1398 <main+0x1b8>
-    13ea:	cb e6       	ldi	r28, 0x6B	; 107
-    13ec:	d8 e3       	ldi	r29, 0x38	; 56
-    13ee:	7e 01       	movw	r14, r28
+    13ce:	80 91 66 38 	lds	r24, 0x3866	; 0x803866 <JTAG2::packet+0x3>
+    13d2:	90 91 67 38 	lds	r25, 0x3867	; 0x803867 <JTAG2::packet+0x4>
+    13d6:	a0 91 68 38 	lds	r26, 0x3868	; 0x803868 <JTAG2::packet+0x5>
+    13da:	b0 91 69 38 	lds	r27, 0x3869	; 0x803869 <JTAG2::packet+0x6>
+    13de:	8a 30       	cpi	r24, 0x0A	; 10
+    13e0:	92 40       	sbci	r25, 0x02	; 2
+    13e2:	a1 05       	cpc	r26, r1
+    13e4:	b1 05       	cpc	r27, r1
+    13e6:	c0 f6       	brcc	.-80     	; 0x1398 <main+0x1b8>
+    13e8:	cb e6       	ldi	r28, 0x6B	; 107
+    13ea:	d8 e3       	ldi	r29, 0x38	; 56
+    13ec:	7e 01       	movw	r14, r28
 main():
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:139
 
   /* 残りを受信 */
   for (int16_t j = -2; j < packet.size_word[0]; j++) *p++ = get();
-    13f0:	8e ef       	ldi	r24, 0xFE	; 254
-    13f2:	9f ef       	ldi	r25, 0xFF	; 255
+    13ee:	8e ef       	ldi	r24, 0xFE	; 254
+    13f0:	9f ef       	ldi	r25, 0xFF	; 255
 packet_receive():
-    13f4:	20 91 66 38 	lds	r18, 0x3866	; 0x803866 <JTAG2::packet+0x3>
-    13f8:	30 91 67 38 	lds	r19, 0x3867	; 0x803867 <JTAG2::packet+0x4>
-    13fc:	82 17       	cp	r24, r18
-    13fe:	93 07       	cpc	r25, r19
-    1400:	74 f4       	brge	.+28     	; 0x141e <main+0x23e>
+    13f2:	20 91 66 38 	lds	r18, 0x3866	; 0x803866 <JTAG2::packet+0x3>
+    13f6:	30 91 67 38 	lds	r19, 0x3867	; 0x803867 <JTAG2::packet+0x4>
+    13fa:	82 17       	cp	r24, r18
+    13fc:	93 07       	cpc	r25, r19
+    13fe:	74 f4       	brge	.+28     	; 0x141c <main+0x23c>
 get():
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:101
   pinMode(JTAG_TXD_PIN, INPUT_PULLUP);
@@ -5002,12 +5001,12 @@ get():
 
 uint8_t JTAG2::get (void) {
   loop_until_bit_is_set(JTAG_USART.STATUS, USART_RXCIF_bp);
-    1402:	20 91 24 08 	lds	r18, 0x0824	; 0x800824 <UPDI::nvmprog_key+0x7f6ef2>
-    1406:	27 ff       	sbrs	r18, 7
-    1408:	fc cf       	rjmp	.-8      	; 0x1402 <main+0x222>
+    1400:	20 91 24 08 	lds	r18, 0x0824	; 0x800824 <UPDI::nvmprog_key+0x7f6ee0>
+    1404:	27 ff       	sbrs	r18, 7
+    1406:	fc cf       	rjmp	.-8      	; 0x1400 <main+0x220>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:102
   return JTAG_USART.RXDATAL;
-    140a:	20 91 20 08 	lds	r18, 0x0820	; 0x800820 <UPDI::nvmprog_key+0x7f6eee>
+    1408:	20 91 20 08 	lds	r18, 0x0820	; 0x800820 <UPDI::nvmprog_key+0x7f6edc>
 packet_receive():
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:139
 
@@ -5016,11 +5015,11 @@ packet_receive():
 
   /* 残りを受信 */
   for (int16_t j = -2; j < packet.size_word[0]; j++) *p++ = get();
-    140e:	d7 01       	movw	r26, r14
-    1410:	2d 93       	st	X+, r18
-    1412:	7d 01       	movw	r14, r26
-    1414:	01 96       	adiw	r24, 0x01	; 1
-    1416:	ee cf       	rjmp	.-36     	; 0x13f4 <main+0x214>
+    140c:	d7 01       	movw	r26, r14
+    140e:	2d 93       	st	X+, r18
+    1410:	7d 01       	movw	r14, r26
+    1412:	01 96       	adiw	r24, 0x01	; 1
+    1414:	ee cf       	rjmp	.-36     	; 0x13f2 <main+0x212>
 setup():
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:114
 
@@ -5029,12 +5028,12 @@ setup():
   }
   else {
     LED_Flash();
-    1418:	0e 94 b8 01 	call	0x370	; 0x370 <TIM::LED_Flash()>
-    141c:	81 cf       	rjmp	.-254    	; 0x1320 <main+0x140>
+    1416:	0e 94 b8 01 	call	0x370	; 0x370 <TIM::LED_Flash()>
+    141a:	82 cf       	rjmp	.-252    	; 0x1320 <main+0x140>
 packet_receive():
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:139
-    141e:	03 e6       	ldi	r16, 0x63	; 99
-    1420:	18 e3       	ldi	r17, 0x38	; 56
+    141c:	03 e6       	ldi	r16, 0x63	; 99
+    141e:	18 e3       	ldi	r17, 0x38	; 56
 main():
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:121
   return _crc_ccitt_update(_crc, _data);
@@ -5043,8 +5042,8 @@ main():
 /* JTAG Receive */
 bool JTAG2::packet_receive (void) {
   uint16_t _crc = ~0;
-    1422:	8f ef       	ldi	r24, 0xFF	; 255
-    1424:	9f ef       	ldi	r25, 0xFF	; 255
+    1420:	8f ef       	ldi	r24, 0xFF	; 255
+    1422:	9f ef       	ldi	r25, 0xFF	; 255
 packet_receive():
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:142
 
@@ -5053,12 +5052,12 @@ packet_receive():
 
   /* 受信バッファが満たされたら CRC 確認 */
   while (p != q) _crc = JTAG2::crc16_update(_crc, *q++);
-    1426:	0e 15       	cp	r16, r14
-    1428:	1f 05       	cpc	r17, r15
-    142a:	29 f0       	breq	.+10     	; 0x1436 <main+0x256>
-    142c:	f8 01       	movw	r30, r16
-    142e:	61 91       	ld	r22, Z+
-    1430:	8f 01       	movw	r16, r30
+    1424:	0e 15       	cp	r16, r14
+    1426:	1f 05       	cpc	r17, r15
+    1428:	29 f0       	breq	.+10     	; 0x1434 <main+0x254>
+    142a:	f8 01       	movw	r30, r16
+    142c:	61 91       	ld	r22, Z+
+    142e:	8f 01       	movw	r16, r30
 crc16_update():
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:116
 void JTAG2::flush (void) {
@@ -5067,19 +5066,19 @@ void JTAG2::flush (void) {
 
 uint16_t JTAG2::crc16_update(uint16_t _crc, uint8_t _data) {
   return _crc_ccitt_update(_crc, _data);
-    1432:	01 d8       	rcall	.-4094   	; 0x436 <_crc_ccitt_update(unsigned int, unsigned char)>
-    1434:	f8 cf       	rjmp	.-16     	; 0x1426 <main+0x246>
+    1430:	02 d8       	rcall	.-4092   	; 0x436 <_crc_ccitt_update(unsigned int, unsigned char)>
+    1432:	f8 cf       	rjmp	.-16     	; 0x1424 <main+0x244>
 wakeup_jtag():
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:381
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:385
   JTAG2::answer_transfer();
 }
 
 void JTAG2::wakeup_jtag (void) {
   for (;;) {
     if (JTAG2::packet_receive()) JTAG2::process_command();
-    1436:	89 2b       	or	r24, r25
-    1438:	09 f0       	breq	.+2      	; 0x143c <main+0x25c>
-    143a:	ae cf       	rjmp	.-164    	; 0x1398 <main+0x1b8>
+    1434:	89 2b       	or	r24, r25
+    1436:	09 f0       	breq	.+2      	; 0x143a <main+0x25a>
+    1438:	af cf       	rjmp	.-162    	; 0x1398 <main+0x1b8>
 process_command():
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:274
   packet.body[0] = JTAG2::RSP_PARAMETER;
@@ -5088,34 +5087,34 @@ process_command():
 /* JTAG Process */
 inline void JTAG2::process_command (void) {
   wdt_reset();
-    143c:	a8 95       	wdr
+    143a:	a8 95       	wdr
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:275
   switch ( packet.body[0] ) {
-    143e:	80 91 6b 38 	lds	r24, 0x386B	; 0x80386b <JTAG2::packet+0x8>
-    1442:	88 30       	cpi	r24, 0x08	; 8
-    1444:	09 f4       	brne	.+2      	; 0x1448 <main+0x268>
-    1446:	cb c1       	rjmp	.+918    	; 0x17de <main+0x5fe>
-    1448:	b8 f5       	brcc	.+110    	; 0x14b8 <main+0x2d8>
-    144a:	82 30       	cpi	r24, 0x02	; 2
-    144c:	09 f4       	brne	.+2      	; 0x1450 <main+0x270>
-    144e:	9d c0       	rjmp	.+314    	; 0x158a <main+0x3aa>
-    1450:	48 f4       	brcc	.+18     	; 0x1464 <main+0x284>
-    1452:	88 23       	and	r24, r24
-    1454:	09 f4       	brne	.+2      	; 0x1458 <main+0x278>
-    1456:	c8 c1       	rjmp	.+912    	; 0x17e8 <main+0x608>
-    1458:	81 30       	cpi	r24, 0x01	; 1
-    145a:	09 f4       	brne	.+2      	; 0x145e <main+0x27e>
-    145c:	44 c0       	rjmp	.+136    	; 0x14e6 <main+0x306>
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:373
+    143c:	80 91 6b 38 	lds	r24, 0x386B	; 0x80386b <JTAG2::packet+0x8>
+    1440:	88 30       	cpi	r24, 0x08	; 8
+    1442:	09 f4       	brne	.+2      	; 0x1446 <main+0x266>
+    1444:	cf c1       	rjmp	.+926    	; 0x17e4 <main+0x604>
+    1446:	d0 f5       	brcc	.+116    	; 0x14bc <main+0x2dc>
+    1448:	82 30       	cpi	r24, 0x02	; 2
+    144a:	09 f4       	brne	.+2      	; 0x144e <main+0x26e>
+    144c:	9f c0       	rjmp	.+318    	; 0x158c <main+0x3ac>
+    144e:	48 f4       	brcc	.+18     	; 0x1462 <main+0x282>
+    1450:	88 23       	and	r24, r24
+    1452:	09 f4       	brne	.+2      	; 0x1456 <main+0x276>
+    1454:	cc c1       	rjmp	.+920    	; 0x17ee <main+0x60e>
+    1456:	81 30       	cpi	r24, 0x01	; 1
+    1458:	09 f4       	brne	.+2      	; 0x145c <main+0x27c>
+    145a:	47 c0       	rjmp	.+142    	; 0x14ea <main+0x30a>
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:377
     case JTAG2::CMND_LEAVE_PROGMODE : {
       JTAG2::set_response(JTAG2::RSP_OK);
       break;
     }
     default : {
       JTAG2::set_response(JTAG2::RSP_FAILED);
-    145e:	80 ea       	ldi	r24, 0xA0	; 160
-    1460:	90 e0       	ldi	r25, 0x00	; 0
-    1462:	d4 c0       	rjmp	.+424    	; 0x160c <main+0x42c>
+    145c:	80 ea       	ldi	r24, 0xA0	; 160
+    145e:	90 e0       	ldi	r25, 0x00	; 0
+    1460:	d6 c0       	rjmp	.+428    	; 0x160e <main+0x42e>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:275
 }
 
@@ -5123,13 +5122,13 @@ inline void JTAG2::process_command (void) {
 inline void JTAG2::process_command (void) {
   wdt_reset();
   switch ( packet.body[0] ) {
-    1464:	84 30       	cpi	r24, 0x04	; 4
-    1466:	09 f4       	brne	.+2      	; 0x146a <main+0x28a>
-    1468:	96 c1       	rjmp	.+812    	; 0x1796 <main+0x5b6>
-    146a:	08 f4       	brcc	.+2      	; 0x146e <main+0x28e>
-    146c:	d2 c0       	rjmp	.+420    	; 0x1612 <main+0x432>
-    146e:	85 30       	cpi	r24, 0x05	; 5
-    1470:	b1 f7       	brne	.-20     	; 0x145e <main+0x27e>
+    1462:	84 30       	cpi	r24, 0x04	; 4
+    1464:	09 f4       	brne	.+2      	; 0x1468 <main+0x288>
+    1466:	9a c1       	rjmp	.+820    	; 0x179c <main+0x5bc>
+    1468:	08 f4       	brcc	.+2      	; 0x146c <main+0x28c>
+    146a:	d4 c0       	rjmp	.+424    	; 0x1614 <main+0x434>
+    146c:	85 30       	cpi	r24, 0x05	; 5
+    146e:	b1 f7       	brne	.-20     	; 0x145c <main+0x27c>
 check_sig():
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:233
 /*
@@ -5138,71 +5137,81 @@ check_sig():
 
 bool UPDI::check_sig (void) {
   uint8_t mem_type  = JTAG2::packet.body[1];
-    1472:	80 91 6c 38 	lds	r24, 0x386C	; 0x80386c <JTAG2::packet+0x9>
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:237
+    1470:	80 91 6c 38 	lds	r24, 0x386C	; 0x80386c <JTAG2::packet+0x9>
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:236
   uint8_t s = _CAPS32(JTAG2::packet.body[2])->bytes[0];
-  uint8_t a = _CAPS32(JTAG2::packet.body[6])->bytes[0] - NVM::BASE_SIGROW;
+  uint8_t a = _CAPS32(JTAG2::packet.body[6])->bytes[0]
+    - (bit_is_set(UPDI_NVMCTRL, UPDI_BROW_bp) ? (uint8_t)NVM::EB_SIGROW
+    1474:	ec 99       	sbic	0x1d, 4	; 29
+    1476:	4f c1       	rjmp	.+670    	; 0x1716 <main+0x536>
+main():
+    1478:	90 e0       	ldi	r25, 0x00	; 0
+check_sig():
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:239
+                                              : (uint8_t)NVM::BASE_SIGROW);
   uint8_t c;
   if (bit_is_clear(UPDI_CONTROL, UPDI_PROG_bp) && mem_type == JTAG2::MTYPE_SIGN_JTAG && s == 1) {
-    1476:	e1 99       	sbic	0x1c, 1	; 28
-    1478:	69 c1       	rjmp	.+722    	; 0x174c <main+0x56c>
-    147a:	84 3b       	cpi	r24, 0xB4	; 180
-    147c:	09 f0       	breq	.+2      	; 0x1480 <main+0x2a0>
-    147e:	66 c1       	rjmp	.+716    	; 0x174c <main+0x56c>
-    1480:	80 91 6d 38 	lds	r24, 0x386D	; 0x80386d <JTAG2::packet+0xa>
-    1484:	81 30       	cpi	r24, 0x01	; 1
-    1486:	09 f0       	breq	.+2      	; 0x148a <main+0x2aa>
-    1488:	61 c1       	rjmp	.+706    	; 0x174c <main+0x56c>
+    147a:	e1 99       	sbic	0x1c, 1	; 28
+    147c:	6a c1       	rjmp	.+724    	; 0x1752 <main+0x572>
+    147e:	84 3b       	cpi	r24, 0xB4	; 180
+    1480:	09 f0       	breq	.+2      	; 0x1484 <main+0x2a4>
+    1482:	67 c1       	rjmp	.+718    	; 0x1752 <main+0x572>
+    1484:	80 91 6d 38 	lds	r24, 0x386D	; 0x80386d <JTAG2::packet+0xa>
+    1488:	81 30       	cpi	r24, 0x01	; 1
+    148a:	09 f0       	breq	.+2      	; 0x148e <main+0x2ae>
+    148c:	62 c1       	rjmp	.+708    	; 0x1752 <main+0x572>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:235
  */
 
 bool UPDI::check_sig (void) {
   uint8_t mem_type  = JTAG2::packet.body[1];
   uint8_t s = _CAPS32(JTAG2::packet.body[2])->bytes[0];
-  uint8_t a = _CAPS32(JTAG2::packet.body[6])->bytes[0] - NVM::BASE_SIGROW;
-    148a:	80 91 71 38 	lds	r24, 0x3871	; 0x803871 <JTAG2::packet+0xe>
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:238
+  uint8_t a = _CAPS32(JTAG2::packet.body[6])->bytes[0]
+    148e:	80 91 71 38 	lds	r24, 0x3871	; 0x803871 <JTAG2::packet+0xe>
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:240
+    - (bit_is_set(UPDI_NVMCTRL, UPDI_BROW_bp) ? (uint8_t)NVM::EB_SIGROW
+                                              : (uint8_t)NVM::BASE_SIGROW);
   uint8_t c;
   if (bit_is_clear(UPDI_CONTROL, UPDI_PROG_bp) && mem_type == JTAG2::MTYPE_SIGN_JTAG && s == 1) {
     JTAG2::packet.body[0] = JTAG2::RSP_MEMORY;
-    148e:	92 e8       	ldi	r25, 0x82	; 130
-    1490:	90 93 6b 38 	sts	0x386B, r25	; 0x80386b <JTAG2::packet+0x8>
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:239
+    1492:	22 e8       	ldi	r18, 0x82	; 130
+    1494:	20 93 6b 38 	sts	0x386B, r18	; 0x80386b <JTAG2::packet+0x8>
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:241
     if (bit_is_clear(UPDI_CONTROL, UPDI_INFO_bp)) c = UPDI_LASTH ? 0x00 : 0xFF;
-    1494:	e0 99       	sbic	0x1c, 0	; 28
-    1496:	3e c1       	rjmp	.+636    	; 0x1714 <main+0x534>
-    1498:	9f b3       	in	r25, 0x1f	; 31
-    149a:	81 e0       	ldi	r24, 0x01	; 1
-    149c:	91 11       	cpse	r25, r1
-    149e:	80 e0       	ldi	r24, 0x00	; 0
-    14a0:	81 95       	neg	r24
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:246
+    1498:	e0 99       	sbic	0x1c, 0	; 28
+    149a:	3f c1       	rjmp	.+638    	; 0x171a <main+0x53a>
+    149c:	9f b3       	in	r25, 0x1f	; 31
+    149e:	81 e0       	ldi	r24, 0x01	; 1
+    14a0:	91 11       	cpse	r25, r1
+    14a2:	80 e0       	ldi	r24, 0x00	; 0
+    14a4:	81 95       	neg	r24
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:248
     else if (a == 1) c = bit_is_set(UPDI_NVMCTRL, UPDI_GEN2_bp) ? 'A'
                        : bit_is_set(UPDI_NVMCTRL, UPDI_LOWF_bp) ? 'm' : 't';
     else if (a == 2) c = bit_is_set(UPDI_NVMCTRL, UPDI_GEN3_bp) ? '3'
                        : bit_is_set(UPDI_NVMCTRL, UPDI_GEN2_bp) ? '2' : '0';
     else return false;
     JTAG2::packet.size = 2;
-    14a2:	40 92 66 38 	sts	0x3866, r4	; 0x803866 <JTAG2::packet+0x3>
-    14a6:	50 92 67 38 	sts	0x3867, r5	; 0x803867 <JTAG2::packet+0x4>
-    14aa:	60 92 68 38 	sts	0x3868, r6	; 0x803868 <JTAG2::packet+0x5>
-    14ae:	70 92 69 38 	sts	0x3869, r7	; 0x803869 <JTAG2::packet+0x6>
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:247
+    14a6:	40 92 66 38 	sts	0x3866, r4	; 0x803866 <JTAG2::packet+0x3>
+    14aa:	50 92 67 38 	sts	0x3867, r5	; 0x803867 <JTAG2::packet+0x4>
+    14ae:	60 92 68 38 	sts	0x3868, r6	; 0x803868 <JTAG2::packet+0x5>
+    14b2:	70 92 69 38 	sts	0x3869, r7	; 0x803869 <JTAG2::packet+0x6>
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:249
     JTAG2::packet.body[1] = c;
-    14b2:	80 93 6c 38 	sts	0x386C, r24	; 0x80386c <JTAG2::packet+0x9>
-    14b6:	66 c0       	rjmp	.+204    	; 0x1584 <main+0x3a4>
+    14b6:	80 93 6c 38 	sts	0x386C, r24	; 0x80386c <JTAG2::packet+0x9>
+    14ba:	65 c0       	rjmp	.+202    	; 0x1586 <main+0x3a6>
 process_command():
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:275
-    14b8:	84 31       	cpi	r24, 0x14	; 20
-    14ba:	09 f4       	brne	.+2      	; 0x14be <main+0x2de>
-    14bc:	0c c1       	rjmp	.+536    	; 0x16d6 <main+0x4f6>
-    14be:	48 f4       	brcc	.+18     	; 0x14d2 <main+0x2f2>
-    14c0:	8b 30       	cpi	r24, 0x0B	; 11
-    14c2:	68 f2       	brcs	.-102    	; 0x145e <main+0x27e>
-    14c4:	8d 30       	cpi	r24, 0x0D	; 13
-    14c6:	10 f0       	brcs	.+4      	; 0x14cc <main+0x2ec>
-    14c8:	8f 30       	cpi	r24, 0x0F	; 15
-    14ca:	49 f6       	brne	.-110    	; 0x145e <main+0x27e>
+    14bc:	84 31       	cpi	r24, 0x14	; 20
+    14be:	09 f4       	brne	.+2      	; 0x14c2 <main+0x2e2>
+    14c0:	0b c1       	rjmp	.+534    	; 0x16d8 <main+0x4f8>
+    14c2:	48 f4       	brcc	.+18     	; 0x14d6 <main+0x2f6>
+    14c4:	8b 30       	cpi	r24, 0x0B	; 11
+    14c6:	50 f2       	brcs	.-108    	; 0x145c <main+0x27c>
+    14c8:	8d 30       	cpi	r24, 0x0D	; 13
+    14ca:	10 f0       	brcs	.+4      	; 0x14d0 <main+0x2f0>
+    14cc:	8f 30       	cpi	r24, 0x0F	; 15
+    14ce:	31 f6       	brne	.-116    	; 0x145c <main+0x27c>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:338
         packet.size = 19;
       break;
@@ -5210,9 +5219,9 @@ process_command():
     case JTAG2::CMND_GO : {
       if (bit_is_set(UPDI_CONTROL, UPDI::UPDI_PROG_bp)) UPDI::runtime(UPDI::UPDI_CMD_GO);
       JTAG2::set_response(JTAG2::RSP_OK);
-    14cc:	80 e8       	ldi	r24, 0x80	; 128
-    14ce:	90 e0       	ldi	r25, 0x00	; 0
-    14d0:	9d c0       	rjmp	.+314    	; 0x160c <main+0x42c>
+    14d0:	80 e8       	ldi	r24, 0x80	; 128
+    14d2:	90 e0       	ldi	r25, 0x00	; 0
+    14d4:	9c c0       	rjmp	.+312    	; 0x160e <main+0x42e>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:275
 }
 
@@ -5220,16 +5229,16 @@ process_command():
 inline void JTAG2::process_command (void) {
   wdt_reset();
   switch ( packet.body[0] ) {
-    14d2:	84 33       	cpi	r24, 0x34	; 52
-    14d4:	09 f4       	brne	.+2      	; 0x14d8 <main+0x2f8>
-    14d6:	66 c1       	rjmp	.+716    	; 0x17a4 <main+0x5c4>
-    14d8:	86 33       	cpi	r24, 0x36	; 54
-    14da:	09 f4       	brne	.+2      	; 0x14de <main+0x2fe>
-    14dc:	93 c1       	rjmp	.+806    	; 0x1804 <main+0x624>
-    14de:	85 31       	cpi	r24, 0x15	; 21
-    14e0:	09 f0       	breq	.+2      	; 0x14e4 <main+0x304>
-    14e2:	bd cf       	rjmp	.-134    	; 0x145e <main+0x27e>
-    14e4:	f3 cf       	rjmp	.-26     	; 0x14cc <main+0x2ec>
+    14d6:	84 33       	cpi	r24, 0x34	; 52
+    14d8:	09 f4       	brne	.+2      	; 0x14dc <main+0x2fc>
+    14da:	67 c1       	rjmp	.+718    	; 0x17aa <main+0x5ca>
+    14dc:	86 33       	cpi	r24, 0x36	; 54
+    14de:	09 f4       	brne	.+2      	; 0x14e2 <main+0x302>
+    14e0:	94 c1       	rjmp	.+808    	; 0x180a <main+0x62a>
+    14e2:	85 31       	cpi	r24, 0x15	; 21
+    14e4:	09 f0       	breq	.+2      	; 0x14e8 <main+0x308>
+    14e6:	ba cf       	rjmp	.-140    	; 0x145c <main+0x27c>
+    14e8:	f3 cf       	rjmp	.-26     	; 0x14d0 <main+0x2f0>
 RTS_Disable():
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/SYS.cpp:107
 void SYS::RTS_Enable (void) {
@@ -5238,8 +5247,8 @@ void SYS::RTS_Enable (void) {
 
 void SYS::RTS_Disable (void) {
   pinControlRegister(RTS_SENSE_PIN) = RTS_SENSE_DISABLE;
-    14e6:	88 e0       	ldi	r24, 0x08	; 8
-    14e8:	80 93 12 04 	sts	0x0412, r24	; 0x800412 <UPDI::nvmprog_key+0x7f6ae0>
+    14ea:	88 e0       	ldi	r24, 0x08	; 8
+    14ec:	80 93 12 04 	sts	0x0412, r24	; 0x800412 <UPDI::nvmprog_key+0x7f6ace>
 WDT_ON():
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/SYS.cpp:139
   _PROTECTED_WRITE(WDT_CTRLA, _wdt_period);
@@ -5248,8 +5257,8 @@ WDT_ON():
 void SYS::WDT_OFF (void) { WDT_SET(WDT_PERIOD_OFF_gc); }
 
 void SYS::WDT_ON (void) { WDT_SET(WDT_PERIOD_8KCLK_gc); }
-    14ec:	8b e0       	ldi	r24, 0x0B	; 11
-    14ee:	0e 94 da 01 	call	0x3b4	; 0x3b4 <SYS::WDT_SET(unsigned char)>
+    14f0:	8b e0       	ldi	r24, 0x0B	; 11
+    14f2:	0e 94 da 01 	call	0x3b4	; 0x3b4 <SYS::WDT_SET(unsigned char)>
 LED_Stop():
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:187
 }
@@ -5258,22 +5267,22 @@ LED_Stop():
 /* TCA0はチャージポンプ駆動速度に変更 */
 void TIM::LED_Stop (void) {
   if (TIM::mode != 0) {
-    14f2:	80 91 50 38 	lds	r24, 0x3850	; 0x803850 <TIM::mode>
-    14f6:	88 23       	and	r24, r24
-    14f8:	41 f0       	breq	.+16     	; 0x150a <main+0x32a>
+    14f6:	80 91 50 38 	lds	r24, 0x3850	; 0x803850 <TIM::mode>
+    14fa:	88 23       	and	r24, r24
+    14fc:	41 f0       	breq	.+16     	; 0x150e <main+0x32e>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:188
     TIM::mode = 0;
-    14fa:	10 92 50 38 	sts	0x3850, r1	; 0x803850 <TIM::mode>
+    14fe:	10 92 50 38 	sts	0x3850, r1	; 0x803850 <TIM::mode>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:189
     TCA0_SPLIT_CTRLA = TCA_SPLIT_RUNSTDBY_bm | TCA_SPLIT_ENABLE_bm | TCA_SPLIT_CLKSEL_DIV1_gc;
-    14fe:	81 e8       	ldi	r24, 0x81	; 129
-    1500:	80 93 00 0a 	sts	0x0A00, r24	; 0x800a00 <UPDI::nvmprog_key+0x7f70ce>
+    1502:	81 e8       	ldi	r24, 0x81	; 129
+    1504:	80 93 00 0a 	sts	0x0A00, r24	; 0x800a00 <UPDI::nvmprog_key+0x7f70bc>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:190
     LEDG_EVOUT = EVSYS_USER_OFF_gc;
-    1504:	10 92 a9 01 	sts	0x01A9, r1	; 0x8001a9 <UPDI::nvmprog_key+0x7f6877>
+    1508:	10 92 a9 01 	sts	0x01A9, r1	; 0x8001a9 <UPDI::nvmprog_key+0x7f6865>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:191
     digitalWrite(LEDG_PIN, LOW);
-    1508:	0f 98       	cbi	0x01, 7	; 1
+    150c:	0f 98       	cbi	0x01, 7	; 1
 PG_Enable():
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/SYS.cpp:95
 /*
@@ -5282,7 +5291,7 @@ PG_Enable():
 
 void SYS::PG_Enable (void) {
   digitalWrite(PGEN_PIN, HIGH);
-    150a:	48 9a       	sbi	0x09, 0	; 9
+    150e:	48 9a       	sbi	0x09, 0	; 9
 transfer_enable():
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:90
   JTAG_USART.CTRLB = JTAG_USART_OFF;
@@ -5291,12 +5300,12 @@ transfer_enable():
 void JTAG2::transfer_enable (void) {
   SYS::PG_Enable();
   pinMode(JTAG_TXD_PIN, OUTPUT);
-    150c:	42 9a       	sbi	0x08, 2	; 8
-    150e:	10 92 52 04 	sts	0x0452, r1	; 0x800452 <UPDI::nvmprog_key+0x7f6b20>
+    1510:	42 9a       	sbi	0x08, 2	; 8
+    1512:	10 92 52 04 	sts	0x0452, r1	; 0x800452 <UPDI::nvmprog_key+0x7f6b0e>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:91
   JTAG_USART.CTRLB = JTAG_USART_ON;
-    1512:	88 ec       	ldi	r24, 0xC8	; 200
-    1514:	80 93 26 08 	sts	0x0826, r24	; 0x800826 <UPDI::nvmprog_key+0x7f6ef4>
+    1516:	88 ec       	ldi	r24, 0xC8	; 200
+    1518:	80 93 26 08 	sts	0x0826, r24	; 0x800826 <UPDI::nvmprog_key+0x7f6ee2>
 sign_on_response():
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:175
   packet.body[3] = UPDI_NVMCTRL;
@@ -5305,19 +5314,17 @@ sign_on_response():
 /* SIGN_ON Response */
 void JTAG2::sign_on_response (void) {
   packet.size = sizeof(sign_on_resp);
-    1518:	80 92 66 38 	sts	0x3866, r8	; 0x803866 <JTAG2::packet+0x3>
-    151c:	90 92 67 38 	sts	0x3867, r9	; 0x803867 <JTAG2::packet+0x4>
-    1520:	a0 92 68 38 	sts	0x3868, r10	; 0x803868 <JTAG2::packet+0x5>
-    1524:	b0 92 69 38 	sts	0x3869, r11	; 0x803869 <JTAG2::packet+0x6>
-    1528:	e8 e7       	ldi	r30, 0x78	; 120
-    152a:	f0 e0       	ldi	r31, 0x00	; 0
-    152c:	88 e8       	ldi	r24, 0x88	; 136
-    152e:	98 e3       	ldi	r25, 0x38	; 56
+    151c:	80 92 66 38 	sts	0x3866, r8	; 0x803866 <JTAG2::packet+0x3>
+    1520:	90 92 67 38 	sts	0x3867, r9	; 0x803867 <JTAG2::packet+0x4>
+    1524:	a0 92 68 38 	sts	0x3868, r10	; 0x803868 <JTAG2::packet+0x5>
+    1528:	b0 92 69 38 	sts	0x3869, r11	; 0x803869 <JTAG2::packet+0x6>
+    152c:	e8 e7       	ldi	r30, 0x78	; 120
+    152e:	f0 e0       	ldi	r31, 0x00	; 0
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:177
   for (uint8_t i = 0; i < sizeof(sign_on_resp); i++)
     packet.body[i] = pgm_read_byte( &sign_on_resp[i] );
-    1530:	24 91       	lpm	r18, Z
-    1532:	29 93       	st	Y+, r18
+    1530:	84 91       	lpm	r24, Z
+    1532:	89 93       	st	Y+, r24
     1534:	31 96       	adiw	r30, 0x01	; 1
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:176
 }
@@ -5326,9 +5333,10 @@ void JTAG2::sign_on_response (void) {
 void JTAG2::sign_on_response (void) {
   packet.size = sizeof(sign_on_resp);
   for (uint8_t i = 0; i < sizeof(sign_on_resp); i++)
-    1536:	8c 17       	cp	r24, r28
-    1538:	9d 07       	cpc	r25, r29
-    153a:	d1 f7       	brne	.-12     	; 0x1530 <main+0x350>
+    1536:	28 e3       	ldi	r18, 0x38	; 56
+    1538:	c8 38       	cpi	r28, 0x88	; 136
+    153a:	d2 07       	cpc	r29, r18
+    153c:	c9 f7       	brne	.-14     	; 0x1530 <main+0x350>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:182
     packet.body[i] = pgm_read_byte( &sign_on_resp[i] );
   /* SERNUMから Version情報を生成する */
@@ -5336,46 +5344,46 @@ void JTAG2::sign_on_response (void) {
   uint8_t* q = (uint8_t*) &SIGROW_SERNUM4;
   uint8_t* r = (uint8_t*) &packet.body[10];
     *r++ = *q++ ^ *p++ ^ *p++;
-    153c:	80 91 07 11 	lds	r24, 0x1107	; 0x801107 <UPDI::nvmprog_key+0x7f77d5>
-    1540:	90 91 03 11 	lds	r25, 0x1103	; 0x801103 <UPDI::nvmprog_key+0x7f77d1>
-    1544:	89 27       	eor	r24, r25
-    1546:	90 91 04 11 	lds	r25, 0x1104	; 0x801104 <UPDI::nvmprog_key+0x7f77d2>
-    154a:	89 27       	eor	r24, r25
-    154c:	80 93 75 38 	sts	0x3875, r24	; 0x803875 <JTAG2::packet+0x12>
+    153e:	80 91 07 11 	lds	r24, 0x1107	; 0x801107 <UPDI::nvmprog_key+0x7f77c3>
+    1542:	90 91 03 11 	lds	r25, 0x1103	; 0x801103 <UPDI::nvmprog_key+0x7f77bf>
+    1546:	89 27       	eor	r24, r25
+    1548:	90 91 04 11 	lds	r25, 0x1104	; 0x801104 <UPDI::nvmprog_key+0x7f77c0>
+    154c:	89 27       	eor	r24, r25
+    154e:	80 93 75 38 	sts	0x3875, r24	; 0x803875 <JTAG2::packet+0x12>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:183
     *r++ = *q++ ^ *p++ ^ *p++;
-    1550:	80 91 08 11 	lds	r24, 0x1108	; 0x801108 <UPDI::nvmprog_key+0x7f77d6>
-    1554:	90 91 05 11 	lds	r25, 0x1105	; 0x801105 <UPDI::nvmprog_key+0x7f77d3>
-    1558:	89 27       	eor	r24, r25
-    155a:	90 91 06 11 	lds	r25, 0x1106	; 0x801106 <UPDI::nvmprog_key+0x7f77d4>
-    155e:	89 27       	eor	r24, r25
-    1560:	80 93 76 38 	sts	0x3876, r24	; 0x803876 <JTAG2::packet+0x13>
+    1552:	80 91 08 11 	lds	r24, 0x1108	; 0x801108 <UPDI::nvmprog_key+0x7f77c4>
+    1556:	90 91 05 11 	lds	r25, 0x1105	; 0x801105 <UPDI::nvmprog_key+0x7f77c1>
+    155a:	89 27       	eor	r24, r25
+    155c:	90 91 06 11 	lds	r25, 0x1106	; 0x801106 <UPDI::nvmprog_key+0x7f77c2>
+    1560:	89 27       	eor	r24, r25
+    1562:	80 93 76 38 	sts	0x3876, r24	; 0x803876 <JTAG2::packet+0x13>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:184
     *r++ = *q++;
-    1564:	80 91 09 11 	lds	r24, 0x1109	; 0x801109 <UPDI::nvmprog_key+0x7f77d7>
-    1568:	80 93 77 38 	sts	0x3877, r24	; 0x803877 <JTAG2::packet+0x14>
+    1566:	80 91 09 11 	lds	r24, 0x1109	; 0x801109 <UPDI::nvmprog_key+0x7f77c5>
+    156a:	80 93 77 38 	sts	0x3877, r24	; 0x803877 <JTAG2::packet+0x14>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:185
     *r++ = *q++;
-    156c:	80 91 0a 11 	lds	r24, 0x110A	; 0x80110a <UPDI::nvmprog_key+0x7f77d8>
-    1570:	80 93 78 38 	sts	0x3878, r24	; 0x803878 <JTAG2::packet+0x15>
+    156e:	80 91 0a 11 	lds	r24, 0x110A	; 0x80110a <UPDI::nvmprog_key+0x7f77c6>
+    1572:	80 93 78 38 	sts	0x3878, r24	; 0x803878 <JTAG2::packet+0x15>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:186
     *r++ = *q++;
-    1574:	80 91 0b 11 	lds	r24, 0x110B	; 0x80110b <UPDI::nvmprog_key+0x7f77d9>
-    1578:	80 93 79 38 	sts	0x3879, r24	; 0x803879 <JTAG2::packet+0x16>
+    1576:	80 91 0b 11 	lds	r24, 0x110B	; 0x80110b <UPDI::nvmprog_key+0x7f77c7>
+    157a:	80 93 79 38 	sts	0x3879, r24	; 0x803879 <JTAG2::packet+0x16>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:187
     *r++ = *q++;
-    157c:	80 91 0c 11 	lds	r24, 0x110C	; 0x80110c <UPDI::nvmprog_key+0x7f77da>
-    1580:	80 93 7a 38 	sts	0x387A, r24	; 0x80387a <JTAG2::packet+0x17>
+    157e:	80 91 0c 11 	lds	r24, 0x110C	; 0x80110c <UPDI::nvmprog_key+0x7f77c8>
+    1582:	80 93 7a 38 	sts	0x387A, r24	; 0x80387a <JTAG2::packet+0x17>
 process_command():
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:376
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:380
     }
     default : {
       JTAG2::set_response(JTAG2::RSP_FAILED);
     }
   }
   JTAG2::answer_transfer();
-    1584:	0e 94 2d 02 	call	0x45a	; 0x45a <JTAG2::answer_transfer()>
-    1588:	07 cf       	rjmp	.-498    	; 0x1398 <main+0x1b8>
+    1586:	0e 94 2d 02 	call	0x45a	; 0x45a <JTAG2::answer_transfer()>
+    158a:	06 cf       	rjmp	.-500    	; 0x1398 <main+0x1b8>
 set_parameter():
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:193
   JTAG2::answer_transfer();
@@ -5384,15 +5392,15 @@ set_parameter():
 /* CMND_SET_PARAMETER */
 bool JTAG2::set_parameter (void) {
   uint8_t param_val = packet.body[2];
-    158a:	f0 90 6d 38 	lds	r15, 0x386D	; 0x80386d <JTAG2::packet+0xa>
+    158c:	f0 90 6d 38 	lds	r15, 0x386D	; 0x80386d <JTAG2::packet+0xa>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:194
   switch (packet.body[1]) {
-    158e:	80 91 6c 38 	lds	r24, 0x386C	; 0x80386c <JTAG2::packet+0x9>
-    1592:	83 30       	cpi	r24, 0x03	; 3
-    1594:	b1 f1       	breq	.+108    	; 0x1602 <main+0x422>
-    1596:	85 30       	cpi	r24, 0x05	; 5
-    1598:	09 f0       	breq	.+2      	; 0x159c <main+0x3bc>
-    159a:	98 cf       	rjmp	.-208    	; 0x14cc <main+0x2ec>
+    1590:	80 91 6c 38 	lds	r24, 0x386C	; 0x80386c <JTAG2::packet+0x9>
+    1594:	83 30       	cpi	r24, 0x03	; 3
+    1596:	b1 f1       	breq	.+108    	; 0x1604 <main+0x424>
+    1598:	85 30       	cpi	r24, 0x05	; 5
+    159a:	09 f0       	breq	.+2      	; 0x159e <main+0x3be>
+    159c:	99 cf       	rjmp	.-206    	; 0x14d0 <main+0x2f0>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:203
       break;
     }
@@ -5400,39 +5408,39 @@ bool JTAG2::set_parameter (void) {
     case JTAG2::PARAM_BAUD_RATE : {
       /* 対応範囲確認 */
       if ((param_val >= JTAG2::BAUD_LOWER) && (param_val <= JTAG2::BAUD_UPPER)) {
-    159c:	8e ef       	ldi	r24, 0xFE	; 254
-    159e:	8f 0d       	add	r24, r15
-    15a0:	88 31       	cpi	r24, 0x18	; 24
-    15a2:	90 f5       	brcc	.+100    	; 0x1608 <main+0x428>
+    159e:	8e ef       	ldi	r24, 0xFE	; 254
+    15a0:	8f 0d       	add	r24, r15
+    15a2:	88 31       	cpi	r24, 0x18	; 24
+    15a4:	90 f5       	brcc	.+100    	; 0x160a <main+0x42a>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:204
         uint16_t baud = pgm_read_word( &BAUD_TABLE[param_val] );
-    15a4:	8f 2d       	mov	r24, r15
-    15a6:	90 e0       	ldi	r25, 0x00	; 0
-    15a8:	fc 01       	movw	r30, r24
-    15aa:	ee 0f       	add	r30, r30
-    15ac:	ff 1f       	adc	r31, r31
-    15ae:	eb 56       	subi	r30, 0x6B	; 107
-    15b0:	ff 4f       	sbci	r31, 0xFF	; 255
-    15b2:	c5 91       	lpm	r28, Z+
-    15b4:	d4 91       	lpm	r29, Z
-    15b6:	8e 01       	movw	r16, r28
+    15a6:	8f 2d       	mov	r24, r15
+    15a8:	90 e0       	ldi	r25, 0x00	; 0
+    15aa:	fc 01       	movw	r30, r24
+    15ac:	ee 0f       	add	r30, r30
+    15ae:	ff 1f       	adc	r31, r31
+    15b0:	eb 56       	subi	r30, 0x6B	; 107
+    15b2:	ff 4f       	sbci	r31, 0xFF	; 255
+    15b4:	c5 91       	lpm	r28, Z+
+    15b6:	d4 91       	lpm	r29, Z
+    15b8:	8e 01       	movw	r16, r28
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:205
         if (baud) {
-    15b8:	20 97       	sbiw	r28, 0x00	; 0
-    15ba:	31 f1       	breq	.+76     	; 0x1608 <main+0x428>
+    15ba:	20 97       	sbiw	r28, 0x00	; 0
+    15bc:	31 f1       	breq	.+76     	; 0x160a <main+0x42a>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:207
           /* 正常なら応答したのち速度変更 */
           PARAM_BAUD_RATE_VAL = (jtag_baud_rate_e) param_val;
-    15bc:	80 93 33 38 	sts	0x3833, r24	; 0x803833 <JTAG2::PARAM_BAUD_RATE_VAL>
-    15c0:	90 93 34 38 	sts	0x3834, r25	; 0x803834 <JTAG2::PARAM_BAUD_RATE_VAL+0x1>
+    15be:	80 93 33 38 	sts	0x3833, r24	; 0x803833 <JTAG2::PARAM_BAUD_RATE_VAL>
+    15c2:	90 93 34 38 	sts	0x3834, r25	; 0x803834 <JTAG2::PARAM_BAUD_RATE_VAL+0x1>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:208
           JTAG2::set_response(JTAG2::RSP_OK);
-    15c4:	80 e8       	ldi	r24, 0x80	; 128
-    15c6:	90 e0       	ldi	r25, 0x00	; 0
-    15c8:	0e 94 fe 01 	call	0x3fc	; 0x3fc <JTAG2::set_response(JTAG2::jtag_response_e)>
+    15c6:	80 e8       	ldi	r24, 0x80	; 128
+    15c8:	90 e0       	ldi	r25, 0x00	; 0
+    15ca:	0e 94 fe 01 	call	0x3fc	; 0x3fc <JTAG2::set_response(JTAG2::jtag_response_e)>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:209
           JTAG2::answer_transfer();
-    15cc:	0e 94 2d 02 	call	0x45a	; 0x45a <JTAG2::answer_transfer()>
+    15ce:	0e 94 2d 02 	call	0x45a	; 0x45a <JTAG2::answer_transfer()>
 flush():
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:112
   JTAG_USART.STATUS = USART_TXCIF_bm;
@@ -5441,9 +5449,9 @@ flush():
 
 void JTAG2::flush (void) {
   loop_until_bit_is_set(JTAG_USART.STATUS, USART_TXCIF_bp);
-    15d0:	80 91 24 08 	lds	r24, 0x0824	; 0x800824 <UPDI::nvmprog_key+0x7f6ef2>
-    15d4:	86 ff       	sbrs	r24, 6
-    15d6:	fc cf       	rjmp	.-8      	; 0x15d0 <main+0x3f0>
+    15d2:	80 91 24 08 	lds	r24, 0x0824	; 0x800824 <UPDI::nvmprog_key+0x7f6ee0>
+    15d6:	86 ff       	sbrs	r24, 6
+    15d8:	fc cf       	rjmp	.-8      	; 0x15d2 <main+0x3f2>
 set_parameter():
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:211
           /* 正常なら応答したのち速度変更 */
@@ -5452,36 +5460,36 @@ set_parameter():
           JTAG2::answer_transfer();
           JTAG2::flush();
           if (baud < 64) {
-    15d8:	c0 34       	cpi	r28, 0x40	; 64
-    15da:	d1 05       	cpc	r29, r1
-    15dc:	30 f4       	brcc	.+12     	; 0x15ea <main+0x40a>
+    15da:	c0 34       	cpi	r28, 0x40	; 64
+    15dc:	d1 05       	cpc	r29, r1
+    15de:	30 f4       	brcc	.+12     	; 0x15ec <main+0x40c>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:212
             JTAG_USART.CTRLB = JTAG_USART_DBLON;
-    15de:	8a ec       	ldi	r24, 0xCA	; 202
-    15e0:	80 93 26 08 	sts	0x0826, r24	; 0x800826 <UPDI::nvmprog_key+0x7f6ef4>
+    15e0:	8a ec       	ldi	r24, 0xCA	; 202
+    15e2:	80 93 26 08 	sts	0x0826, r24	; 0x800826 <UPDI::nvmprog_key+0x7f6ee2>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:213
             baud <<= 1;
-    15e4:	8e 01       	movw	r16, r28
-    15e6:	00 0f       	add	r16, r16
-    15e8:	11 1f       	adc	r17, r17
+    15e6:	8e 01       	movw	r16, r28
+    15e8:	00 0f       	add	r16, r16
+    15ea:	11 1f       	adc	r17, r17
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:215
           }
           JTAG_USART.BAUD = baud;
-    15ea:	00 93 28 08 	sts	0x0828, r16	; 0x800828 <UPDI::nvmprog_key+0x7f6ef6>
-    15ee:	10 93 29 08 	sts	0x0829, r17	; 0x800829 <UPDI::nvmprog_key+0x7f6ef7>
+    15ec:	00 93 28 08 	sts	0x0828, r16	; 0x800828 <UPDI::nvmprog_key+0x7f6ee4>
+    15f0:	10 93 29 08 	sts	0x0829, r17	; 0x800829 <UPDI::nvmprog_key+0x7f6ee5>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:217
           /* terminal mode を許可する速度 */
           if (param_val == JTAG2::BAUD_38400 || param_val == JTAG2::BAUD_666666)
-    15f2:	f5 e0       	ldi	r31, 0x05	; 5
-    15f4:	ff 16       	cp	r15, r31
-    15f6:	19 f0       	breq	.+6      	; 0x15fe <main+0x41e>
-    15f8:	28 e1       	ldi	r18, 0x18	; 24
-    15fa:	f2 12       	cpse	r15, r18
-    15fc:	cd ce       	rjmp	.-614    	; 0x1398 <main+0x1b8>
+    15f4:	95 e0       	ldi	r25, 0x05	; 5
+    15f6:	f9 16       	cp	r15, r25
+    15f8:	19 f0       	breq	.+6      	; 0x1600 <main+0x420>
+    15fa:	a8 e1       	ldi	r26, 0x18	; 24
+    15fc:	fa 12       	cpse	r15, r26
+    15fe:	cc ce       	rjmp	.-616    	; 0x1398 <main+0x1b8>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:218
             UPDI_CONTROL |= _BV(UPDI::UPDI_TERM_bp);
-    15fe:	e6 9a       	sbi	0x1c, 6	; 28
-    1600:	cb ce       	rjmp	.-618    	; 0x1398 <main+0x1b8>
+    1600:	e6 9a       	sbi	0x1c, 6	; 28
+    1602:	ca ce       	rjmp	.-620    	; 0x1398 <main+0x1b8>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:197
 bool JTAG2::set_parameter (void) {
   uint8_t param_val = packet.body[2];
@@ -5489,8 +5497,8 @@ bool JTAG2::set_parameter (void) {
     /* エミュレーションモード */
     case JTAG2::PARAM_EMU_MODE : {
       PARAM_EMU_MODE_VAL = param_val;
-    1602:	f0 92 4f 38 	sts	0x384F, r15	; 0x80384f <JTAG2::PARAM_EMU_MODE_VAL>
-    1606:	62 cf       	rjmp	.-316    	; 0x14cc <main+0x2ec>
+    1604:	f0 92 4f 38 	sts	0x384F, r15	; 0x80384f <JTAG2::PARAM_EMU_MODE_VAL>
+    1608:	63 cf       	rjmp	.-314    	; 0x14d0 <main+0x2f0>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:223
             UPDI_CONTROL |= _BV(UPDI::UPDI_TERM_bp);
           return false;
@@ -5498,18 +5506,18 @@ bool JTAG2::set_parameter (void) {
       }
       /* 範囲違反は失敗応答 */
       JTAG2::set_response(JTAG2::RSP_ILLEGAL_VALUE);
-    1608:	86 ea       	ldi	r24, 0xA6	; 166
-    160a:	90 e0       	ldi	r25, 0x00	; 0
+    160a:	86 ea       	ldi	r24, 0xA6	; 166
+    160c:	90 e0       	ldi	r25, 0x00	; 0
 process_command():
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:373
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:377
     case JTAG2::CMND_LEAVE_PROGMODE : {
       JTAG2::set_response(JTAG2::RSP_OK);
       break;
     }
     default : {
       JTAG2::set_response(JTAG2::RSP_FAILED);
-    160c:	0e 94 fe 01 	call	0x3fc	; 0x3fc <JTAG2::set_response(JTAG2::jtag_response_e)>
-    1610:	b9 cf       	rjmp	.-142    	; 0x1584 <main+0x3a4>
+    160e:	0e 94 fe 01 	call	0x3fc	; 0x3fc <JTAG2::set_response(JTAG2::jtag_response_e)>
+    1612:	b9 cf       	rjmp	.-142    	; 0x1586 <main+0x3a6>
 get_parameter():
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:234
 }
@@ -5518,15 +5526,15 @@ get_parameter():
 void JTAG2::get_parameter (void) {
   volatile uint8_t &param_type = packet.body[1];
   switch (param_type) {
-    1612:	80 91 6c 38 	lds	r24, 0x386C	; 0x80386c <JTAG2::packet+0x9>
-    1616:	83 30       	cpi	r24, 0x03	; 3
-    1618:	09 f4       	brne	.+2      	; 0x161c <main+0x43c>
-    161a:	51 c0       	rjmp	.+162    	; 0x16be <main+0x4de>
-    161c:	38 f4       	brcc	.+14     	; 0x162c <main+0x44c>
-    161e:	81 30       	cpi	r24, 0x01	; 1
-    1620:	81 f1       	breq	.+96     	; 0x1682 <main+0x4a2>
-    1622:	82 30       	cpi	r24, 0x02	; 2
-    1624:	b9 f1       	breq	.+110    	; 0x1694 <main+0x4b4>
+    1614:	80 91 6c 38 	lds	r24, 0x386C	; 0x80386c <JTAG2::packet+0x9>
+    1618:	83 30       	cpi	r24, 0x03	; 3
+    161a:	09 f4       	brne	.+2      	; 0x161e <main+0x43e>
+    161c:	51 c0       	rjmp	.+162    	; 0x16c0 <main+0x4e0>
+    161e:	38 f4       	brcc	.+14     	; 0x162e <main+0x44e>
+    1620:	81 30       	cpi	r24, 0x01	; 1
+    1622:	81 f1       	breq	.+96     	; 0x1684 <main+0x4a4>
+    1624:	82 30       	cpi	r24, 0x02	; 2
+    1626:	b9 f1       	breq	.+110    	; 0x1696 <main+0x4b6>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:265
       _CAPS16(packet.body[1])->word = SYS::get_vcc();
       packet.size_word[0] = 3;
@@ -5534,9 +5542,9 @@ void JTAG2::get_parameter (void) {
     }
     default : {
       JTAG2::set_response(JTAG2::RSP_ILLEGAL_PARAMETER);
-    1626:	81 ea       	ldi	r24, 0xA1	; 161
-    1628:	90 e0       	ldi	r25, 0x00	; 0
-    162a:	f0 cf       	rjmp	.-32     	; 0x160c <main+0x42c>
+    1628:	81 ea       	ldi	r24, 0xA1	; 161
+    162a:	90 e0       	ldi	r25, 0x00	; 0
+    162c:	f0 cf       	rjmp	.-32     	; 0x160e <main+0x42e>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:234
 }
 
@@ -5544,11 +5552,11 @@ void JTAG2::get_parameter (void) {
 void JTAG2::get_parameter (void) {
   volatile uint8_t &param_type = packet.body[1];
   switch (param_type) {
-    162c:	85 30       	cpi	r24, 0x05	; 5
-    162e:	09 f4       	brne	.+2      	; 0x1632 <main+0x452>
-    1630:	4f c0       	rjmp	.+158    	; 0x16d0 <main+0x4f0>
-    1632:	86 30       	cpi	r24, 0x06	; 6
-    1634:	c1 f7       	brne	.-16     	; 0x1626 <main+0x446>
+    162e:	85 30       	cpi	r24, 0x05	; 5
+    1630:	09 f4       	brne	.+2      	; 0x1634 <main+0x454>
+    1632:	4f c0       	rjmp	.+158    	; 0x16d2 <main+0x4f2>
+    1634:	86 30       	cpi	r24, 0x06	; 6
+    1636:	c1 f7       	brne	.-16     	; 0x1628 <main+0x448>
 get_vcc():
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/SYS.cpp:69
 /*
@@ -5557,45 +5565,45 @@ get_vcc():
 
 uint16_t SYS::get_vcc (void) {
   ADC0_CTRLA = ADC_ENABLE_bm;
-    1636:	81 e0       	ldi	r24, 0x01	; 1
-    1638:	80 93 00 06 	sts	0x0600, r24	; 0x800600 <UPDI::nvmprog_key+0x7f6cce>
+    1638:	81 e0       	ldi	r24, 0x01	; 1
+    163a:	80 93 00 06 	sts	0x0600, r24	; 0x800600 <UPDI::nvmprog_key+0x7f6cbc>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/SYS.cpp:70
   ADC0_CTRLB = ADC_PRESC_DIV2_gc;
-    163c:	10 92 01 06 	sts	0x0601, r1	; 0x800601 <UPDI::nvmprog_key+0x7f6ccf>
+    163e:	10 92 01 06 	sts	0x0601, r1	; 0x800601 <UPDI::nvmprog_key+0x7f6cbd>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/SYS.cpp:71
   ADC0_CTRLC = ADC_REFSEL_1024MV_gc | ((F_CPU / 1000000UL) << ADC_TIMEBASE_gp);
-    1640:	84 e5       	ldi	r24, 0x54	; 84
-    1642:	80 93 02 06 	sts	0x0602, r24	; 0x800602 <UPDI::nvmprog_key+0x7f6cd0>
+    1642:	84 e5       	ldi	r24, 0x54	; 84
+    1644:	80 93 02 06 	sts	0x0602, r24	; 0x800602 <UPDI::nvmprog_key+0x7f6cbe>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/SYS.cpp:72
   ADC0_CTRLE = 17; /* (SAMPDUR + 0.5) * fCLK_ADC = 10.5 µs sample duration */
-    1646:	81 e1       	ldi	r24, 0x11	; 17
-    1648:	80 93 08 06 	sts	0x0608, r24	; 0x800608 <UPDI::nvmprog_key+0x7f6cd6>
+    1648:	81 e1       	ldi	r24, 0x11	; 17
+    164a:	80 93 08 06 	sts	0x0608, r24	; 0x800608 <UPDI::nvmprog_key+0x7f6cc4>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/SYS.cpp:73
   ADC0_MUXPOS = ADC_MUXPOS_VDDDIV10_gc; /* ADC channel VDD/10 */
-    164c:	91 e3       	ldi	r25, 0x31	; 49
-    164e:	90 93 0c 06 	sts	0x060C, r25	; 0x80060c <UPDI::nvmprog_key+0x7f6cda>
+    164e:	91 e3       	ldi	r25, 0x31	; 49
+    1650:	90 93 0c 06 	sts	0x060C, r25	; 0x80060c <UPDI::nvmprog_key+0x7f6cc8>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/SYS.cpp:74
   ADC0_COMMAND = ADC_MODE_SINGLE_12BIT_gc | ADC_START_IMMEDIATE_gc;
-    1652:	80 93 0a 06 	sts	0x060A, r24	; 0x80060a <UPDI::nvmprog_key+0x7f6cd8>
+    1654:	80 93 0a 06 	sts	0x060A, r24	; 0x80060a <UPDI::nvmprog_key+0x7f6cc6>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/SYS.cpp:75
   loop_until_bit_is_set(ADC0_INTFLAGS, ADC_SAMPRDY_bp);
-    1656:	80 91 05 06 	lds	r24, 0x0605	; 0x800605 <UPDI::nvmprog_key+0x7f6cd3>
-    165a:	81 ff       	sbrs	r24, 1
-    165c:	fc cf       	rjmp	.-8      	; 0x1656 <main+0x476>
+    1658:	80 91 05 06 	lds	r24, 0x0605	; 0x800605 <UPDI::nvmprog_key+0x7f6cc1>
+    165c:	81 ff       	sbrs	r24, 1
+    165e:	fc cf       	rjmp	.-8      	; 0x1658 <main+0x478>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/SYS.cpp:76
   uint16_t adc_reading = ADC0_SAMPLE;
-    165e:	80 91 14 06 	lds	r24, 0x0614	; 0x800614 <UPDI::nvmprog_key+0x7f6ce2>
-    1662:	90 91 15 06 	lds	r25, 0x0615	; 0x800615 <UPDI::nvmprog_key+0x7f6ce3>
+    1660:	80 91 14 06 	lds	r24, 0x0614	; 0x800614 <UPDI::nvmprog_key+0x7f6cd0>
+    1664:	90 91 15 06 	lds	r25, 0x0615	; 0x800615 <UPDI::nvmprog_key+0x7f6cd1>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/SYS.cpp:77
   adc_reading += adc_reading + (adc_reading >> 1);  /* x2.5 */
-    1666:	9c 01       	movw	r18, r24
-    1668:	36 95       	lsr	r19
-    166a:	27 95       	ror	r18
-    166c:	88 0f       	add	r24, r24
-    166e:	99 1f       	adc	r25, r25
+    1668:	9c 01       	movw	r18, r24
+    166a:	36 95       	lsr	r19
+    166c:	27 95       	ror	r18
+    166e:	88 0f       	add	r24, r24
+    1670:	99 1f       	adc	r25, r25
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/SYS.cpp:78
   ADC0_CTRLA = 0;
-    1670:	10 92 00 06 	sts	0x0600, r1	; 0x800600 <UPDI::nvmprog_key+0x7f6cce>
+    1672:	10 92 00 06 	sts	0x0600, r1	; 0x800600 <UPDI::nvmprog_key+0x7f6cbc>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/SYS.cpp:77
   ADC0_CTRLE = 17; /* (SAMPDUR + 0.5) * fCLK_ADC = 10.5 µs sample duration */
   ADC0_MUXPOS = ADC_MUXPOS_VDDDIV10_gc; /* ADC channel VDD/10 */
@@ -5603,8 +5611,8 @@ uint16_t SYS::get_vcc (void) {
   loop_until_bit_is_set(ADC0_INTFLAGS, ADC_SAMPRDY_bp);
   uint16_t adc_reading = ADC0_SAMPLE;
   adc_reading += adc_reading + (adc_reading >> 1);  /* x2.5 */
-    1674:	82 0f       	add	r24, r18
-    1676:	93 1f       	adc	r25, r19
+    1676:	82 0f       	add	r24, r18
+    1678:	93 1f       	adc	r25, r19
 get_parameter():
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:260
       packet.body[1] = PARAM_BAUD_RATE_VAL;
@@ -5613,9 +5621,9 @@ get_parameter():
     }
     case JTAG2::PARAM_VTARGET : {
       _CAPS16(packet.body[1])->word = SYS::get_vcc();
-    1678:	80 93 6c 38 	sts	0x386C, r24	; 0x80386c <JTAG2::packet+0x9>
-    167c:	90 93 6d 38 	sts	0x386D, r25	; 0x80386d <JTAG2::packet+0xa>
-    1680:	04 c0       	rjmp	.+8      	; 0x168a <main+0x4aa>
+    167a:	80 93 6c 38 	sts	0x386C, r24	; 0x80386c <JTAG2::packet+0x9>
+    167e:	90 93 6d 38 	sts	0x386D, r25	; 0x80386d <JTAG2::packet+0xa>
+    1682:	04 c0       	rjmp	.+8      	; 0x168c <main+0x4ac>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:236
 /* CMND_GET_PARAMETER */
 void JTAG2::get_parameter (void) {
@@ -5623,10 +5631,10 @@ void JTAG2::get_parameter (void) {
   switch (param_type) {
     case JTAG2::PARAM_HW_VER : {
       packet.body[1] = sign_on_resp[5];
-    1682:	80 93 6c 38 	sts	0x386C, r24	; 0x80386c <JTAG2::packet+0x9>
+    1684:	80 93 6c 38 	sts	0x386C, r24	; 0x80386c <JTAG2::packet+0x9>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:237
       packet.body[2] = sign_on_resp[9];
-    1686:	80 93 6d 38 	sts	0x386D, r24	; 0x80386d <JTAG2::packet+0xa>
+    1688:	80 93 6d 38 	sts	0x386D, r24	; 0x80386d <JTAG2::packet+0xa>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:261
       packet.size_word[0] = 2;
       break;
@@ -5634,9 +5642,9 @@ void JTAG2::get_parameter (void) {
     case JTAG2::PARAM_VTARGET : {
       _CAPS16(packet.body[1])->word = SYS::get_vcc();
       packet.size_word[0] = 3;
-    168a:	c0 92 66 38 	sts	0x3866, r12	; 0x803866 <JTAG2::packet+0x3>
-    168e:	d0 92 67 38 	sts	0x3867, r13	; 0x803867 <JTAG2::packet+0x4>
-    1692:	11 c0       	rjmp	.+34     	; 0x16b6 <main+0x4d6>
+    168c:	20 92 66 38 	sts	0x3866, r2	; 0x803866 <JTAG2::packet+0x3>
+    1690:	30 92 67 38 	sts	0x3867, r3	; 0x803867 <JTAG2::packet+0x4>
+    1694:	11 c0       	rjmp	.+34     	; 0x16b8 <main+0x4d8>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:242
       packet.body[2] = sign_on_resp[9];
       packet.size_word[0] = 3;
@@ -5644,25 +5652,25 @@ void JTAG2::get_parameter (void) {
     }
     case JTAG2::PARAM_FW_VER : {
       packet.body[1] = sign_on_resp[3];
-    1694:	91 e0       	ldi	r25, 0x01	; 1
-    1696:	90 93 6c 38 	sts	0x386C, r25	; 0x80386c <JTAG2::packet+0x9>
+    1696:	91 e0       	ldi	r25, 0x01	; 1
+    1698:	90 93 6c 38 	sts	0x386C, r25	; 0x80386c <JTAG2::packet+0x9>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:243
       packet.body[2] = sign_on_resp[4];
-    169a:	80 93 6d 38 	sts	0x386D, r24	; 0x80386d <JTAG2::packet+0xa>
+    169c:	80 93 6d 38 	sts	0x386D, r24	; 0x80386d <JTAG2::packet+0xa>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:244
       packet.body[3] = sign_on_resp[7];
-    169e:	85 e3       	ldi	r24, 0x35	; 53
-    16a0:	80 93 6e 38 	sts	0x386E, r24	; 0x80386e <JTAG2::packet+0xb>
+    16a0:	85 e3       	ldi	r24, 0x35	; 53
+    16a2:	80 93 6e 38 	sts	0x386E, r24	; 0x80386e <JTAG2::packet+0xb>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:245
       packet.body[4] = sign_on_resp[8];
-    16a4:	87 e0       	ldi	r24, 0x07	; 7
-    16a6:	80 93 6f 38 	sts	0x386F, r24	; 0x80386f <JTAG2::packet+0xc>
+    16a6:	87 e0       	ldi	r24, 0x07	; 7
+    16a8:	80 93 6f 38 	sts	0x386F, r24	; 0x80386f <JTAG2::packet+0xc>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:246
       packet.size_word[0] = 5;
-    16aa:	85 e0       	ldi	r24, 0x05	; 5
-    16ac:	90 e0       	ldi	r25, 0x00	; 0
-    16ae:	80 93 66 38 	sts	0x3866, r24	; 0x803866 <JTAG2::packet+0x3>
-    16b2:	90 93 67 38 	sts	0x3867, r25	; 0x803867 <JTAG2::packet+0x4>
+    16ac:	e5 e0       	ldi	r30, 0x05	; 5
+    16ae:	f0 e0       	ldi	r31, 0x00	; 0
+    16b0:	e0 93 66 38 	sts	0x3866, r30	; 0x803866 <JTAG2::packet+0x3>
+    16b4:	f0 93 67 38 	sts	0x3867, r31	; 0x803867 <JTAG2::packet+0x4>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:269
     default : {
       JTAG2::set_response(JTAG2::RSP_ILLEGAL_PARAMETER);
@@ -5670,9 +5678,9 @@ void JTAG2::get_parameter (void) {
     }
   }
   packet.body[0] = JTAG2::RSP_PARAMETER;
-    16b6:	81 e8       	ldi	r24, 0x81	; 129
-    16b8:	80 93 6b 38 	sts	0x386B, r24	; 0x80386b <JTAG2::packet+0x8>
-    16bc:	63 cf       	rjmp	.-314    	; 0x1584 <main+0x3a4>
+    16b8:	81 e8       	ldi	r24, 0x81	; 129
+    16ba:	80 93 6b 38 	sts	0x386B, r24	; 0x80386b <JTAG2::packet+0x8>
+    16be:	63 cf       	rjmp	.-314    	; 0x1586 <main+0x3a6>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:250
       packet.body[4] = sign_on_resp[8];
       packet.size_word[0] = 5;
@@ -5680,19 +5688,19 @@ void JTAG2::get_parameter (void) {
     }
     case JTAG2::PARAM_EMU_MODE : {
       packet.body[1] = PARAM_EMU_MODE_VAL;
-    16be:	80 91 4f 38 	lds	r24, 0x384F	; 0x80384f <JTAG2::PARAM_EMU_MODE_VAL>
+    16c0:	80 91 4f 38 	lds	r24, 0x384F	; 0x80384f <JTAG2::PARAM_EMU_MODE_VAL>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:255
       packet.size_word[0] = 2;
       break;
     }
     case JTAG2::PARAM_BAUD_RATE : {
       packet.body[1] = PARAM_BAUD_RATE_VAL;
-    16c2:	80 93 6c 38 	sts	0x386C, r24	; 0x80386c <JTAG2::packet+0x9>
+    16c4:	80 93 6c 38 	sts	0x386C, r24	; 0x80386c <JTAG2::packet+0x9>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:256
       packet.size_word[0] = 2;
-    16c6:	20 92 66 38 	sts	0x3866, r2	; 0x803866 <JTAG2::packet+0x3>
-    16ca:	30 92 67 38 	sts	0x3867, r3	; 0x803867 <JTAG2::packet+0x4>
-    16ce:	f3 cf       	rjmp	.-26     	; 0x16b6 <main+0x4d6>
+    16c8:	c0 92 66 38 	sts	0x3866, r12	; 0x803866 <JTAG2::packet+0x3>
+    16cc:	d0 92 67 38 	sts	0x3867, r13	; 0x803867 <JTAG2::packet+0x4>
+    16d0:	f3 cf       	rjmp	.-26     	; 0x16b8 <main+0x4d8>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:255
       packet.body[1] = PARAM_EMU_MODE_VAL;
       packet.size_word[0] = 2;
@@ -5700,8 +5708,8 @@ void JTAG2::get_parameter (void) {
     }
     case JTAG2::PARAM_BAUD_RATE : {
       packet.body[1] = PARAM_BAUD_RATE_VAL;
-    16d0:	80 91 33 38 	lds	r24, 0x3833	; 0x803833 <JTAG2::PARAM_BAUD_RATE_VAL>
-    16d4:	f6 cf       	rjmp	.-20     	; 0x16c2 <main+0x4e2>
+    16d2:	80 91 33 38 	lds	r24, 0x3833	; 0x803833 <JTAG2::PARAM_BAUD_RATE_VAL>
+    16d6:	f6 cf       	rjmp	.-20     	; 0x16c4 <main+0x4e4>
 process_command():
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:293
     case JTAG2::CMND_GET_PARAMETER : {
@@ -5710,39 +5718,39 @@ process_command():
     }
     case JTAG2::CMND_ENTER_PROGMODE : {
       uint8_t c = UPDI_CONTROL;
-    16d6:	cc b3       	in	r28, 0x1c	; 28
+    16d8:	cc b3       	in	r28, 0x1c	; 28
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:294
       UPDI::updi_activate();
-    16d8:	0e 94 f6 02 	call	0x5ec	; 0x5ec <UPDI::updi_activate()>
+    16da:	0e 94 f6 02 	call	0x5ec	; 0x5ec <UPDI::updi_activate()>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:295
       JTAG2::set_response(JTAG2::RSP_OK);
-    16dc:	80 e8       	ldi	r24, 0x80	; 128
-    16de:	90 e0       	ldi	r25, 0x00	; 0
-    16e0:	0e 94 fe 01 	call	0x3fc	; 0x3fc <JTAG2::set_response(JTAG2::jtag_response_e)>
+    16de:	80 e8       	ldi	r24, 0x80	; 128
+    16e0:	90 e0       	ldi	r25, 0x00	; 0
+    16e2:	0e 94 fe 01 	call	0x3fc	; 0x3fc <JTAG2::set_response(JTAG2::jtag_response_e)>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:296
       if (!(c & _BV(UPDI::UPDI_INFO_bp)) && bit_is_set(UPDI_CONTROL, UPDI::UPDI_INFO_bp))
-    16e4:	c0 fd       	sbrc	r28, 0
-    16e6:	0e c0       	rjmp	.+28     	; 0x1704 <main+0x524>
-    16e8:	e0 9b       	sbis	0x1c, 0	; 28
-    16ea:	0c c0       	rjmp	.+24     	; 0x1704 <main+0x524>
+    16e6:	c0 fd       	sbrc	r28, 0
+    16e8:	0e c0       	rjmp	.+28     	; 0x1706 <main+0x526>
+    16ea:	e0 9b       	sbis	0x1c, 0	; 28
+    16ec:	0c c0       	rjmp	.+24     	; 0x1706 <main+0x526>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:297
         packet.size = 20;
-    16ec:	84 e1       	ldi	r24, 0x14	; 20
-    16ee:	90 e0       	ldi	r25, 0x00	; 0
-    16f0:	a0 e0       	ldi	r26, 0x00	; 0
-    16f2:	b0 e0       	ldi	r27, 0x00	; 0
-    16f4:	80 93 66 38 	sts	0x3866, r24	; 0x803866 <JTAG2::packet+0x3>
-    16f8:	90 93 67 38 	sts	0x3867, r25	; 0x803867 <JTAG2::packet+0x4>
-    16fc:	a0 93 68 38 	sts	0x3868, r26	; 0x803868 <JTAG2::packet+0x5>
-    1700:	b0 93 69 38 	sts	0x3869, r27	; 0x803869 <JTAG2::packet+0x6>
+    16ee:	84 e1       	ldi	r24, 0x14	; 20
+    16f0:	90 e0       	ldi	r25, 0x00	; 0
+    16f2:	a0 e0       	ldi	r26, 0x00	; 0
+    16f4:	b0 e0       	ldi	r27, 0x00	; 0
+    16f6:	80 93 66 38 	sts	0x3866, r24	; 0x803866 <JTAG2::packet+0x3>
+    16fa:	90 93 67 38 	sts	0x3867, r25	; 0x803867 <JTAG2::packet+0x4>
+    16fe:	a0 93 68 38 	sts	0x3868, r26	; 0x803868 <JTAG2::packet+0x5>
+    1702:	b0 93 69 38 	sts	0x3869, r27	; 0x803869 <JTAG2::packet+0x6>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:298
       TIM::LED_Blink();
-    1704:	0e 94 a0 01 	call	0x340	; 0x340 <TIM::LED_Blink()>
+    1706:	0e 94 a0 01 	call	0x340	; 0x340 <TIM::LED_Blink()>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:300
       /* terminal mode 許可時は WDTを無効にする */
       if (bit_is_set(UPDI_CONTROL, UPDI::UPDI_TERM_bp)) SYS::WDT_OFF();
-    1708:	e6 9b       	sbis	0x1c, 6	; 28
-    170a:	3c cf       	rjmp	.-392    	; 0x1584 <main+0x3a4>
+    170a:	e6 9b       	sbis	0x1c, 6	; 28
+    170c:	3c cf       	rjmp	.-392    	; 0x1586 <main+0x3a6>
 WDT_OFF():
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/SYS.cpp:137
 void SYS::WDT_SET (uint8_t _wdt_period) {
@@ -5751,65 +5759,76 @@ void SYS::WDT_SET (uint8_t _wdt_period) {
 }
 
 void SYS::WDT_OFF (void) { WDT_SET(WDT_PERIOD_OFF_gc); }
-    170c:	80 e0       	ldi	r24, 0x00	; 0
-    170e:	0e 94 da 01 	call	0x3b4	; 0x3b4 <SYS::WDT_SET(unsigned char)>
-    1712:	38 cf       	rjmp	.-400    	; 0x1584 <main+0x3a4>
+    170e:	80 e0       	ldi	r24, 0x00	; 0
+    1710:	0e 94 da 01 	call	0x3b4	; 0x3b4 <SYS::WDT_SET(unsigned char)>
+    1714:	38 cf       	rjmp	.-400    	; 0x1586 <main+0x3a6>
+main():
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:236
+
+bool UPDI::check_sig (void) {
+  uint8_t mem_type  = JTAG2::packet.body[1];
+  uint8_t s = _CAPS32(JTAG2::packet.body[2])->bytes[0];
+  uint8_t a = _CAPS32(JTAG2::packet.body[6])->bytes[0]
+    - (bit_is_set(UPDI_NVMCTRL, UPDI_BROW_bp) ? (uint8_t)NVM::EB_SIGROW
+    1716:	90 e8       	ldi	r25, 0x80	; 128
+    1718:	b0 ce       	rjmp	.-672    	; 0x147a <main+0x29a>
 check_sig():
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:240
-  uint8_t a = _CAPS32(JTAG2::packet.body[6])->bytes[0] - NVM::BASE_SIGROW;
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:237
+                                              : (uint8_t)NVM::BASE_SIGROW);
+    171a:	89 1b       	sub	r24, r25
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:242
   uint8_t c;
   if (bit_is_clear(UPDI_CONTROL, UPDI_PROG_bp) && mem_type == JTAG2::MTYPE_SIGN_JTAG && s == 1) {
     JTAG2::packet.body[0] = JTAG2::RSP_MEMORY;
     if (bit_is_clear(UPDI_CONTROL, UPDI_INFO_bp)) c = UPDI_LASTH ? 0x00 : 0xFF;
     else if (a == 0) c = 0x1E;
-    1714:	88 23       	and	r24, r24
-    1716:	81 f0       	breq	.+32     	; 0x1738 <main+0x558>
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:241
-    else if (a == 1) c = bit_is_set(UPDI_NVMCTRL, UPDI_GEN2_bp) ? 'A'
-    1718:	81 30       	cpi	r24, 0x01	; 1
-    171a:	31 f4       	brne	.+12     	; 0x1728 <main+0x548>
-    171c:	ee 99       	sbic	0x1d, 6	; 29
-    171e:	0e c0       	rjmp	.+28     	; 0x173c <main+0x55c>
-    1720:	ed 99       	sbic	0x1d, 5	; 29
-    1722:	0e c0       	rjmp	.+28     	; 0x1740 <main+0x560>
-main():
-    1724:	84 e7       	ldi	r24, 0x74	; 116
-    1726:	bd ce       	rjmp	.-646    	; 0x14a2 <main+0x2c2>
-check_sig():
+    171c:	81 f0       	breq	.+32     	; 0x173e <main+0x55e>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:243
+    else if (a == 1) c = bit_is_set(UPDI_NVMCTRL, UPDI_GEN2_bp) ? 'A'
+    171e:	81 30       	cpi	r24, 0x01	; 1
+    1720:	31 f4       	brne	.+12     	; 0x172e <main+0x54e>
+    1722:	ee 99       	sbic	0x1d, 6	; 29
+    1724:	0e c0       	rjmp	.+28     	; 0x1742 <main+0x562>
+    1726:	ed 99       	sbic	0x1d, 5	; 29
+    1728:	0e c0       	rjmp	.+28     	; 0x1746 <main+0x566>
+main():
+    172a:	84 e7       	ldi	r24, 0x74	; 116
+    172c:	bc ce       	rjmp	.-648    	; 0x14a6 <main+0x2c6>
+check_sig():
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:245
                        : bit_is_set(UPDI_NVMCTRL, UPDI_LOWF_bp) ? 'm' : 't';
     else if (a == 2) c = bit_is_set(UPDI_NVMCTRL, UPDI_GEN3_bp) ? '3'
-    1728:	82 30       	cpi	r24, 0x02	; 2
-    172a:	81 f4       	brne	.+32     	; 0x174c <main+0x56c>
-    172c:	ef 99       	sbic	0x1d, 7	; 29
-    172e:	0a c0       	rjmp	.+20     	; 0x1744 <main+0x564>
-    1730:	ee 99       	sbic	0x1d, 6	; 29
-    1732:	0a c0       	rjmp	.+20     	; 0x1748 <main+0x568>
+    172e:	82 30       	cpi	r24, 0x02	; 2
+    1730:	81 f4       	brne	.+32     	; 0x1752 <main+0x572>
+    1732:	ef 99       	sbic	0x1d, 7	; 29
+    1734:	0a c0       	rjmp	.+20     	; 0x174a <main+0x56a>
+    1736:	ee 99       	sbic	0x1d, 6	; 29
+    1738:	0a c0       	rjmp	.+20     	; 0x174e <main+0x56e>
 main():
-    1734:	80 e3       	ldi	r24, 0x30	; 48
-    1736:	b5 ce       	rjmp	.-662    	; 0x14a2 <main+0x2c2>
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:240
-  uint8_t a = _CAPS32(JTAG2::packet.body[6])->bytes[0] - NVM::BASE_SIGROW;
+    173a:	80 e3       	ldi	r24, 0x30	; 48
+    173c:	b4 ce       	rjmp	.-664    	; 0x14a6 <main+0x2c6>
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:242
+                                              : (uint8_t)NVM::BASE_SIGROW);
   uint8_t c;
   if (bit_is_clear(UPDI_CONTROL, UPDI_PROG_bp) && mem_type == JTAG2::MTYPE_SIGN_JTAG && s == 1) {
     JTAG2::packet.body[0] = JTAG2::RSP_MEMORY;
     if (bit_is_clear(UPDI_CONTROL, UPDI_INFO_bp)) c = UPDI_LASTH ? 0x00 : 0xFF;
     else if (a == 0) c = 0x1E;
-    1738:	8e e1       	ldi	r24, 0x1E	; 30
-    173a:	b3 ce       	rjmp	.-666    	; 0x14a2 <main+0x2c2>
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:241
-    else if (a == 1) c = bit_is_set(UPDI_NVMCTRL, UPDI_GEN2_bp) ? 'A'
-    173c:	81 e4       	ldi	r24, 0x41	; 65
-    173e:	b1 ce       	rjmp	.-670    	; 0x14a2 <main+0x2c2>
-    1740:	8d e6       	ldi	r24, 0x6D	; 109
-    1742:	af ce       	rjmp	.-674    	; 0x14a2 <main+0x2c2>
+    173e:	8e e1       	ldi	r24, 0x1E	; 30
+    1740:	b2 ce       	rjmp	.-668    	; 0x14a6 <main+0x2c6>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:243
+    else if (a == 1) c = bit_is_set(UPDI_NVMCTRL, UPDI_GEN2_bp) ? 'A'
+    1742:	81 e4       	ldi	r24, 0x41	; 65
+    1744:	b0 ce       	rjmp	.-672    	; 0x14a6 <main+0x2c6>
+    1746:	8d e6       	ldi	r24, 0x6D	; 109
+    1748:	ae ce       	rjmp	.-676    	; 0x14a6 <main+0x2c6>
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/UPDI.cpp:245
                        : bit_is_set(UPDI_NVMCTRL, UPDI_LOWF_bp) ? 'm' : 't';
     else if (a == 2) c = bit_is_set(UPDI_NVMCTRL, UPDI_GEN3_bp) ? '3'
-    1744:	83 e3       	ldi	r24, 0x33	; 51
-    1746:	ad ce       	rjmp	.-678    	; 0x14a2 <main+0x2c2>
-    1748:	82 e3       	ldi	r24, 0x32	; 50
-    174a:	ab ce       	rjmp	.-682    	; 0x14a2 <main+0x2c2>
+    174a:	83 e3       	ldi	r24, 0x33	; 51
+    174c:	ac ce       	rjmp	.-680    	; 0x14a6 <main+0x2c6>
+    174e:	82 e3       	ldi	r24, 0x32	; 50
+    1750:	aa ce       	rjmp	.-684    	; 0x14a6 <main+0x2c6>
 process_command():
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:307
     }
@@ -5818,8 +5837,8 @@ process_command():
       if (UPDI::check_sig()) break;
       /* terminal mode でなければLED高速点滅 */
       if (bit_is_clear(UPDI_CONTROL, UPDI::UPDI_TERM_bp)) TIM::LED_Fast();
-    174c:	e6 99       	sbic	0x1c, 6	; 28
-    174e:	17 c0       	rjmp	.+46     	; 0x177e <main+0x59e>
+    1752:	e6 99       	sbic	0x1c, 6	; 28
+    1754:	17 c0       	rjmp	.+46     	; 0x1784 <main+0x5a4>
 LED_TCB1():
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:160
     LEDG_EVOUT = EVSYS_USER_CHANNEL2_gc;
@@ -5828,31 +5847,31 @@ LED_TCB1():
 
 void LED_TCB1 (uint8_t mode, uint16_t ccmp) {
   if (TIM::mode != mode) {
-    1750:	80 91 50 38 	lds	r24, 0x3850	; 0x803850 <TIM::mode>
-    1754:	84 30       	cpi	r24, 0x04	; 4
-    1756:	99 f0       	breq	.+38     	; 0x177e <main+0x59e>
+    1756:	80 91 50 38 	lds	r24, 0x3850	; 0x803850 <TIM::mode>
+    175a:	84 30       	cpi	r24, 0x04	; 4
+    175c:	99 f0       	breq	.+38     	; 0x1784 <main+0x5a4>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:161
     TIM::mode = mode;
-    1758:	84 e0       	ldi	r24, 0x04	; 4
-    175a:	80 93 50 38 	sts	0x3850, r24	; 0x803850 <TIM::mode>
+    175e:	84 e0       	ldi	r24, 0x04	; 4
+    1760:	80 93 50 38 	sts	0x3850, r24	; 0x803850 <TIM::mode>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:162
     TCB1_CCMP = ccmp;
-    175e:	85 e1       	ldi	r24, 0x15	; 21
-    1760:	91 e0       	ldi	r25, 0x01	; 1
-    1762:	80 93 9c 0a 	sts	0x0A9C, r24	; 0x800a9c <UPDI::nvmprog_key+0x7f716a>
-    1766:	90 93 9d 0a 	sts	0x0A9D, r25	; 0x800a9d <UPDI::nvmprog_key+0x7f716b>
+    1764:	a5 e1       	ldi	r26, 0x15	; 21
+    1766:	b1 e0       	ldi	r27, 0x01	; 1
+    1768:	a0 93 9c 0a 	sts	0x0A9C, r26	; 0x800a9c <UPDI::nvmprog_key+0x7f7158>
+    176c:	b0 93 9d 0a 	sts	0x0A9D, r27	; 0x800a9d <UPDI::nvmprog_key+0x7f7159>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:163
     TCB1_CNT = 0;
-    176a:	10 92 9a 0a 	sts	0x0A9A, r1	; 0x800a9a <UPDI::nvmprog_key+0x7f7168>
-    176e:	10 92 9b 0a 	sts	0x0A9B, r1	; 0x800a9b <UPDI::nvmprog_key+0x7f7169>
+    1770:	10 92 9a 0a 	sts	0x0A9A, r1	; 0x800a9a <UPDI::nvmprog_key+0x7f7156>
+    1774:	10 92 9b 0a 	sts	0x0A9B, r1	; 0x800a9b <UPDI::nvmprog_key+0x7f7157>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:164
     TCB1_CTRLA = TCB_RUNSTDBY_bm | TCB_ENABLE_bm | TCB_CLKSEL_EVENT_gc;
-    1772:	8f e4       	ldi	r24, 0x4F	; 79
-    1774:	80 93 90 0a 	sts	0x0A90, r24	; 0x800a90 <UPDI::nvmprog_key+0x7f715e>
+    1778:	8f e4       	ldi	r24, 0x4F	; 79
+    177a:	80 93 90 0a 	sts	0x0A90, r24	; 0x800a90 <UPDI::nvmprog_key+0x7f714c>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/TIM.cpp:165
     LEDG_EVOUT = EVSYS_USER_CHANNEL0_gc;
-    1778:	81 e0       	ldi	r24, 0x01	; 1
-    177a:	80 93 a9 01 	sts	0x01A9, r24	; 0x8001a9 <UPDI::nvmprog_key+0x7f6877>
+    177e:	81 e0       	ldi	r24, 0x01	; 1
+    1780:	80 93 a9 01 	sts	0x01A9, r24	; 0x8001a9 <UPDI::nvmprog_key+0x7f6865>
 process_command():
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:312
 
@@ -5860,8 +5879,8 @@ process_command():
       if ((bit_is_clear(UPDI_CONTROL, UPDI::UPDI_PROG_bp)
         && bit_is_clear(UPDI_CONTROL, UPDI::UPDI_URWR_bp))
       || !UPDI::runtime(UPDI::UPDI_CMD_READ_MEMORY)) {
-    177e:	e1 99       	sbic	0x1c, 1	; 28
-    1780:	05 c0       	rjmp	.+10     	; 0x178c <main+0x5ac>
+    1784:	e1 99       	sbic	0x1c, 1	; 28
+    1786:	05 c0       	rjmp	.+10     	; 0x1792 <main+0x5b2>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:311
       /* terminal mode でなければLED高速点滅 */
       if (bit_is_clear(UPDI_CONTROL, UPDI::UPDI_TERM_bp)) TIM::LED_Fast();
@@ -5869,14 +5888,14 @@ process_command():
       /* PROG状態かUSERROW応答可能な場合はメモリ読出処理へ */
       if ((bit_is_clear(UPDI_CONTROL, UPDI::UPDI_PROG_bp)
         && bit_is_clear(UPDI_CONTROL, UPDI::UPDI_URWR_bp))
-    1782:	e5 99       	sbic	0x1c, 5	; 28
-    1784:	03 c0       	rjmp	.+6      	; 0x178c <main+0x5ac>
+    1788:	e5 99       	sbic	0x1c, 5	; 28
+    178a:	03 c0       	rjmp	.+6      	; 0x1792 <main+0x5b2>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:313
       || !UPDI::runtime(UPDI::UPDI_CMD_READ_MEMORY)) {
         JTAG2::set_response(JTAG2::RSP_ILLEGAL_MCU_STATE);
-    1786:	85 ea       	ldi	r24, 0xA5	; 165
-    1788:	90 e0       	ldi	r25, 0x00	; 0
-    178a:	40 cf       	rjmp	.-384    	; 0x160c <main+0x42c>
+    178c:	85 ea       	ldi	r24, 0xA5	; 165
+    178e:	90 e0       	ldi	r25, 0x00	; 0
+    1790:	3e cf       	rjmp	.-388    	; 0x160e <main+0x42e>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:312
       if (bit_is_clear(UPDI_CONTROL, UPDI::UPDI_TERM_bp)) TIM::LED_Fast();
 
@@ -5884,11 +5903,11 @@ process_command():
       if ((bit_is_clear(UPDI_CONTROL, UPDI::UPDI_PROG_bp)
         && bit_is_clear(UPDI_CONTROL, UPDI::UPDI_URWR_bp))
       || !UPDI::runtime(UPDI::UPDI_CMD_READ_MEMORY)) {
-    178c:	81 e0       	ldi	r24, 0x01	; 1
-    178e:	a4 d8       	rcall	.-3768   	; 0x8d8 <UPDI::runtime(unsigned char)>
-    1790:	81 11       	cpse	r24, r1
-    1792:	f8 ce       	rjmp	.-528    	; 0x1584 <main+0x3a4>
-    1794:	f8 cf       	rjmp	.-16     	; 0x1786 <main+0x5a6>
+    1792:	81 e0       	ldi	r24, 0x01	; 1
+    1794:	a1 d8       	rcall	.-3774   	; 0x8d8 <UPDI::runtime(unsigned char)>
+    1796:	81 11       	cpse	r24, r1
+    1798:	f6 ce       	rjmp	.-532    	; 0x1586 <main+0x3a6>
+    179a:	f8 cf       	rjmp	.-16     	; 0x178c <main+0x5ac>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:319
       }
       break;
@@ -5896,9 +5915,9 @@ process_command():
     case JTAG2::CMND_WRITE_MEMORY : {
       JTAG2::set_response(
         UPDI::runtime(UPDI::UPDI_CMD_WRITE_MEMORY)
-    1796:	82 e0       	ldi	r24, 0x02	; 2
-    1798:	9f d8       	rcall	.-3778   	; 0x8d8 <UPDI::runtime(unsigned char)>
-    179a:	81 11       	cpse	r24, r1
+    179c:	82 e0       	ldi	r24, 0x02	; 2
+    179e:	9c d8       	rcall	.-3784   	; 0x8d8 <UPDI::runtime(unsigned char)>
+    17a0:	81 11       	cpse	r24, r1
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:318
         JTAG2::set_response(JTAG2::RSP_ILLEGAL_MCU_STATE);
       }
@@ -5906,11 +5925,11 @@ process_command():
     }
     case JTAG2::CMND_WRITE_MEMORY : {
       JTAG2::set_response(
-    179c:	97 ce       	rjmp	.-722    	; 0x14cc <main+0x2ec>
+    17a2:	96 ce       	rjmp	.-724    	; 0x14d0 <main+0x2f0>
 main():
-    179e:	82 ea       	ldi	r24, 0xA2	; 162
-    17a0:	90 e0       	ldi	r25, 0x00	; 0
-    17a2:	34 cf       	rjmp	.-408    	; 0x160c <main+0x42c>
+    17a4:	82 ea       	ldi	r24, 0xA2	; 162
+    17a6:	90 e0       	ldi	r25, 0x00	; 0
+    17a8:	32 cf       	rjmp	.-412    	; 0x160e <main+0x42e>
 process_command():
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:326
         : JTAG2::RSP_ILLEGAL_MEMORY_TYPE
@@ -5919,13 +5938,13 @@ process_command():
     }
     case JTAG2::CMND_XMEGA_ERASE : {
       uint8_t c = UPDI_CONTROL;
-    17a4:	cc b3       	in	r28, 0x1c	; 28
+    17aa:	cc b3       	in	r28, 0x1c	; 28
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:328
       JTAG2::set_response(
         UPDI::runtime(UPDI::UPDI_CMD_ERASE)
-    17a6:	83 e0       	ldi	r24, 0x03	; 3
-    17a8:	97 d8       	rcall	.-3794   	; 0x8d8 <UPDI::runtime(unsigned char)>
-    17aa:	81 11       	cpse	r24, r1
+    17ac:	83 e0       	ldi	r24, 0x03	; 3
+    17ae:	94 d8       	rcall	.-3800   	; 0x8d8 <UPDI::runtime(unsigned char)>
+    17b0:	81 11       	cpse	r24, r1
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:327
       );
       break;
@@ -5933,35 +5952,35 @@ process_command():
     case JTAG2::CMND_XMEGA_ERASE : {
       uint8_t c = UPDI_CONTROL;
       JTAG2::set_response(
-    17ac:	15 c0       	rjmp	.+42     	; 0x17d8 <main+0x5f8>
+    17b2:	15 c0       	rjmp	.+42     	; 0x17de <main+0x5fe>
 main():
-    17ae:	85 ea       	ldi	r24, 0xA5	; 165
-    17b0:	90 e0       	ldi	r25, 0x00	; 0
+    17b4:	85 ea       	ldi	r24, 0xA5	; 165
+    17b6:	90 e0       	ldi	r25, 0x00	; 0
 process_command():
-    17b2:	0e 94 fe 01 	call	0x3fc	; 0x3fc <JTAG2::set_response(JTAG2::jtag_response_e)>
-    17b6:	c0 fd       	sbrc	r28, 0
+    17b8:	0e 94 fe 01 	call	0x3fc	; 0x3fc <JTAG2::set_response(JTAG2::jtag_response_e)>
+    17bc:	c0 fd       	sbrc	r28, 0
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:332
         UPDI::runtime(UPDI::UPDI_CMD_ERASE)
         ? JTAG2::RSP_OK
         : JTAG2::RSP_ILLEGAL_MCU_STATE
       );
       if (!(c & _BV(UPDI::UPDI_INFO_bp)) && bit_is_set(UPDI_CONTROL, UPDI::UPDI_INFO_bp))
-    17b8:	e5 ce       	rjmp	.-566    	; 0x1584 <main+0x3a4>
-    17ba:	e0 9b       	sbis	0x1c, 0	; 28
-    17bc:	e3 ce       	rjmp	.-570    	; 0x1584 <main+0x3a4>
-    17be:	83 e1       	ldi	r24, 0x13	; 19
+    17be:	e3 ce       	rjmp	.-570    	; 0x1586 <main+0x3a6>
+    17c0:	e0 9b       	sbis	0x1c, 0	; 28
+    17c2:	e1 ce       	rjmp	.-574    	; 0x1586 <main+0x3a6>
+    17c4:	83 e1       	ldi	r24, 0x13	; 19
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:333
         packet.size = 19;
-    17c0:	90 e0       	ldi	r25, 0x00	; 0
-    17c2:	a0 e0       	ldi	r26, 0x00	; 0
-    17c4:	b0 e0       	ldi	r27, 0x00	; 0
-    17c6:	80 93 66 38 	sts	0x3866, r24	; 0x803866 <JTAG2::packet+0x3>
-    17ca:	90 93 67 38 	sts	0x3867, r25	; 0x803867 <JTAG2::packet+0x4>
-    17ce:	a0 93 68 38 	sts	0x3868, r26	; 0x803868 <JTAG2::packet+0x5>
-    17d2:	b0 93 69 38 	sts	0x3869, r27	; 0x803869 <JTAG2::packet+0x6>
-    17d6:	d6 ce       	rjmp	.-596    	; 0x1584 <main+0x3a4>
+    17c6:	90 e0       	ldi	r25, 0x00	; 0
+    17c8:	a0 e0       	ldi	r26, 0x00	; 0
+    17ca:	b0 e0       	ldi	r27, 0x00	; 0
+    17cc:	80 93 66 38 	sts	0x3866, r24	; 0x803866 <JTAG2::packet+0x3>
+    17d0:	90 93 67 38 	sts	0x3867, r25	; 0x803867 <JTAG2::packet+0x4>
+    17d4:	a0 93 68 38 	sts	0x3868, r26	; 0x803868 <JTAG2::packet+0x5>
+    17d8:	b0 93 69 38 	sts	0x3869, r27	; 0x803869 <JTAG2::packet+0x6>
+    17dc:	d4 ce       	rjmp	.-600    	; 0x1586 <main+0x3a6>
 main():
-    17d8:	80 e8       	ldi	r24, 0x80	; 128
+    17de:	80 e8       	ldi	r24, 0x80	; 128
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:327
       );
       break;
@@ -5969,8 +5988,8 @@ main():
     case JTAG2::CMND_XMEGA_ERASE : {
       uint8_t c = UPDI_CONTROL;
       JTAG2::set_response(
-    17da:	90 e0       	ldi	r25, 0x00	; 0
-    17dc:	ea cf       	rjmp	.-44     	; 0x17b2 <main+0x5d2>
+    17e0:	90 e0       	ldi	r25, 0x00	; 0
+    17e2:	ea cf       	rjmp	.-44     	; 0x17b8 <main+0x5d8>
 process_command():
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:337
       if (!(c & _BV(UPDI::UPDI_INFO_bp)) && bit_is_set(UPDI_CONTROL, UPDI::UPDI_INFO_bp))
@@ -5979,25 +5998,25 @@ process_command():
     }
     case JTAG2::CMND_GO : {
       if (bit_is_set(UPDI_CONTROL, UPDI::UPDI_PROG_bp)) UPDI::runtime(UPDI::UPDI_CMD_GO);
-    17de:	e1 9b       	sbis	0x1c, 1	; 28
-    17e0:	75 ce       	rjmp	.-790    	; 0x14cc <main+0x2ec>
-    17e2:	84 e0       	ldi	r24, 0x04	; 4
-    17e4:	79 d8       	rcall	.-3854   	; 0x8d8 <UPDI::runtime(unsigned char)>
-    17e6:	72 ce       	rjmp	.-796    	; 0x14cc <main+0x2ec>
-    17e8:	80 e8       	ldi	r24, 0x80	; 128
+    17e4:	e1 9b       	sbis	0x1c, 1	; 28
+    17e6:	74 ce       	rjmp	.-792    	; 0x14d0 <main+0x2f0>
+    17e8:	84 e0       	ldi	r24, 0x04	; 4
+    17ea:	76 d8       	rcall	.-3860   	; 0x8d8 <UPDI::runtime(unsigned char)>
+    17ec:	71 ce       	rjmp	.-798    	; 0x14d0 <main+0x2f0>
+    17ee:	80 e8       	ldi	r24, 0x80	; 128
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:342
       JTAG2::set_response(JTAG2::RSP_OK);
       break;
     }
     case JTAG2::CMND_SIGN_OFF : {
       JTAG2::set_response(JTAG2::RSP_OK);
-    17ea:	90 e0       	ldi	r25, 0x00	; 0
-    17ec:	0e 94 fe 01 	call	0x3fc	; 0x3fc <JTAG2::set_response(JTAG2::jtag_response_e)>
-    17f0:	0e 94 2d 02 	call	0x45a	; 0x45a <JTAG2::answer_transfer()>
+    17f0:	90 e0       	ldi	r25, 0x00	; 0
+    17f2:	0e 94 fe 01 	call	0x3fc	; 0x3fc <JTAG2::set_response(JTAG2::jtag_response_e)>
+    17f6:	0e 94 2d 02 	call	0x45a	; 0x45a <JTAG2::answer_transfer()>
 flush():
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:343
       JTAG2::answer_transfer();
-    17f4:	80 91 24 08 	lds	r24, 0x0824	; 0x800824 <UPDI::nvmprog_key+0x7f6ef2>
+    17fa:	80 91 24 08 	lds	r24, 0x0824	; 0x800824 <UPDI::nvmprog_key+0x7f6ee0>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:112
   JTAG_USART.STATUS = USART_TXCIF_bm;
   return JTAG_USART.TXDATAL = _data;
@@ -6005,20 +6024,20 @@ flush():
 
 void JTAG2::flush (void) {
   loop_until_bit_is_set(JTAG_USART.STATUS, USART_TXCIF_bp);
-    17f8:	86 ff       	sbrs	r24, 6
-    17fa:	fc cf       	rjmp	.-8      	; 0x17f4 <main+0x614>
+    17fe:	86 ff       	sbrs	r24, 6
+    1800:	fc cf       	rjmp	.-8      	; 0x17fa <main+0x61a>
 WDT_REBOOT():
-    17fc:	81 e0       	ldi	r24, 0x01	; 1
+    1802:	81 e0       	ldi	r24, 0x01	; 1
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/SYS.cpp:142
 
 void SYS::WDT_ON (void) { WDT_SET(WDT_PERIOD_8KCLK_gc); }
 
 void SYS::WDT_REBOOT (void) {
   WDT_SET(WDT_PERIOD_8CLK_gc);
-    17fe:	0e 94 da 01 	call	0x3b4	; 0x3b4 <SYS::WDT_SET(unsigned char)>
-    1802:	ff cf       	rjmp	.-2      	; 0x1802 <main+0x622>
+    1804:	0e 94 da 01 	call	0x3b4	; 0x3b4 <SYS::WDT_SET(unsigned char)>
+    1808:	ff cf       	rjmp	.-2      	; 0x1808 <main+0x628>
 process_command():
-    1804:	80 91 77 38 	lds	r24, 0x3877	; 0x803877 <JTAG2::packet+0x14>
+    180a:	80 91 77 38 	lds	r24, 0x3877	; 0x803877 <JTAG2::packet+0x14>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:352
       SYS::WDT_REBOOT();
       /* Session Complete */
@@ -6026,142 +6045,152 @@ process_command():
     // Ex) struct xmega_device_desc
     case JTAG2::CMND_SET_XMEGA_PARAMS : {
       NVM::nvm_eeprom_offset   = _CAPS32(packet.body[12])->dword;
-    1808:	90 91 78 38 	lds	r25, 0x3878	; 0x803878 <JTAG2::packet+0x15>
-    180c:	a0 91 79 38 	lds	r26, 0x3879	; 0x803879 <JTAG2::packet+0x16>
-    1810:	b0 91 7a 38 	lds	r27, 0x387A	; 0x80387a <JTAG2::packet+0x17>
-    1814:	80 93 5f 38 	sts	0x385F, r24	; 0x80385f <NVM::nvm_eeprom_offset>
-    1818:	90 93 60 38 	sts	0x3860, r25	; 0x803860 <NVM::nvm_eeprom_offset+0x1>
-    181c:	a0 93 61 38 	sts	0x3861, r26	; 0x803861 <NVM::nvm_eeprom_offset+0x2>
-    1820:	b0 93 62 38 	sts	0x3862, r27	; 0x803862 <NVM::nvm_eeprom_offset+0x3>
-    1824:	80 91 83 38 	lds	r24, 0x3883	; 0x803883 <JTAG2::packet+0x20>
+    180e:	90 91 78 38 	lds	r25, 0x3878	; 0x803878 <JTAG2::packet+0x15>
+    1812:	a0 91 79 38 	lds	r26, 0x3879	; 0x803879 <JTAG2::packet+0x16>
+    1816:	b0 91 7a 38 	lds	r27, 0x387A	; 0x80387a <JTAG2::packet+0x17>
+    181a:	80 93 5f 38 	sts	0x385F, r24	; 0x80385f <NVM::nvm_eeprom_offset>
+    181e:	90 93 60 38 	sts	0x3860, r25	; 0x803860 <NVM::nvm_eeprom_offset+0x1>
+    1822:	a0 93 61 38 	sts	0x3861, r26	; 0x803861 <NVM::nvm_eeprom_offset+0x2>
+    1826:	b0 93 62 38 	sts	0x3862, r27	; 0x803862 <NVM::nvm_eeprom_offset+0x3>
+    182a:	80 91 83 38 	lds	r24, 0x3883	; 0x803883 <JTAG2::packet+0x20>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:354
     //NVM::nvm_fuse_offset     = _CAPS32(packet.body[16])->dword;
       NVM::nvm_user_sig_offset = _CAPS32(packet.body[24])->dword;
-    1828:	90 91 84 38 	lds	r25, 0x3884	; 0x803884 <JTAG2::packet+0x21>
-    182c:	a0 91 85 38 	lds	r26, 0x3885	; 0x803885 <JTAG2::packet+0x22>
-    1830:	b0 91 86 38 	lds	r27, 0x3886	; 0x803886 <JTAG2::packet+0x23>
-    1834:	80 93 5b 38 	sts	0x385B, r24	; 0x80385b <NVM::nvm_user_sig_offset>
-    1838:	90 93 5c 38 	sts	0x385C, r25	; 0x80385c <NVM::nvm_user_sig_offset+0x1>
-    183c:	a0 93 5d 38 	sts	0x385D, r26	; 0x80385d <NVM::nvm_user_sig_offset+0x2>
-    1840:	b0 93 5e 38 	sts	0x385E, r27	; 0x80385e <NVM::nvm_user_sig_offset+0x3>
-    1844:	80 91 8b 38 	lds	r24, 0x388B	; 0x80388b <JTAG2::packet+0x28>
+    182e:	90 91 84 38 	lds	r25, 0x3884	; 0x803884 <JTAG2::packet+0x21>
+    1832:	a0 91 85 38 	lds	r26, 0x3885	; 0x803885 <JTAG2::packet+0x22>
+    1836:	b0 91 86 38 	lds	r27, 0x3886	; 0x803886 <JTAG2::packet+0x23>
+    183a:	80 93 5b 38 	sts	0x385B, r24	; 0x80385b <NVM::nvm_user_sig_offset>
+    183e:	90 93 5c 38 	sts	0x385C, r25	; 0x80385c <NVM::nvm_user_sig_offset+0x1>
+    1842:	a0 93 5d 38 	sts	0x385D, r26	; 0x80385d <NVM::nvm_user_sig_offset+0x2>
+    1846:	b0 93 5e 38 	sts	0x385E, r27	; 0x80385e <NVM::nvm_user_sig_offset+0x3>
+    184a:	80 91 8b 38 	lds	r24, 0x388B	; 0x80388b <JTAG2::packet+0x28>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:355
       NVM::nvm_data_offset     = _CAPS32(packet.body[32])->dword;
-    1848:	90 91 8c 38 	lds	r25, 0x388C	; 0x80388c <JTAG2::packet+0x29>
-    184c:	a0 91 8d 38 	lds	r26, 0x388D	; 0x80388d <JTAG2::packet+0x2a>
-    1850:	b0 91 8e 38 	lds	r27, 0x388E	; 0x80388e <JTAG2::packet+0x2b>
-    1854:	80 93 57 38 	sts	0x3857, r24	; 0x803857 <NVM::nvm_data_offset>
-    1858:	90 93 58 38 	sts	0x3858, r25	; 0x803858 <NVM::nvm_data_offset+0x1>
-    185c:	a0 93 59 38 	sts	0x3859, r26	; 0x803859 <NVM::nvm_data_offset+0x2>
-    1860:	b0 93 5a 38 	sts	0x385A, r27	; 0x80385a <NVM::nvm_data_offset+0x3>
-    1864:	80 91 95 38 	lds	r24, 0x3895	; 0x803895 <JTAG2::packet+0x32>
+    184e:	90 91 8c 38 	lds	r25, 0x388C	; 0x80388c <JTAG2::packet+0x29>
+    1852:	a0 91 8d 38 	lds	r26, 0x388D	; 0x80388d <JTAG2::packet+0x2a>
+    1856:	b0 91 8e 38 	lds	r27, 0x388E	; 0x80388e <JTAG2::packet+0x2b>
+    185a:	80 93 57 38 	sts	0x3857, r24	; 0x803857 <NVM::nvm_data_offset>
+    185e:	90 93 58 38 	sts	0x3858, r25	; 0x803858 <NVM::nvm_data_offset+0x1>
+    1862:	a0 93 59 38 	sts	0x3859, r26	; 0x803859 <NVM::nvm_data_offset+0x2>
+    1866:	b0 93 5a 38 	sts	0x385A, r27	; 0x80385a <NVM::nvm_data_offset+0x3>
+    186a:	80 91 95 38 	lds	r24, 0x3895	; 0x803895 <JTAG2::packet+0x32>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:356
       NVM::flash_page_size     = _CAPS16(packet.body[42])->word;
-    1868:	90 91 96 38 	lds	r25, 0x3896	; 0x803896 <JTAG2::packet+0x33>
-    186c:	80 93 55 38 	sts	0x3855, r24	; 0x803855 <NVM::flash_page_size>
-    1870:	90 93 56 38 	sts	0x3856, r25	; 0x803856 <NVM::flash_page_size+0x1>
-    1874:	80 91 5c 38 	lds	r24, 0x385C	; 0x80385c <NVM::nvm_user_sig_offset+0x1>
+    186e:	90 91 96 38 	lds	r25, 0x3896	; 0x803896 <JTAG2::packet+0x33>
+    1872:	80 93 55 38 	sts	0x3855, r24	; 0x803855 <NVM::flash_page_size>
+    1876:	90 93 56 38 	sts	0x3856, r25	; 0x803856 <NVM::flash_page_size+0x1>
+    187a:	80 91 5c 38 	lds	r24, 0x385C	; 0x80385c <NVM::nvm_user_sig_offset+0x1>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:359
     //NVM::eeprom_page_size    = packet.body[46];
       // AVR_DA/DB/DD/EA/EB
       if (_CAPS32(NVM::nvm_user_sig_offset)->bytes[1] != 0x13) {
-    1878:	83 31       	cpi	r24, 0x13	; 19
-    187a:	09 f4       	brne	.+2      	; 0x187e <main+0x69e>
-    187c:	27 ce       	rjmp	.-946    	; 0x14cc <main+0x2ec>
-    187e:	80 e0       	ldi	r24, 0x00	; 0
+    187e:	83 31       	cpi	r24, 0x13	; 19
+    1880:	09 f4       	brne	.+2      	; 0x1884 <main+0x6a4>
+    1882:	26 ce       	rjmp	.-948    	; 0x14d0 <main+0x2f0>
+    1884:	80 e0       	ldi	r24, 0x00	; 0
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:360
         NVM::nvm_flash_offset  = 0x800000;
-    1880:	90 e0       	ldi	r25, 0x00	; 0
-    1882:	a0 e8       	ldi	r26, 0x80	; 128
-    1884:	b0 e0       	ldi	r27, 0x00	; 0
-    1886:	80 93 51 38 	sts	0x3851, r24	; 0x803851 <NVM::nvm_flash_offset>
-    188a:	90 93 52 38 	sts	0x3852, r25	; 0x803852 <NVM::nvm_flash_offset+0x1>
-    188e:	a0 93 53 38 	sts	0x3853, r26	; 0x803853 <NVM::nvm_flash_offset+0x2>
-    1892:	b0 93 54 38 	sts	0x3854, r27	; 0x803854 <NVM::nvm_flash_offset+0x3>
-    1896:	ee 9a       	sbi	0x1d, 6	; 29
+    1886:	90 e0       	ldi	r25, 0x00	; 0
+    1888:	a0 e8       	ldi	r26, 0x80	; 128
+    188a:	b0 e0       	ldi	r27, 0x00	; 0
+    188c:	80 93 51 38 	sts	0x3851, r24	; 0x803851 <NVM::nvm_flash_offset>
+    1890:	90 93 52 38 	sts	0x3852, r25	; 0x803852 <NVM::nvm_flash_offset+0x1>
+    1894:	a0 93 53 38 	sts	0x3853, r26	; 0x803853 <NVM::nvm_flash_offset+0x2>
+    1898:	b0 93 54 38 	sts	0x3854, r27	; 0x803854 <NVM::nvm_flash_offset+0x3>
+    189c:	ee 9a       	sbi	0x1d, 6	; 29
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:361
         UPDI_NVMCTRL |= _BV(UPDI::UPDI_GEN2_bp);
-    1898:	19 ce       	rjmp	.-974    	; 0x14cc <main+0x2ec>
+    189e:	80 91 5c 38 	lds	r24, 0x385C	; 0x80385c <NVM::nvm_user_sig_offset+0x1>
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:363
+        // EB
+        if (_CAPS32(NVM::nvm_user_sig_offset)->bytes[1] == 0x12) {
+    18a2:	82 31       	cpi	r24, 0x12	; 18
+    18a4:	09 f0       	breq	.+2      	; 0x18a8 <main+0x6c8>
+    18a6:	14 ce       	rjmp	.-984    	; 0x14d0 <main+0x2f0>
+    18a8:	ec 9a       	sbi	0x1d, 4	; 29
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW753B/src/JTAG2.cpp:364
+          UPDI_NVMCTRL |= _BV(UPDI::UPDI_BROW_bp);
+    18aa:	12 ce       	rjmp	.-988    	; 0x14d0 <main+0x2f0>
 
-0000189a <setjmp>:
+000018ac <setjmp>:
 setjmp():
-    189a:	dc 01       	movw	r26, r24
-    189c:	2d 92       	st	X+, r2
-    189e:	3d 92       	st	X+, r3
-    18a0:	4d 92       	st	X+, r4
-    18a2:	5d 92       	st	X+, r5
-    18a4:	6d 92       	st	X+, r6
-    18a6:	7d 92       	st	X+, r7
-    18a8:	8d 92       	st	X+, r8
-    18aa:	9d 92       	st	X+, r9
-    18ac:	ad 92       	st	X+, r10
-    18ae:	bd 92       	st	X+, r11
-    18b0:	cd 92       	st	X+, r12
-    18b2:	dd 92       	st	X+, r13
-    18b4:	ed 92       	st	X+, r14
-    18b6:	fd 92       	st	X+, r15
-    18b8:	0d 93       	st	X+, r16
-    18ba:	1d 93       	st	X+, r17
-    18bc:	cd 93       	st	X+, r28
-    18be:	dd 93       	st	X+, r29
-    18c0:	ff 91       	pop	r31
-    18c2:	ef 91       	pop	r30
-    18c4:	8d b7       	in	r24, 0x3d	; 61
-    18c6:	8d 93       	st	X+, r24
-    18c8:	8e b7       	in	r24, 0x3e	; 62
-    18ca:	8d 93       	st	X+, r24
-    18cc:	8f b7       	in	r24, 0x3f	; 63
-    18ce:	8d 93       	st	X+, r24
-    18d0:	ed 93       	st	X+, r30
-    18d2:	fd 93       	st	X+, r31
-    18d4:	88 27       	eor	r24, r24
-    18d6:	99 27       	eor	r25, r25
-    18d8:	09 94       	ijmp
+    18ac:	dc 01       	movw	r26, r24
+    18ae:	2d 92       	st	X+, r2
+    18b0:	3d 92       	st	X+, r3
+    18b2:	4d 92       	st	X+, r4
+    18b4:	5d 92       	st	X+, r5
+    18b6:	6d 92       	st	X+, r6
+    18b8:	7d 92       	st	X+, r7
+    18ba:	8d 92       	st	X+, r8
+    18bc:	9d 92       	st	X+, r9
+    18be:	ad 92       	st	X+, r10
+    18c0:	bd 92       	st	X+, r11
+    18c2:	cd 92       	st	X+, r12
+    18c4:	dd 92       	st	X+, r13
+    18c6:	ed 92       	st	X+, r14
+    18c8:	fd 92       	st	X+, r15
+    18ca:	0d 93       	st	X+, r16
+    18cc:	1d 93       	st	X+, r17
+    18ce:	cd 93       	st	X+, r28
+    18d0:	dd 93       	st	X+, r29
+    18d2:	ff 91       	pop	r31
+    18d4:	ef 91       	pop	r30
+    18d6:	8d b7       	in	r24, 0x3d	; 61
+    18d8:	8d 93       	st	X+, r24
+    18da:	8e b7       	in	r24, 0x3e	; 62
+    18dc:	8d 93       	st	X+, r24
+    18de:	8f b7       	in	r24, 0x3f	; 63
+    18e0:	8d 93       	st	X+, r24
+    18e2:	ed 93       	st	X+, r30
+    18e4:	fd 93       	st	X+, r31
+    18e6:	88 27       	eor	r24, r24
+    18e8:	99 27       	eor	r25, r25
+    18ea:	09 94       	ijmp
 
-000018da <longjmp>:
+000018ec <longjmp>:
 longjmp():
-    18da:	dc 01       	movw	r26, r24
-    18dc:	cb 01       	movw	r24, r22
-    18de:	81 30       	cpi	r24, 0x01	; 1
-    18e0:	91 05       	cpc	r25, r1
-    18e2:	81 1d       	adc	r24, r1
-    18e4:	2d 90       	ld	r2, X+
-    18e6:	3d 90       	ld	r3, X+
-    18e8:	4d 90       	ld	r4, X+
-    18ea:	5d 90       	ld	r5, X+
-    18ec:	6d 90       	ld	r6, X+
-    18ee:	7d 90       	ld	r7, X+
-    18f0:	8d 90       	ld	r8, X+
-    18f2:	9d 90       	ld	r9, X+
-    18f4:	ad 90       	ld	r10, X+
-    18f6:	bd 90       	ld	r11, X+
-    18f8:	cd 90       	ld	r12, X+
-    18fa:	dd 90       	ld	r13, X+
-    18fc:	ed 90       	ld	r14, X+
-    18fe:	fd 90       	ld	r15, X+
-    1900:	0d 91       	ld	r16, X+
-    1902:	1d 91       	ld	r17, X+
-    1904:	cd 91       	ld	r28, X+
-    1906:	dd 91       	ld	r29, X+
-    1908:	ed 91       	ld	r30, X+
-    190a:	fd 91       	ld	r31, X+
-    190c:	0d 90       	ld	r0, X+
-    190e:	0f be       	out	0x3f, r0	; 63
-    1910:	ed bf       	out	0x3d, r30	; 61
-    1912:	fe bf       	out	0x3e, r31	; 62
-    1914:	ed 91       	ld	r30, X+
-    1916:	fd 91       	ld	r31, X+
-    1918:	09 94       	ijmp
+    18ec:	dc 01       	movw	r26, r24
+    18ee:	cb 01       	movw	r24, r22
+    18f0:	81 30       	cpi	r24, 0x01	; 1
+    18f2:	91 05       	cpc	r25, r1
+    18f4:	81 1d       	adc	r24, r1
+    18f6:	2d 90       	ld	r2, X+
+    18f8:	3d 90       	ld	r3, X+
+    18fa:	4d 90       	ld	r4, X+
+    18fc:	5d 90       	ld	r5, X+
+    18fe:	6d 90       	ld	r6, X+
+    1900:	7d 90       	ld	r7, X+
+    1902:	8d 90       	ld	r8, X+
+    1904:	9d 90       	ld	r9, X+
+    1906:	ad 90       	ld	r10, X+
+    1908:	bd 90       	ld	r11, X+
+    190a:	cd 90       	ld	r12, X+
+    190c:	dd 90       	ld	r13, X+
+    190e:	ed 90       	ld	r14, X+
+    1910:	fd 90       	ld	r15, X+
+    1912:	0d 91       	ld	r16, X+
+    1914:	1d 91       	ld	r17, X+
+    1916:	cd 91       	ld	r28, X+
+    1918:	dd 91       	ld	r29, X+
+    191a:	ed 91       	ld	r30, X+
+    191c:	fd 91       	ld	r31, X+
+    191e:	0d 90       	ld	r0, X+
+    1920:	0f be       	out	0x3f, r0	; 63
+    1922:	ed bf       	out	0x3d, r30	; 61
+    1924:	fe bf       	out	0x3e, r31	; 62
+    1926:	ed 91       	ld	r30, X+
+    1928:	fd 91       	ld	r31, X+
+    192a:	09 94       	ijmp
 
-0000191a <_exit>:
+0000192c <_exit>:
 exit():
-    191a:	f8 94       	cli
+    192c:	f8 94       	cli
 
-0000191c <__stop_program>:
+0000192e <__stop_program>:
 __stop_program():
-    191c:	ff cf       	rjmp	.-2      	; 0x191c <__stop_program>
+    192e:	ff cf       	rjmp	.-2      	; 0x192e <__stop_program>
 
 Disassembly of section .nvmem:
 
-00001974 <.nvmem>:
+00001986 <.nvmem>:
 	...

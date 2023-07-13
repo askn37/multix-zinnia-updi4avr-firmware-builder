@@ -359,6 +359,10 @@ inline void JTAG2::process_command (void) {
       if (_CAPS32(NVM::nvm_user_sig_offset)->bytes[1] != 0x13) {
         NVM::nvm_flash_offset  = 0x800000;
         UPDI_NVMCTRL |= _BV(UPDI::UPDI_GEN2_bp);
+        // EB
+        if (_CAPS32(NVM::nvm_user_sig_offset)->bytes[1] == 0x12) {
+          UPDI_NVMCTRL |= _BV(UPDI::UPDI_BROW_bp);
+        }
       }
     }
     /* no support command, dummy response, all ok */
