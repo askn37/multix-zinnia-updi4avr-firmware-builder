@@ -30,6 +30,7 @@ void UPDI::setup (void) {
   UPDI_USART.CTRLA = UPDI_USART_CTRLA;
   UPDI_USART.CTRLC = UPDI_USART_CTRLC;
   UPDI_USART.CTRLB = UPDI_USART_ON;
+  UPDI_CONTROL &= ~_BV(UPDI::UPDI_CLKU_bp);
 
   /* ソフトリセット後は ターゲットのリセットを解除 */
   if ( bit_is_set(RSTCTRL_RSTFR, RSTCTRL_SWRF_bp) ) UPDI::Target_Reset(false);
@@ -190,11 +191,14 @@ uint8_t UPDI::ld8 (uint32_t addr) {
  * コントロールステータス受信
  */
 
-bool UPDI::is_cs_stat (const uint8_t code, uint8_t check) {
+uint8_t UPDI::get_cs_stat (const uint8_t code) {
   static uint8_t set_ptr[] = { UPDI::UPDI_SYNCH, 0 };
   set_ptr[1] = UPDI::UPDI_LDCS | code;
   while (!UPDI::send_bytes(set_ptr, sizeof(set_ptr))) UPDI::BREAK();
-  return check == (UPDI::RECV() & check);
+  return UPDI::RECV();
+}
+inline bool UPDI::is_cs_stat (const uint8_t code, uint8_t check) {
+  return check == (UPDI::get_cs_stat(code) & check);
 }
 inline bool UPDI::is_sys_stat (const uint8_t check) {
   return UPDI::is_cs_stat(UPDI::UPDI_CS_ASI_SYS_STATUS, check);
@@ -218,6 +222,12 @@ bool UPDI::set_cs_stat (const uint8_t code, uint8_t data) {
 }
 inline bool UPDI::set_cs_ctra (const uint8_t data) {
   return UPDI::set_cs_stat(UPDI::UPDI_CS_CTRLA, data);
+}
+inline bool UPDI::set_cs_asi_ctra (const uint8_t data) {
+  return UPDI::set_cs_stat(UPDI::UPDI_CS_ASI_CTRLA, data);
+}
+inline uint8_t UPDI::get_cs_asi_ctra (void) {
+  return UPDI::get_cs_stat(UPDI::UPDI_CS_ASI_CTRLA);
 }
 inline bool UPDI::updi_reset (bool logic) {
   return UPDI::set_cs_stat(
@@ -270,9 +280,9 @@ bool UPDI::enter_userrow (void) {
 void HV_Pulse (void) {
   TIM::HV_Pulse_ON();
   openDrainWrite(TRST_PIN, LOW);
-  delay_micros(2000);
+  delay_micros(800);
   openDrainWrite(TRST_PIN, HIGH);
-  delay_micros(2000);
+  delay_micros(800);
   if (bit_is_set(UPDI_NVMCTRL, UPDI::UPDI_GEN2_bp)) {
     digitalWrite(HV8_PIN, HIGH);
     delay_micros(800);
@@ -288,6 +298,7 @@ void HV_Pulse (void) {
   UPDI::SEND(UPDI::UPDI_NOP);
   UPDI_USART.BAUD = UPDI_BAUD_CALC;
   UPDI_CONTROL |= _BV(UPDI::UPDI_ERHV_bp);
+  UPDI_CONTROL &= ~_BV(UPDI::UPDI_CLKU_bp);
 }
 
 
@@ -349,6 +360,7 @@ bool UPDI::enter_updi (bool skip) {
       UPDI::BREAK();
   }
   if (bit_is_clear(UPDI_CONTROL, UPDI::UPDI_INFO_bp)) {
+    if (!UPDI::set_cs_asi_ctra(UPDI::UPDI_SET_UPDICLKSEL_8M)) return false;
     if (!UPDI::set_cs_ctra(UPDI::UPDI_SET_GTVAL_2)) return false;
     if (!UPDI::send_bytes(set_ptr, sizeof(set_ptr))) return false;
     while (_len--) *_p++ = UPDI::RECV();
@@ -382,6 +394,11 @@ bool UPDI::enter_updi (bool skip) {
       }
     }
     UPDI_CONTROL |= _BV(UPDI::UPDI_INFO_bp);
+  }
+  if ((UPDI::get_cs_asi_ctra() & UPDI::UPDI_SET_UPDICLKSEL_bm) 
+                              == UPDI::UPDI_SET_UPDICLKSEL_8M) {
+    UPDI_CONTROL |= _BV(UPDI::UPDI_CLKU_bp);
+    UPDI_USART.BAUD = UPDI_BAUD_CALC >> 1;
   }
   return true;
 }

@@ -84,6 +84,7 @@ namespace UPDI {
     , UPDI_FCHV_bp      = 4   /*  16 HV強制許可 */
     , UPDI_URWR_bp      = 5   /*  32 USERROW特殊書込 */
     , UPDI_TERM_bp      = 6   /*  64 terminal mode */
+    , UPDI_CLKU_bp      = 7   /* 128 UPDI拘束動作で真 */
   };
   enum updi_nvmctrl_p {
       UPDI_BROW_bp      = 4   /*  16 BOOTROWが存在すると真 (AVR_EB) */
@@ -191,12 +192,15 @@ namespace UPDI {
   bool st8 (uint32_t addr, uint8_t data);
   bool sts8 (uint32_t addr, uint8_t *data, size_t len);
   uint8_t ld8 (uint32_t addr);
+  uint8_t get_cs_stat (const uint8_t code);
   bool is_cs_stat (const uint8_t code, uint8_t check);
   bool is_sys_stat (const uint8_t check);
   bool is_key_stat (const uint8_t check);
   bool is_rst_stat (void);
   bool set_cs_stat (const uint8_t code, uint8_t data);
   bool set_cs_ctra (const uint8_t data);
+  bool set_cs_asi_ctra (const uint8_t data);
+  uint8_t get_cs_asi_ctra (void);
   bool updi_reset (bool logic);
   bool enter_updi (bool skip = false);
   bool enter_prog (void);

@@ -122,6 +122,11 @@ Vtarget         : 5.0 V
 
 ## 更新履歴
 
+- v0.2.4 (23/09/09)
+  - `7.3.0-avr8-gnu-toolchain-230831`に更新。
+  - `programmers.txt`を改正。
+    - `SerialUPDI`の`-xrtsdtr=High`オプションを有効化。
+
 - v0.2.3 (23/07/09)
   - `7.3.0-avr8-gnu-toolchain-230628`に更新。
 
