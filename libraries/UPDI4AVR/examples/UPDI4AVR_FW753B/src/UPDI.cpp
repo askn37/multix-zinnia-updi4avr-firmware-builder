@@ -342,6 +342,7 @@ bool UPDI::enter_updi (bool skip) {
   static uint8_t set_ptr[] = { UPDI::UPDI_SYNCH, UPDI::UPDI_SIB_128 };
   uint8_t* _p = &JTAG2::packet.body[4];
   size_t _len = 16;
+  bool hvol = SYS::get_vcc() >= 4250;
   if (!skip) {
     /* HV制御強制許可 */
     if (bit_is_set(UPDI_CONTROL, UPDI_FCHV_bp)) {
@@ -360,7 +361,7 @@ bool UPDI::enter_updi (bool skip) {
       UPDI::BREAK();
   }
   if (bit_is_clear(UPDI_CONTROL, UPDI::UPDI_INFO_bp)) {
-    if (!UPDI::set_cs_asi_ctra(UPDI::UPDI_SET_UPDICLKSEL_8M)) return false;
+    if (hvol && !UPDI::set_cs_asi_ctra(UPDI::UPDI_SET_UPDICLKSEL_8M)) return false;
     if (!UPDI::set_cs_ctra(UPDI::UPDI_SET_GTVAL_2)) return false;
     if (!UPDI::send_bytes(set_ptr, sizeof(set_ptr))) return false;
     while (_len--) *_p++ = UPDI::RECV();
@@ -395,8 +396,8 @@ bool UPDI::enter_updi (bool skip) {
     }
     UPDI_CONTROL |= _BV(UPDI::UPDI_INFO_bp);
   }
-  if ((UPDI::get_cs_asi_ctra() & UPDI::UPDI_SET_UPDICLKSEL_bm) 
-                              == UPDI::UPDI_SET_UPDICLKSEL_8M) {
+  if (hvol && (UPDI::get_cs_asi_ctra() & UPDI::UPDI_SET_UPDICLKSEL_bm) 
+                                      == UPDI::UPDI_SET_UPDICLKSEL_8M) {
     UPDI_CONTROL |= _BV(UPDI::UPDI_CLKU_bp);
     UPDI_USART.BAUD = UPDI_BAUD_CALC >> 1;
   }
