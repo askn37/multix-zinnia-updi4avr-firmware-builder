@@ -221,7 +221,7 @@ ISR(portIntrruptVector(SW_SENSE_PIN), ISR_NAKED) {
   UPDI_USART.CTRLB = UPDI_USART_OFF;
 
   /* チャタリング抑制 */
-  delay_micros(1000);
+  delay_micros(800);
 
   /* ターゲットリセット維持 */
   pinMode(UPDI_TDAT_PIN, OUTPUT);

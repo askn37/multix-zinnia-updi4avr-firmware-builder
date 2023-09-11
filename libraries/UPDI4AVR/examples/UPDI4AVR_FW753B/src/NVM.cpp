@@ -33,7 +33,7 @@ namespace NVM {
   static uint8_t set_repeat_rsd[] = {
       UPDI::UPDI_SYNCH
     , UPDI::UPDI_STCS    | UPDI::UPDI_CS_CTRLA
-    , UPDI::UPDI_SET_RSD | UPDI::UPDI_SET_GTVAL_2
+    , UPDI::UPDI_SET_RSD | UPDI_GTVAL
     , UPDI::UPDI_SYNCH
     , UPDI::UPDI_REPEAT  | UPDI::UPDI_DATA1
     , 0                 // $05:repeat count
@@ -479,7 +479,7 @@ bool NVM::write_flash (uint32_t start_addr, size_t byte_count) {
   // UPDI::guardtime();
 
   /* disable RSD mode */
-  if (!UPDI::set_cs_ctra(UPDI::UPDI_SET_GTVAL_2)) return false;
+  if (!UPDI::set_cs_ctra(UPDI_GTVAL)) return false;
 
   /* NVMCTRL write page and complete */
   if (!NVM::nvm_ctrl(NVM::NVM_CMD_ERWP)) return false;
@@ -516,7 +516,7 @@ bool NVM::write_flash_v2 (uint32_t start_addr, size_t byte_count) {
   // UPDI::guardtime();
 
   /* disable RSD mode */
-  if (!UPDI::set_cs_ctra(UPDI::UPDI_SET_GTVAL_2)) return false;
+  if (!UPDI::set_cs_ctra(UPDI_GTVAL)) return false;
 
   return NVM::nvm_ctrl_v2(NVM::NVM_V2_CMD_NOCMD);
 }
@@ -552,7 +552,7 @@ bool NVM::write_flash_v3 (uint32_t start_addr, size_t byte_count) {
   // UPDI::guardtime();
 
   /* disable RSD mode */
-  if (!UPDI::set_cs_ctra(UPDI::UPDI_SET_GTVAL_2)) return false;
+  if (!UPDI::set_cs_ctra(UPDI_GTVAL)) return false;
 
   return NVM::nvm_ctrl_v3(NVM::NVM_V3_CMD_FLPW);
 }
@@ -585,7 +585,7 @@ bool NVM::write_userrow (size_t byte_count) {
   } while (--byte_count);
 
   UPDI::set_cs_stat(UPDI::UPDI_CS_ASI_SYS_CTRLA, UPDI::UPDI_SET_UROWDONE);
-  do{ delay_micros(100); } while (UPDI::is_sys_stat(UPDI::UPDI_SYS_UROWPROG));
+  do{ delay_micros(50); } while (UPDI::is_sys_stat(UPDI::UPDI_SYS_UROWPROG));
   UPDI::set_cs_stat(UPDI::UPDI_CS_ASI_KEY_STATUS, UPDI::UPDI_KEY_UROWWRITE);
   if (!UPDI::updi_reset(true) || !UPDI::updi_reset(false)) return false;
   UPDI_CONTROL |= _BV(UPDI::UPDI_URWR_bp);

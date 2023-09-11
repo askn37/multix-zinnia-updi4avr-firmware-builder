@@ -357,18 +357,18 @@ namespace JTAG2 {
   /* Changing CMT_SET_PARAMETER command */
   enum jtag_baud_rate_e {
       BAUD_NOTUSED
-    , BAUD_2400         // 1: no supported
-    , BAUD_4800         // 2: no supported
+    , BAUD_2400         // 1: F_CPU 9.83Mhz lower limit
+    , BAUD_4800         // 2: F_CPU 19.67MHz lower limit
     , BAUD_9600         // 3: supported min
-    , BAUD_19200        // 4: POR default
+    , BAUD_19200        // 4: JTAG2 startup default speed
     , BAUD_38400        // 5: terminal mode active
     , BAUD_57600
-    , BAUD_115200       // 7: normal
-    , BAUD_14400
-    , BAUD_153600
-    , BAUD_230400
+    , BAUD_115200       // 7: normal : avrdude 6.x max speed
+    , BAUD_14400        // 8: using avrdude 6.x lower
+    , BAUD_153600       // 9: using avrdude 7.x upper
+    , BAUD_230400       // 10: UPDI4AVR standard speed
     , BAUD_460800
-    , BAUD_921600       // 13: UPDI4AVR standard speed
+    , BAUD_921600
     , BAUD_128000
     , BAUD_256000
     , BAUD_512000       // 16: CH340E not supported
@@ -380,11 +380,11 @@ namespace JTAG2 {
     , BAUD_400000
     , BAUD_500000
     , BAUD_600000
-    , BAUD_666666
-    , BAUD_1000000
-    , BAUD_1500000      // 26: supported max
-    , BAUD_2000000
-    , BAUD_3000000      // 28: no supported
+    , BAUD_666666       // 24: terminal mode active
+    , BAUD_1000000      // 25: F_CPU 10MHz or more
+    , BAUD_1500000      // 26: F_CPU 12MHz or more
+    , BAUD_2000000      // 27: F_CPU 16MHz or more
+    , BAUD_3000000      // 28: F_CPU 24MHz or more
 
 #if (F_CPU / 2400 < 4096)
     , BAUD_LOWER = BAUD_2400

@@ -270,7 +270,7 @@ bool UPDI::enter_userrow (void) {
   if (!UPDI::send_bytes(UPDI::urowwrite_key, sizeof(UPDI::urowwrite_key))) return false;
   /* restart target : change mode */
   if (!UPDI::updi_reset(true) || !UPDI::updi_reset(false)) return false;
-  do{ delay_micros(100); } while (!UPDI::is_sys_stat(UPDI::UPDI_SYS_UROWPROG));
+  do{ delay_micros(50); } while (!UPDI::is_sys_stat(UPDI::UPDI_SYS_UROWPROG));
   return true;
 }
 
@@ -322,9 +322,9 @@ bool UPDI::chip_erase (void) {
   if (!UPDI::updi_reset(true) || !UPDI::updi_reset(false)) return false;
 
   /* wait enable : chip erase mode success */
-  delay_millis(10);
+  delay_millis(50);
 
-  do{ delay_micros(100); } while (UPDI::is_sys_stat(UPDI::UPDI_SYS_LOCKSTATUS));
+  do{ delay_micros(50); } while (UPDI::is_sys_stat(UPDI::UPDI_SYS_LOCKSTATUS));
   UPDI_CONTROL |= _BV(UPDI::UPDI_ERFM_bp);
 
   if (bit_is_set(UPDI_CONTROL, UPDI::UPDI_INFO_bp)) {
@@ -362,7 +362,7 @@ bool UPDI::enter_updi (bool skip) {
   }
   if (bit_is_clear(UPDI_CONTROL, UPDI::UPDI_INFO_bp)) {
     if (hvol && !UPDI::set_cs_asi_ctra(UPDI::UPDI_SET_UPDICLKSEL_8M)) return false;
-    if (!UPDI::set_cs_ctra(UPDI::UPDI_SET_GTVAL_2)) return false;
+    if (!UPDI::set_cs_ctra(UPDI_GTVAL)) return false;
     if (!UPDI::send_bytes(set_ptr, sizeof(set_ptr))) return false;
     while (_len--) *_p++ = UPDI::RECV();
     switch (JTAG2::packet.body[4]) {
@@ -416,10 +416,10 @@ bool UPDI::enter_prog (void) {
       if (UPDI_LASTL & UPDI::UPDI_SYS_LOCKSTATUS) return false;
       if (!UPDI::is_key_stat(UPDI::UPDI_KEY_NVMPROG)) {
         if (!UPDI::send_bytes(UPDI::nvmprog_key, sizeof(UPDI::nvmprog_key))) return false;
-        do{ delay_micros(100); } while (!UPDI::is_key_stat(UPDI::UPDI_KEY_NVMPROG));
+        do{ delay_micros(50); } while (!UPDI::is_key_stat(UPDI::UPDI_KEY_NVMPROG));
       }
       if (!UPDI::updi_reset(true) || !UPDI::updi_reset(false)) return false;
-      do{ delay_micros(100); } while (!UPDI::is_sys_stat(UPDI::UPDI_SYS_NVMPROG));
+      do{ delay_micros(50); } while (!UPDI::is_sys_stat(UPDI::UPDI_SYS_NVMPROG));
     }
     UPDI_CONTROL |= _BV(UPDI::UPDI_INFO_bp);
     UPDI_CONTROL |= _BV(UPDI::UPDI_PROG_bp);
@@ -434,7 +434,7 @@ bool UPDI::enter_prog (void) {
 bool UPDI::updi_activate (void) {
   volatile uint8_t count = 3;
   while (--count && bit_is_clear(UPDI_CONTROL, UPDI_PROG_bp)) {
-    delay_millis(100);
+    delay_millis(50);
     if (setjmp(TIM::CONTEXT) == 0) {
       TIM::Timeout_Start(150);
       UPDI::enter_updi(false) && UPDI::enter_prog();

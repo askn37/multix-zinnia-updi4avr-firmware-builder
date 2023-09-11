@@ -29,6 +29,9 @@
 /* 単線二重保護時間 */
 #define UPDI_GUARDTIME (F_CPU / UPDI_BAUD)
 
+/* 方向切替猶予時間 */
+#define UPDI_GTVAL UPDI::UPDI_SET_GTVAL_2
+
 /* LED 設定 */
 #define HBEAT_HZ   (0.5)
 #define TCA0_STEP  ((uint8_t)(sqrt((F_CPU / 1024.0) * (1.0 / HBEAT_HZ)) - 0.5))

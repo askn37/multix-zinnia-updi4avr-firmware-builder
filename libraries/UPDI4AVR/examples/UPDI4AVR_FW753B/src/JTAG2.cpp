@@ -26,16 +26,16 @@ namespace JTAG2 {
       BAUD_NOTUSED          // 0: not used dummy
     , BAUD_REG_VAL(2400)    // 1: F_CPU 9.83Mhz lower limit
     , BAUD_REG_VAL(4800)    // 2: F_CPU 19.67MHz lower limit
-    , BAUD_REG_VAL(9600)
+    , BAUD_REG_VAL(9600)    // 3: supported min
     , BAUD_REG_VAL(19200)   // 4: JTAG2 startup default speed
     , BAUD_REG_VAL(38400)   // 5: terminal mode active
     , BAUD_REG_VAL(57600)
-    , BAUD_REG_VAL(115200)  // 7: avrdude 6.x max speed
+    , BAUD_REG_VAL(115200)  // 7: normal : avrdude 6.x max speed
     , BAUD_REG_VAL(14400)   // 8: using avrdude 6.x lower
     , BAUD_REG_VAL(153600)  // 9: using avrdude 7.x upper
-    , BAUD_REG_VAL(230400)
+    , BAUD_REG_VAL(230400)  // 10: UPDI4AVR standard speed
     , BAUD_REG_VAL(460800)
-    , BAUD_REG_VAL(921600)  // 13: UPDI4AVR standard speed
+    , BAUD_REG_VAL(921600)
     , BAUD_REG_VAL(128000)
     , BAUD_REG_VAL(256000)
     , BAUD_NOTUSED          // 16: CH340E not supported
