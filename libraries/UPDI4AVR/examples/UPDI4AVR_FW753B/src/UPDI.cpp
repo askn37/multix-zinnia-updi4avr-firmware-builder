@@ -270,7 +270,8 @@ bool UPDI::enter_userrow (void) {
   if (!UPDI::send_bytes(UPDI::urowwrite_key, sizeof(UPDI::urowwrite_key))) return false;
   /* restart target : change mode */
   if (!UPDI::updi_reset(true) || !UPDI::updi_reset(false)) return false;
-  do{ delay_micros(50); } while (!UPDI::is_sys_stat(UPDI::UPDI_SYS_UROWPROG));
+  do { delay_micros(50); } while (UPDI::is_sys_stat(UPDI::UPDI_SYS_RSTSYS));
+  do { delay_micros(50); } while (!UPDI::is_sys_stat(UPDI::UPDI_SYS_UROWPROG));
   return true;
 }
 
@@ -301,7 +302,6 @@ void HV_Pulse (void) {
   UPDI_CONTROL &= ~_BV(UPDI::UPDI_CLKU_bp);
 }
 
-
 /*
  * チップ一括消去
  *
@@ -319,12 +319,11 @@ bool UPDI::chip_erase (void) {
   if (!UPDI::send_bytes(UPDI::erase_key, sizeof(UPDI::erase_key))) return false;
 
   /* restart target : change mode */
+  do { delay_micros(50); } while (!UPDI::is_key_stat(UPDI::UPSI_KEY_CHIPERASE));
   if (!UPDI::updi_reset(true) || !UPDI::updi_reset(false)) return false;
 
   /* wait enable : chip erase mode success */
-  delay_millis(50);
-
-  do{ delay_micros(50); } while (UPDI::is_sys_stat(UPDI::UPDI_SYS_LOCKSTATUS));
+  do { delay_micros(50); } while (UPDI::is_sys_stat(UPDI::UPDI_SYS_LOCKSTATUS));
   UPDI_CONTROL |= _BV(UPDI::UPDI_ERFM_bp);
 
   if (bit_is_set(UPDI_CONTROL, UPDI::UPDI_INFO_bp)) {
@@ -355,7 +354,8 @@ bool UPDI::enter_updi (bool skip) {
       if (!UPDI::updi_reset(true) || !UPDI::updi_reset(false)) return false;
 
       /* wait enable : chip erase mode success */
-      delay_millis(50);
+      delay_millis(100);
+      do { delay_micros(50); } while (UPDI::is_sys_stat(UPDI::UPDI_SYS_RSTSYS));
     }
     else
       UPDI::BREAK();
@@ -416,10 +416,11 @@ bool UPDI::enter_prog (void) {
       if (UPDI_LASTL & UPDI::UPDI_SYS_LOCKSTATUS) return false;
       if (!UPDI::is_key_stat(UPDI::UPDI_KEY_NVMPROG)) {
         if (!UPDI::send_bytes(UPDI::nvmprog_key, sizeof(UPDI::nvmprog_key))) return false;
-        do{ delay_micros(50); } while (!UPDI::is_key_stat(UPDI::UPDI_KEY_NVMPROG));
+        do { delay_micros(50); } while (!UPDI::is_key_stat(UPDI::UPDI_KEY_NVMPROG));
       }
       if (!UPDI::updi_reset(true) || !UPDI::updi_reset(false)) return false;
-      do{ delay_micros(50); } while (!UPDI::is_sys_stat(UPDI::UPDI_SYS_NVMPROG));
+      do { delay_micros(50); } while (UPDI::is_sys_stat(UPDI::UPDI_SYS_RSTSYS));
+      do { delay_micros(50); } while (!UPDI::is_sys_stat(UPDI::UPDI_SYS_NVMPROG));
     }
     UPDI_CONTROL |= _BV(UPDI::UPDI_INFO_bp);
     UPDI_CONTROL |= _BV(UPDI::UPDI_PROG_bp);
@@ -432,9 +433,8 @@ bool UPDI::enter_prog (void) {
  */
 
 bool UPDI::updi_activate (void) {
-  volatile uint8_t count = 3;
+  volatile uint8_t count = 4;
   while (--count && bit_is_clear(UPDI_CONTROL, UPDI_PROG_bp)) {
-    delay_millis(50);
     if (setjmp(TIM::CONTEXT) == 0) {
       TIM::Timeout_Start(150);
       UPDI::enter_updi(false) && UPDI::enter_prog();
@@ -442,7 +442,8 @@ bool UPDI::updi_activate (void) {
     TIM::Timeout_Stop();
 
     /* 2周目以降は JPショートならHV制御強制を許可 */
-    if (!digitalRead(JP_SENSE_PIN)) UPDI_CONTROL |= _BV(UPDI::UPDI_FCHV_bp);
+    if (count < 2 && !digitalRead(JP_SENSE_PIN))
+      UPDI_CONTROL |= _BV(UPDI::UPDI_FCHV_bp);
   }
   return bit_is_set(UPDI_CONTROL, UPDI_PROG_bp);
 }
@@ -453,9 +454,8 @@ bool UPDI::updi_activate (void) {
 
 bool UPDI::runtime (uint8_t updi_cmd) {
   volatile bool _result = false;
-  uint16_t limit = 4000;
   if (setjmp(TIM::CONTEXT) == 0) {
-    TIM::Timeout_Start(limit);
+    TIM::Timeout_Start(4000);
     switch (updi_cmd) {
       case UPDI::UPDI_CMD_READ_MEMORY : {
         _result = NVM::read_memory();

@@ -307,8 +307,9 @@ namespace NVM {
   };
 
   extern volatile uint32_t nvm_flash_offset;
-  extern volatile uint32_t nvm_user_sig_offset;
   extern volatile uint32_t nvm_eeprom_offset;
+  extern volatile uint32_t nvm_fuse_offset;
+  extern volatile uint32_t nvm_user_sig_offset;
   extern volatile uint32_t nvm_data_offset;
   extern volatile uint16_t flash_page_size;
 

@@ -27,7 +27,7 @@ MZU2306.build.led_pin=-DLED_BUILTIN=PIN_PA7
 MZU2306.build.macroapi=-DENABLE_MACRO_API
 MZU2306.build.printf=
 MZU2306.build.printflt=
-MZU2306.build.f_cpu=10000000L
+MZU2306.build.f_cpu=20000000L
 MZU2306.compiler.c.elf.extra_flags=-Wl,-T{runtime.platform.path}/avrxmega3_p64.x
 MZU2306.upload.tool=
 MZU2306.menu.01_variant.MZU2306B.build.board=AVR_ATTINY1626

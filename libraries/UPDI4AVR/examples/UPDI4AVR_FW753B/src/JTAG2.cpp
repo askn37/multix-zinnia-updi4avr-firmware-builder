@@ -350,7 +350,7 @@ inline void JTAG2::process_command (void) {
     // Ex) struct xmega_device_desc
     case JTAG2::CMND_SET_XMEGA_PARAMS : {
       NVM::nvm_eeprom_offset   = _CAPS32(packet.body[12])->dword;
-    //NVM::nvm_fuse_offset     = _CAPS32(packet.body[16])->dword;
+      NVM::nvm_fuse_offset     = _CAPS32(packet.body[16])->dword;
       NVM::nvm_user_sig_offset = _CAPS32(packet.body[24])->dword;
       NVM::nvm_data_offset     = _CAPS32(packet.body[32])->dword;
       NVM::flash_page_size     = _CAPS16(packet.body[42])->word;

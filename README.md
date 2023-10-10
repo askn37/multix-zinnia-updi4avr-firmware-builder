@@ -120,7 +120,48 @@ Vtarget         : 5.0 V
 
 - __megaTinyCore - Arduino support for all tinyAVR 0/1/2-Series__ [->HERE](https://github.com/SpenceKonde/megaTinyCore)
 
+## AVR_EB系統のメモリマップ変更
+
+AVR_EB系統では新たな不揮発メモリとして`BOOTROW`が設定された。
+これは 64byteの`Flash`メモリにして`FUSE`に追加された保護ビットにより
+フラッシュ消去と連動消去するか保護されるか選べるものである。
+そしてその配置アドレスは従来の`SIGNATURE`領域を指している。
+
+|Symbol|tinyAVR / megaAVR|AVR_DA/DB/DD/EA|AVR_EB|
+|-|-|-|-|
+|SIGNATURES_START / SIGNATURE_0|0x1100|0x1100|0x1080|
+|USER_SIGNATURES_START (USERROW)|0x1300|0x1080|0x1200|
+|BOOTROW_START (BOOTROW)|-|-|0x1100|
+
+このため`BOOTROW`に本来の`SIGNATURE`の内容が転写されており、
+かつ`FUSE`で消去保護がされているならば、
+AVR_EA以前とは互換性があるように振る舞う。
+2023/10時点での最新の *avrdude.conf*
+[(GitHUB)](https://github.com/avrdudes/avrdude/blob/main/src/avrdude.conf.in)
+は、この互換性を期待した記述であることに注意されたい。
+
+> `BOOTROW`と`SIGNATURE`を共に0x1100とし、
+`-U bootrow`でアクセスできるようにしている。
+一方で`USERROW`は0x1080のままであるため正常に処理できない。
+`PRODSIG`も`BOOTROW`から読み出される。
+
+一方で本リポジトリに付属の *avrdude.conf.updi* での配置アドレス指定は、
+AVR_EB ネイティブである。
+これは`BOOTROW`を特殊ではないメモリアクセスと、
+`USERROW`への正しいメモリアクセスを保証する。
+
+> 前述の表の通りに記述されており、
+`BOOTROW`と`SIGNATURE`は別の領域である。
+`PRODSIG`も`SIGNATURE`の次アドレスから正しく読み出される。
+
 ## 更新履歴
+
+- v0.2.5 (23/10/09)
+  - AVR_EB系統の対応準備
+  - *avrdude.conf.updi* 記述を avrdude 7.1 準拠に改正
+  - 前述に対応したNVM制御の修正
+  - 規定の動作主クロックを10Mhz→20MHzに変更
+    - 4.5V未満でのNVM書換は未だ可能であるが非推奨とする
 
 - v0.2.4 (23/09/09)
   - `7.3.0-avr8-gnu-toolchain-230831`に更新。

@@ -14,6 +14,7 @@
 namespace NVM {
   volatile uint32_t nvm_flash_offset    = 0;
   volatile uint32_t nvm_eeprom_offset   = 0;
+  volatile uint32_t nvm_fuse_offset     = 0;
   volatile uint32_t nvm_user_sig_offset = 0;
   volatile uint32_t nvm_data_offset     = 0;
   volatile uint16_t flash_page_size     = 0;
@@ -57,12 +58,8 @@ bool NVM::read_memory (void) {
   /* Flash領域は常に偶数量 */
   if (byte_count >= 2) {
     switch (mem_type) {
-      /* Data 領域 */
-      /* これは常に絶対アドレス */
-      case JTAG2::MTYPE_XMEGA_FLASH : {   // 0xC0
-        start_addr -= NVM::nvm_flash_offset;
-      }
       /* Flash 領域 */
+      case JTAG2::MTYPE_XMEGA_FLASH :     // 0xC0
       case JTAG2::MTYPE_BOOT_FLASH : {    // 0xC1
         start_addr += NVM::nvm_flash_offset;
         return NVM::read_flash(start_addr, byte_count);
@@ -83,9 +80,11 @@ bool NVM::read_memory (void) {
         start_addr += NVM::nvm_user_sig_offset;
         break;
       }
-      /* FUSE他 */
-      /* 常に絶対アドレス */
-      case JTAG2::MTYPE_FUSE_BITS :       // 0xB2
+      /* FUSE はブロック読み出しの場合オフセットを与える */
+      case JTAG2::MTYPE_FUSE_BITS : {     // 0xB2
+        start_addr += NVM::nvm_fuse_offset;
+      }
+      /* その他は常に絶対アドレス */
       case JTAG2::MTYPE_LOCK_BITS :       // 0xB3
       case JTAG2::MTYPE_SIGN_JTAG :       // 0xB4
       case JTAG2::MTYPE_OSCCAL_BYTE :     // 0xB5
@@ -113,8 +112,8 @@ bool NVM::write_memory (void) {
     switch (mem_type) {
       /* Flash 領域 */
       /* 奇数量指定は Data領域絶対アドレス指定になる */
-      case JTAG2::MTYPE_XMEGA_FLASH :   // 0xC0
-      case JTAG2::MTYPE_BOOT_FLASH : {  // 0xC1
+      case JTAG2::MTYPE_XMEGA_FLASH :     // 0xC0
+      case JTAG2::MTYPE_BOOT_FLASH : {    // 0xC1
         start_addr += NVM::nvm_flash_offset;
         if (bit_is_set(UPDI_NVMCTRL, UPDI::UPDI_GEN3_bp))
           return NVM::write_flash_v3(start_addr, byte_count);
@@ -122,28 +121,62 @@ bool NVM::write_memory (void) {
           return NVM::write_flash_v2(start_addr, byte_count);
         return NVM::write_flash(start_addr, byte_count);
       }
+
       /* EEPROM 領域 */
-      case JTAG2::MTYPE_EEPROM :        // 0x22
-      case JTAG2::MTYPE_EEPROM_XMEGA :  // 0xC4
-      case JTAG2::MTYPE_LOCK_BITS : {   // 0xB3
+      case JTAG2::MTYPE_EEPROM :          // 0x22
+      case JTAG2::MTYPE_EEPROM_XMEGA : {  // 0xC4
         start_addr += NVM::nvm_eeprom_offset;
         break;
       }
+
+      /* FUSES/LOCKBITS 領域 */
+      /* ブロック書き込みは特殊 */
+      case JTAG2::MTYPE_LOCK_BITS :       // 0xB3
+      case JTAG2::MTYPE_FUSE_BITS : {     // 0xB2
+        start_addr += NVM::nvm_fuse_offset;
+        uint8_t buffer_index = 10;
+        while (byte_count--) {
+          uint8_t data = JTAG2::packet.body[buffer_index++];
+          if (UPDI::ld8(start_addr) == data && UPDI_LASTH == 0) continue;
+          if (bit_is_set(UPDI_NVMCTRL, UPDI::UPDI_GEN3_bp)) {
+            if (!NVM::write_fuse_v3(start_addr, data)) return false;
+          }
+          else if (bit_is_set(UPDI_NVMCTRL, UPDI::UPDI_GEN2_bp)) {
+            if (!NVM::write_fuse_v2(start_addr, data)) return false;
+          }
+          else {
+            if (!NVM::write_fuse(start_addr, data)) return false;
+          }
+          start_addr++;
+        }
+        return true;
+      }
+
       /* USERROW/USERSIG 領域 */
-      case JTAG2::MTYPE_USERSIG : {     // 0xC5
+      case JTAG2::MTYPE_SIGN_JTAG :       // 0xB4
+      case JTAG2::MTYPE_PRODSIG :         // 0xC6
+      case JTAG2::MTYPE_USERSIG : {       // 0xC5
 
-        /* デバイス施錠されている場合 */
-        if (bit_is_clear(UPDI_CONTROL, UPDI::UPDI_PROG_bp))
-          return NVM::write_userrow(byte_count);
+        /* AVR_EB系統の特別な SIGROW==BOOTROW ブロック書込 */
+        /* この系統では 0x1100からの 64byte は BOOTROWで、Flash領域として書ける */
+        /* それ以外は書込不可か EEPROMとして扱う */
+        if (mem_type != JTAG2::MTYPE_USERSIG) {
+          if (!bit_is_set(UPDI_NVMCTRL, UPDI::UPDI_GEN3_bp)) break;
+        }
+        else {
+          /* デバイス施錠されている場合 */
+          if (bit_is_clear(UPDI_CONTROL, UPDI::UPDI_PROG_bp))
+            return NVM::write_userrow(byte_count);
+          start_addr += NVM::nvm_user_sig_offset;
+        }
 
-        start_addr += NVM::nvm_user_sig_offset;
         /* AVR_DA/DB/DD/EA is Flash */
         /* この系統は Flash として実装されている */
 
         /* NVMCTRL v3 */
         if (bit_is_set(UPDI_NVMCTRL, UPDI::UPDI_GEN3_bp)) {
           /* 書く前にページ消去 */
-            NVM::nvm_wait_v3();
+          NVM::nvm_wait_v3();
           if (!UPDI::st8(start_addr, 0xFF)) return false;
           if (!NVM::nvm_ctrl_v3(NVM::NVM_V2_CMD_FLPER)) return false;
           UPDI_CONTROL |= _BV(UPDI::UPDI_ERFM_bp);
@@ -171,8 +204,8 @@ bool NVM::write_memory (void) {
     switch (mem_type) {
       /* FUSES/LOCKBITS 領域 */
       /* 常に奇数量絶対アドレス指定の特殊書込 */
-      case JTAG2::MTYPE_LOCK_BITS :     // 0xB3
-      case JTAG2::MTYPE_FUSE_BITS : {   // 0xB2
+      case JTAG2::MTYPE_LOCK_BITS :       // 0xB3
+      case JTAG2::MTYPE_FUSE_BITS : {     // 0xB2
         if (UPDI::ld8(start_addr) == data && UPDI_LASTH == 0) return true;
         if (bit_is_set(UPDI_NVMCTRL, UPDI::UPDI_GEN3_bp))
           return NVM::write_fuse_v3(start_addr, data);
@@ -180,9 +213,20 @@ bool NVM::write_memory (void) {
           return NVM::write_fuse_v2(start_addr, data);
         return NVM::write_fuse(start_addr, data);
       }
+
       /* USERROW/USERSIG 領域 */
-      case JTAG2::MTYPE_USERSIG : {     // 0xC5
-        /* ここは terminal mode の場合のみ通過するはず */
+      case JTAG2::MTYPE_SIGN_JTAG :       // 0xB4
+      case JTAG2::MTYPE_PRODSIG :         // 0xC6
+      case JTAG2::MTYPE_USERSIG : {       // 0xC5
+
+        /* AVR_EB系統の特別な SIGROW==BOOTROW バイト書込 */
+        /* この系統では 0x1100からの64byte は BOOTROWで、Flash領域として書ける */
+        /* それ以外は書込不可か EEPROMとして扱う */
+        if (mem_type != JTAG2::MTYPE_USERSIG) {
+          if (!bit_is_set(UPDI_NVMCTRL, UPDI::UPDI_GEN3_bp)) break;
+        }
+
+        /* 普通ここは terminal mode の場合のみ通過するはず */
         /* AVR_DA/DB/DD/EA is Flash */
         /* この系統は Flash として実装されている */
 
@@ -405,23 +449,12 @@ bool NVM::write_eeprom (uint32_t start_addr, size_t byte_count) {
 /* NVMCTRL v2 */
 bool NVM::write_eeprom_v2 (uint32_t start_addr, size_t byte_count) {
   if (byte_count == 0 || byte_count > 256) return false;
-
   if (!NVM::nvm_ctrl_v2(NVM::NVM_V2_CMD_EEERWR)) return false;
-
-  /* setting register pointer */
-  _CAPS32(set_ptr[2])->dword = start_addr;
-  set_repeat[2] = (uint8_t)byte_count - 1;
-  if (!UPDI::send_bytes(set_ptr, sizeof(set_ptr) - 1)) return false;
-  if (UPDI::UPDI_ACK != UPDI::RECV()) return false;
-  if (!UPDI::send_bytes(set_repeat, sizeof(set_repeat))) return false;
-
-  /* page buffer stored */
   uint8_t* p = &JTAG2::packet.body[10];
   do {
-    if (!UPDI::SEND(*p++)) return false;
-    if (UPDI::UPDI_ACK != UPDI::RECV()) return false;
+    if ((NVM::nvm_wait() & 0x70) != 0) return false;
+    if (!UPDI::st8(start_addr++, *p++)) return false;
   } while (--byte_count);
-
   return NVM::nvm_ctrl_v2(NVM::NVM_V2_CMD_NOCMD);
 }
 
@@ -429,7 +462,7 @@ bool NVM::write_eeprom_v2 (uint32_t start_addr, size_t byte_count) {
 bool NVM::write_eeprom_v3 (uint32_t start_addr, size_t byte_count) {
   if (byte_count == 0 || byte_count > 256) return false;
 
-  if (!NVM::nvm_ctrl_v3(NVM::NVM_V3_CMD_NOCMD)) return false;
+  if (!NVM::nvm_ctrl_v3(NVM::NVM_V3_CMD_EEPBCLR)) return false;
 
   /* setting register pointer */
   _CAPS32(set_ptr[2])->dword = start_addr;
@@ -445,7 +478,8 @@ bool NVM::write_eeprom_v3 (uint32_t start_addr, size_t byte_count) {
     if (UPDI::UPDI_ACK != UPDI::RECV()) return false;
   } while (--byte_count);
 
-  return NVM::nvm_ctrl_v3(NVM::NVM_V3_CMD_EEPERW);
+  if (!NVM::nvm_ctrl_v3(NVM::NVM_V3_CMD_EEPERW)) return false;
+  return NVM::nvm_ctrl_v3(NVM::NVM_V3_CMD_NOCMD);
 }
 
 /*
@@ -554,7 +588,8 @@ bool NVM::write_flash_v3 (uint32_t start_addr, size_t byte_count) {
   /* disable RSD mode */
   if (!UPDI::set_cs_ctra(UPDI_GTVAL)) return false;
 
-  return NVM::nvm_ctrl_v3(NVM::NVM_V3_CMD_FLPW);
+  if (!NVM::nvm_ctrl_v3(NVM::NVM_V3_CMD_FLPW)) return false;
+  return NVM::nvm_ctrl_v3(NVM::NVM_V3_CMD_NOCMD);
 }
 
 /*
@@ -585,7 +620,7 @@ bool NVM::write_userrow (size_t byte_count) {
   } while (--byte_count);
 
   UPDI::set_cs_stat(UPDI::UPDI_CS_ASI_SYS_CTRLA, UPDI::UPDI_SET_UROWDONE);
-  do{ delay_micros(50); } while (UPDI::is_sys_stat(UPDI::UPDI_SYS_UROWPROG));
+  do { delay_micros(50); } while (UPDI::is_sys_stat(UPDI::UPDI_SYS_UROWPROG));
   UPDI::set_cs_stat(UPDI::UPDI_CS_ASI_KEY_STATUS, UPDI::UPDI_KEY_UROWWRITE);
   if (!UPDI::updi_reset(true) || !UPDI::updi_reset(false)) return false;
   UPDI_CONTROL |= _BV(UPDI::UPDI_URWR_bp);
