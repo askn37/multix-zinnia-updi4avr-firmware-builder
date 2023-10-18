@@ -39,7 +39,7 @@
 #define TCB1_STEP  (170)
 #define TCB1_BLINK (((TCB1_STEP / 2) * 256) + TCB1_STEP - 1)
 #define TCB1_FLASH ((8 * 256) + TCB1_STEP - 1)
-#define TCB1_FAST  ((1 * 256) + TCB1_STEP / 8)
+#define TCB1_FAST  ((4 * 256) + TCB1_STEP / 8)
 
 /*
  * GPIO 割当
