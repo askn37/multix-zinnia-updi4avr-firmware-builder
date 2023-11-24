@@ -108,10 +108,6 @@ void TIM::setup (void) {
   else {
     LED_Flash();
   }
-
-  /* Hibernation mode */
-  set_sleep_mode(SLEEP_MODE_STANDBY);
-  sleep_enable();
 }
 
 /*
@@ -246,14 +242,12 @@ ISR(portIntrruptVector(SW_SENSE_PIN), ISR_NAKED) {
   while (!digitalRead(SW_SENSE_PIN));
 
   /* Reset the main unit */
-  SYS::System_Reset();
+  // SYS::System_Reset();
+  SYS::WDT_REBOOT();
 }
 
 /*
  * RTS monitoring upper and lower end interrupts
- *
- * LOW Active resets UPDI target ON/OFF
- * Reset the main unit with Deactive
  */
 
 ISR(portIntrruptVector(RTS_SENSE_PIN)) {
@@ -261,26 +255,45 @@ ISR(portIntrruptVector(RTS_SENSE_PIN)) {
   portRegister(RTS_SENSE_PIN).INTFLAGS;
 
   if ( digitalRead(RTS_SENSE_PIN) ) {
-    openDrainWrite(TRST_PIN, HIGH);
-
-    /* Target restart cancellation */
-    UPDI::Target_Reset(false);
-
-    /* Reset the main unit by opening RTS */
-    SYS::System_Reset();
+    /* Detection HIGH signal level */
+    if (bit_is_clear(UPDI_NVMCTRL, 1)) {
+      /* If no LOW level signal is detected, */
+      /* Indicates that the console that was open at the time of POR was closed. */
+      /* Reboot the system with the target in the reset state. */
+      UPDI::Target_Reset(true);
+      SYS::WDT_REBOOT();
+    }
+    /* Otherwise, heartbeat the LED and raise the flag. */
+    bit_set(UPDI_NVMCTRL, 0);
+    TIM::LED_HeartBeat();
+  }
+  else if (bit_is_set(UPDI_NVMCTRL, 0)) {
+    /* Second LOW signal level detected within time limit. */
+    /* I interpret this as a bootloader startup notification. */
+    /* Reboot the system and release the target reset. */
+    SYS::WDT_REBOOT();
   }
   else {
+    /* Detection LOW signal level */
+    /* The first low level signal keeps the target in reset state */
+    /* and starts counting the time limit. */
+    bit_set(UPDI_NVMCTRL, 1);
+
     /* Disable UART passthrough */
+    /* Prioritizes reception of JTAG communication */
     SYS::PG_Enable();
 
     /* LED blinks alternately */
     TIM::LED_Flash();
 
-    /* target restart */
     UPDI::Target_Reset(true);
-
-    /* target reset pulse */
     openDrainWrite(TRST_PIN, LOW);
+
+    /* Enable Short WDT */
+    SYS::WDT_Short();
+    /* This WDT is released when JTAG communication starts. */
+    /* Once the time is up, the target will be released */
+    /* from the reset state after rebooting the system. */
   }
 }
 
@@ -298,3 +311,48 @@ ISR(TCB0_INT_vect, ISR_NAKED) {
 }
 
 // end of code
+
+/***
+RTS pin change summary
+
+* Arduino IDE console
+
+    HIGH --                      -----
+           |                    |
+    LOW     --------------------
+          OPEN                CLOSE
+
+* Arduino IDE console for macos 1st opening
+
+    HIGH ----------------------------
+
+    LOW
+          OPEN                CLOSE
+
+* AVRDUDE arduino bootloader
+
+    HIGH --   ------       ----------------
+           | |      |     |     ^
+    LOW     -        -----      start
+          OPEN 250ms 100us 100ms      CLOSE
+
+* AVRDUDE -xrtsdtr=high
+
+    HIGH --   -----------------   -----
+           | | ^               | |
+    LOW     -  start            -
+          OPEN                CLOSE
+
+* AVRDUDE -xrtsdtr=low
+
+    HIGH --                      ------
+           |   start            |
+    LOW     --------------------
+          OPEN                CLOSE
+
+- Do nothing if RTS=HIGH when the power is turned on.
+- RTS=LOW edge deactivates the device and puts the UART into JTAG mode.
+- If JTAG starts within 250ms, keep it there.
+- If JTAG is not recognized within 250ms, put the UART on the device side and activate the device.
+
+*/

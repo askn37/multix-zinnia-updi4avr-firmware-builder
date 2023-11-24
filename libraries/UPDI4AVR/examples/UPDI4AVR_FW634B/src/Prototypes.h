@@ -22,7 +22,7 @@
  && !defined(__AVR_ATtiny1627__) \
  && !defined(__AVR_ATtiny3227__)
   #error This MCU family is not supported tinyAVR-2 series 20 pins or more and SRAM 1KB or more only
-  #include BUILD_STOP
+  #include "BUILD_STOP"
 #endif
 
 /*****************************
@@ -67,6 +67,7 @@ namespace SYS {
   void WDT_SET (uint8_t _wdt_period);
   void WDT_OFF (void);
   void WDT_ON (void);
+  void WDT_Short (void);
   void WDT_REBOOT (void);
 } // end of SYS
 
@@ -365,7 +366,6 @@ namespace NVM {
     , EB_BOOTROW   = 0x1300
   };
 
-  bool memory_block_erase (void);
   bool read_signature (uint16_t start_addr);
   bool read_memory (uint32_t start_addr, size_t byte_count);
   bool write_memory (void);
@@ -455,6 +455,8 @@ namespace JTAG2 {
   /* CMND_XMEGA_ERASE sub-command */
   enum jtag_erase_mode_e {
       XMEGA_ERASE_CHIP          = 0x00
+    /* The following is not implemented */
+    /* In interactive mode, normal memory writing is substituted */
     , XMEGA_ERASE_APP           = 0x01
     , XMEGA_ERASE_BOOT          = 0x02
     , XMEGA_ERASE_EEPROM        = 0x03
@@ -462,6 +464,7 @@ namespace JTAG2 {
     , XMEGA_ERASE_BOOT_PAGE     = 0x05
     , XMEGA_ERASE_EEPROM_PAGE   = 0x06
     , XMEGA_ERASE_USERSIG       = 0x07
+    , XMEGA_ERASE_USERROW       = 0x07
     /*** ATMEL defines more than ***/
   };
 
@@ -567,7 +570,7 @@ namespace JTAG2 {
     unsigned char ucAllowFullPageBitstream; /* FALSE on ALL new */
     unsigned char uiStartSmallestBootLoaderSection[2];
     unsigned char EnablePageProgramming;    /* For JTAG parts only, */
-    unsigned char ucCacheType;        /* CacheType_Normal 0x00, */
+    unsigned char ucCacheType;	      /* CacheType_Normal 0x00, */
     unsigned char uiSramStartAddr[2]; /* Start of SRAM */
     unsigned char ucResetType;        /* Selects reset type */
     unsigned char ucPCMaskExtended;   /* For parts with extended PC */

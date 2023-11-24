@@ -117,13 +117,21 @@ void SYS::LED_Invert (void) {
  ***************************************/
 
 void SYS::ready (void) {
-  RSTCTRL_RSTFR = 0xFF;
+  /* Clears the reset state flag. */
+  RSTCTRL_RSTFR = RSTCTRL_RSTFR;
 
   /* Clear asynchronous interrupts detected during initialization */
-  portRegister(RTS_SENSE_PIN).INTFLAGS = 0xFF;
+  portRegister(RTS_SENSE_PIN).INTFLAGS =
+  portRegister(RTS_SENSE_PIN).INTFLAGS;
+
+  /*** Hibernation mode ***/
+  set_sleep_mode(SLEEP_MODE_STANDBY);
 
   /* Interrupt permission */
   sei();
+
+  /* It stays in a low power state until the first interrupt occurs. */
+  sleep_enable();
 }
 
 /*****************
@@ -138,6 +146,8 @@ void SYS::WDT_SET (uint8_t _wdt_period) {
 void SYS::WDT_OFF (void) { WDT_SET(WDT_PERIOD_OFF_gc); }
 
 void SYS::WDT_ON (void) { WDT_SET(WDT_PERIOD_8KCLK_gc); }
+
+void SYS::WDT_Short (void) { WDT_SET(WDT_PERIOD_128CLK_gc); }
 
 void SYS::WDT_REBOOT (void) {
   WDT_SET(WDT_PERIOD_8CLK_gc);

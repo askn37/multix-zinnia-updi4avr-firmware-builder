@@ -47,14 +47,14 @@ avrdude -p avr64ea32 -c updi4avr -P <実際のCOMポート> -v
 何れの場合も（対象デバイスがないため）エラーで終了するが、それに先立って`UPDI4AVR`の個体情報をコンソールに表示する。
 
 ```plain
-Programmer Type : JTAGMKII_PDI
+Programmer Type : JTAGMKII_UPDI
 Description     : JTAGv2 to UPDI bridge
-M_MCU HW version: 1
-M_MCU FW version: 2.01
-S_MCU HW version: 1
-S_MCU FW version: 7.53
-Serial number   : 4a:34:0f:a6:28:3f
-Vtarget         : 5.0 V
+M_MCU HW version: 2
+M_MCU FW version: 7.53
+S_MCU HW version: 2
+S_MCU FW version: 6.34
+Serial number   : xx:xx:xx:xx:xx:xx
+Vtarget         : 5.2 V
 ```
 
 `S_MCU FW version`が現在実行中の`UPDI4AVR`FWバージョン、`Serial number`が`UPDI4AVR`ハードウェア固有識別子を示す。
@@ -155,6 +155,12 @@ AVR_EB ネイティブである。
 `PRODSIG`も`SIGNATURE`の次アドレスから正しく読み出される。
 
 ## 更新履歴
+
+- v0.2.8 (23/11/24)
+  - `7.3.0-avr8-gnu-toolchain-231113`に更新。
+  - UPDI4AVR Firmware を`UPDI4AVR_FW634B`に変更。
+    - `AVRDUDE 7.3`仕様に準拠。
+    - HV制御は添付の`avrdude.conf.UPDI4AVR`を使用した場合に有効。
 
 - v0.2.7 (23/10/18)
   - `dryrun`を書込器選択に追加。

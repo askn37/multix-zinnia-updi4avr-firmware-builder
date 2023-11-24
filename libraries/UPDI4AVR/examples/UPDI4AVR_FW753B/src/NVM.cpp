@@ -594,17 +594,13 @@ bool NVM::write_flash_v3 (uint32_t start_addr, size_t byte_count) {
 
 /*
  * 施錠デバイス USERROW 書込
- *
- * 条件；nvm_data_offset が正しく設定されていなければならない
- * 制約：実メモリの読み戻しは出来ない
- *      そこでバッファ後方にコピーを取っておく
  */
 
 bool NVM::write_userrow (size_t byte_count) {
   if (!UPDI::enter_userrow()) return false;
 
   /* setting register pointer */
-  _CAPS32(set_ptr[2])->dword = NVM::nvm_data_offset;
+  _CAPS32(set_ptr[2])->dword = NVM::nvm_user_sig_offset;
   set_repeat[2] = (uint8_t)byte_count - 1;
   if (!UPDI::send_bytes(set_ptr, sizeof(set_ptr) - 1)) return false;
   if (UPDI::UPDI_ACK != UPDI::RECV()) return false;

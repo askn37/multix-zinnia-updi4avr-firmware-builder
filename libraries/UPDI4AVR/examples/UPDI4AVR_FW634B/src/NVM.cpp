@@ -22,8 +22,6 @@ namespace NVM {
   uint8_t nvm_wait_v3 (void);
 
   bool write_fuse (uint16_t addr, uint8_t data);
-  bool write_eeprom (uint32_t start_addr, uint8_t *data, size_t byte_count);
-  bool write_flash (uint32_t start_addr, uint8_t *data, size_t byte_count);
 
   /*********************
    * NVMCTRL operation *
@@ -211,58 +209,6 @@ namespace NVM {
 }
 
 /*** Global functions ***/
-
-/************************
- * Memory block erasing *
- ************************/
-
-bool NVM::memory_block_erase (void) {
-  /* In this operation, address information is located in a different location than usual */
-  const uint32_t start_addr = _CAPS32(JTAG2::packet.body[JTAG2::DATA_LENGTH])->dword;
-  const uint8_t erase_type = JTAG2::packet.body[JTAG2::MEM_TYPE];
-  bool is_flash = false;
-  JTAG2::set_response(JTAG2::RSP_OK);
-
-  /* Characteristics for each specified memory type */
-  switch (erase_type) {
-    case JTAG2::XMEGA_ERASE_USERSIG : {
-      /* Only NVMCTRL version 0 is EEPROM type */
-      is_flash = bit_is_set(UPDI_NVMCTRL, UPDI::UPDI_GEN3_bp)
-              || bit_is_set(UPDI_NVMCTRL, UPDI::UPDI_GEN2_bp);
-      break;
-    }
-    case JTAG2::XMEGA_ERASE_EEPROM : {
-      break;
-    }
-    case JTAG2::XMEGA_ERASE_APP_PAGE :
-    case JTAG2::XMEGA_ERASE_BOOT_PAGE : {
-      is_flash = true;
-      break;
-    }
-    /* The following specifications are not supported */
-    case JTAG2::XMEGA_ERASE_EEPROM_PAGE :
-    case JTAG2::XMEGA_ERASE_APP :
-    case JTAG2::XMEGA_ERASE_BOOT :
-    default:
-      JTAG2::set_response(JTAG2::RSP_FAILED);
-      return true;
-  }
-
-  if (is_flash) {
-    /* Flash memory erase */
-    if (bit_is_set(UPDI_NVMCTRL, UPDI::UPDI_GEN3_bp)) {}
-    else if (bit_is_set(UPDI_NVMCTRL, UPDI::UPDI_GEN2_bp)) {}
-    else {}
-  }
-  else {
-    /* EEPROM erase */
-    if (bit_is_set(UPDI_NVMCTRL, UPDI::UPDI_GEN3_bp)) {}
-    else if (bit_is_set(UPDI_NVMCTRL, UPDI::UPDI_GEN2_bp)) {}
-    else {}
-  }
-
-  return true;
-}
 
 /*********************
  * Signature reading *

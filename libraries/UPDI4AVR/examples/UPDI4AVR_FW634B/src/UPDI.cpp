@@ -73,8 +73,8 @@ void UPDI::setup (void) {
   UPDI_USART.CTRLB = UPDI_USART_ON;
   bit_clear(UPDI_CONTROL, UPDI_CLKU_bp);
 
-  /* After soft reset, release target reset */
-  if ( bit_is_set(RSTCTRL_RSTFR, RSTCTRL_SWRF_bp) ) Target_Reset(false);
+  /* Release target from reset state after resetting WDT timeout */
+  if ( bit_is_set(RSTCTRL_RSTFR, RSTCTRL_WDRF_bp) ) Target_Reset(false);
 }
 
 /* This special system reset will log you out of UPDI */
@@ -718,9 +718,6 @@ bool UPDI::runtime (uint8_t updi_cmd) {
       case UPDI_CMD_ERASE : {
         if (JTAG2::packet.body[JTAG2::MEM_TYPE] == JTAG2::XMEGA_ERASE_CHIP) {
           _result = chip_erase();
-        }
-        else {
-          _result = NVM::memory_block_erase();
         }
         break;
       }

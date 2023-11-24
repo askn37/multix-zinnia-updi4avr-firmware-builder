@@ -21,7 +21,7 @@
  && !defined(__AVR_ATtiny1627__) \
  && !defined(__AVR_ATtiny3227__)
   #error This MCU family is not supported tinyAVR-2 series 20 pins or more and SRAM 1KB or more only
-  #include BUILD_STOP
+  #include "BUILD_STOP"
 #endif
 
 /*

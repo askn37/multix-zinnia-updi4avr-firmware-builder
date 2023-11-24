@@ -164,6 +164,7 @@ namespace JTAG2 {
    ********************/
 
   void sign_on_response (void) {
+    UPDI_NVMCTRL = 0;
     packet.size = sizeof(sign_on_resp);
     for (uint8_t i = 0; i < sizeof(sign_on_resp); i++)
       packet.body[i] = pgm_read_byte( &sign_on_resp[i] );
@@ -431,7 +432,8 @@ namespace JTAG2 {
         if (bit_is_set(UPDI_CONTROL, UPDI::UPDI_PROG_bp))
           UPDI::runtime(UPDI::UPDI_CMD_GO);
         /* After all processing is completed, reset itself */
-        SYS::WDT_REBOOT();
+        // SYS::WDT_REBOOT();
+        SYS::System_Reset();
       }
       /* Returns negation for unknown commands */
       default : {
