@@ -570,7 +570,7 @@ namespace JTAG2 {
     unsigned char ucAllowFullPageBitstream; /* FALSE on ALL new */
     unsigned char uiStartSmallestBootLoaderSection[2];
     unsigned char EnablePageProgramming;    /* For JTAG parts only, */
-    unsigned char ucCacheType;	      /* CacheType_Normal 0x00, */
+    unsigned char ucCacheType;        /* CacheType_Normal 0x00, */
     unsigned char uiSramStartAddr[2]; /* Start of SRAM */
     unsigned char ucResetType;        /* Selects reset type */
     unsigned char ucPCMaskExtended;   /* For parts with extended PC */
