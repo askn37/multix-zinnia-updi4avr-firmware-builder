@@ -108,12 +108,12 @@ namespace NVM {
       set_response(JTAG2::RSP_ILLEGAL_MEMORY_RANGE);
       return true;
     }
-    if (!nvm_ctrl(NVM_V3_CMD_EEPBCLR)) return false;
+    if (!nvm_ctrl_v3(NVM_V3_CMD_EEPBCLR)) return false;
 
     if (byte_count == 1) UPDI::st8(start_addr, *data);
     else UPDI::sts8(start_addr, data, byte_count);
 
-    return nvm_ctrl(NVM_V3_CMD_EEPERW);
+    return nvm_ctrl_v3(NVM_V3_CMD_EEPERW);
   }
 
   bool write_eeprom_v2 (uint32_t start_addr, uint8_t *data, size_t byte_count) {
@@ -159,18 +159,18 @@ namespace NVM {
     /* NVMCTRL version 3 or 5 */
     /* If the chip is not erased, erase the page. */
     /* However, only when the beginning of the page boundary is addressed */
-    nvm_wait_v3();
     if (is_bound) {
+      nvm_wait_v3();
       if (!UPDI::st8(start_addr, 0xFF)) return false;
-      if (!nvm_ctrl(NVM_V3_CMD_FLPER)) return false;
+      if (!nvm_ctrl_v3(NVM_V3_CMD_FLPER)) return false;
     }
-    else if (!nvm_ctrl(NVM_V3_CMD_FLPBCLR)) return false;
+    else if (!nvm_ctrl_v3(NVM_V3_CMD_FLPBCLR)) return false;
     nvm_wait_v3();
 
     if (byte_count == 1) UPDI::st8(start_addr, *data);
     else UPDI::sts8rsd(start_addr, data, byte_count);
 
-    return nvm_ctrl(NVM_V3_CMD_FLPW);
+    return nvm_ctrl_v3(NVM_V3_CMD_FLPW);
   }
 
   bool write_flash_v2 (uint32_t start_addr, uint8_t *data, size_t byte_count, bool is_bound) {
