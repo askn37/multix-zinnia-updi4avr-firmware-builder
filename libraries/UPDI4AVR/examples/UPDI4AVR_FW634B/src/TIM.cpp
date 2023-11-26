@@ -220,6 +220,10 @@ void TIM::delay_200ms (void) {
  */
 
 ISR(portIntrruptVector(SW_SENSE_PIN), ISR_NAKED) {
+  /* Enable Short WDT */
+  wdt_reset();
+  SYS::WDT_Short();
+
   /* LED is blinking */
   TIM::LED_Flash();
 
@@ -238,6 +242,9 @@ ISR(portIntrruptVector(SW_SENSE_PIN), ISR_NAKED) {
   /* LED blinks alternately */
   TIM::LED_Blink();
 
+  /* Disable WDT */
+  SYS::WDT_OFF();
+
   /* Waits while pressed */
   while (!digitalRead(SW_SENSE_PIN));
 
@@ -251,6 +258,7 @@ ISR(portIntrruptVector(SW_SENSE_PIN), ISR_NAKED) {
  */
 
 ISR(portIntrruptVector(RTS_SENSE_PIN)) {
+  wdt_reset();
   portRegister(RTS_SENSE_PIN).INTFLAGS =
   portRegister(RTS_SENSE_PIN).INTFLAGS;
 
@@ -258,6 +266,10 @@ ISR(portIntrruptVector(RTS_SENSE_PIN)) {
     /* Detection HIGH signal level */
     if (bit_is_clear(UPDI_NVMCTRL, 1)) {
       /* If no LOW level signal is detected, */
+
+      /* Enable Short WDT */
+      SYS::WDT_Short();
+
       /* Indicates that the console that was open at the time of POR was closed. */
       /* Reboot the system with the target in the reset state. */
       UPDI::Target_Reset(true);
@@ -275,6 +287,10 @@ ISR(portIntrruptVector(RTS_SENSE_PIN)) {
   }
   else {
     /* Detection LOW signal level */
+
+    /* Enable Short WDT */
+    SYS::WDT_Short();
+
     /* The first low level signal keeps the target in reset state */
     /* and starts counting the time limit. */
     bit_set(UPDI_NVMCTRL, 1);
@@ -289,8 +305,6 @@ ISR(portIntrruptVector(RTS_SENSE_PIN)) {
     UPDI::Target_Reset(true);
     openDrainWrite(TRST_PIN, LOW);
 
-    /* Enable Short WDT */
-    SYS::WDT_Short();
     /* This WDT is released when JTAG communication starts. */
     /* Once the time is up, the target will be released */
     /* from the reset state after rebooting the system. */

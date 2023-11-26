@@ -210,56 +210,6 @@ namespace NVM {
 
 /*** Global functions ***/
 
-/*********************
- * Signature reading *
- *********************/
-
-bool NVM::read_signature (uint16_t start_addr) {
-  /* The starting address is 0x1080 for AVR_EB, and 0x1100 for others. */
-  if (start_addr == (bit_is_set(UPDI_NVMCTRL, UPDI::UPDI_GEN5_bp) ? 0x1080 : 0x1100)) {
-    JTAG2::updi_desc.nvm_signature_offset = start_addr;
-    if (bit_is_set(UPDI_CONTROL, UPDI::UPDI_PROG_bp)) {
-      /* In program mode you should be able to read from IO memory */
-      if (!UPDI::lds8(start_addr, &JTAG2::updi_desc.signature[0], 3)) {
-        /* If there is a communication error, return a signature of all zeros */
-        /* Typically this only occurs when the UPDI pin is used for GPIO */
-        JTAG2::updi_desc.signature[0] = 0;
-        JTAG2::updi_desc.signature[1] = 0;
-        JTAG2::updi_desc.signature[2] = 0;
-      }
-    }
-    else if (bit_is_set(UPDI_CONTROL, UPDI::UPDI_INFO_bp)) {
-      /* Returns a dummy signature on locking devices */
-      uint8_t c = JTAG2::updi_desc.sib[0];
-      if (c == ' ') c = JTAG2::updi_desc.sib[4];  /* Applies only to very old AVR_DA */
-      JTAG2::updi_desc.signature[0] = 0x1E; // AVR fixed $1E
-      JTAG2::updi_desc.signature[1] = c;    // Series model 'm','t' or 'A'
-      JTAG2::updi_desc.signature[2] = JTAG2::updi_desc.sib[10]; // NVMCTRL version '0','2','3' or '5'
-    }
-    else {
-      /* Returns a special value for devices that have UPDI disabled (offline) */
-      JTAG2::updi_desc.signature[0] = 0xFF;
-      JTAG2::updi_desc.signature[1] = 0xFF;
-      JTAG2::updi_desc.signature[2] = 0xFF;
-    }
-    #ifdef ENABLE_ADDFEATS_LOCK_SIG_DEBUGOUT
-    /* Returns the contents of the internal structure determined so far */
-    JTAG2::packet.size_word[0] = sizeof(JTAG2::updi_desc) + 2;
-    uint8_t *q = &JTAG2::packet.body[JTAG2::RSP_DATA + 1];
-    uint8_t *p = (uint8_t*)&JTAG2::updi_desc;
-    *q++ = UPDI_CONTROL;
-    *q++ = UPDI_NVMCTRL;
-    for (uint8_t i = 0; i < sizeof(JTAG2::updi_desc); i++) *q++ = *p++;
-    #endif
-  }
-  const uint8_t idx = start_addr - JTAG2::updi_desc.nvm_signature_offset;
-  if (idx < 3) {
-    JTAG2::packet.body[JTAG2::RSP_DATA] = JTAG2::updi_desc.signature[idx];
-    return true;
-  }
-  return false;
-}
-
 /***********************
  * Memory reading core *
  ***********************/
@@ -278,13 +228,15 @@ bool NVM::read_memory (uint32_t start_addr, size_t byte_count) {
   /* Reading only 1 byte may be special */
   if (byte_count == 1) {
     #ifdef ENABLE_ADDFEATS_LOCK_SIG
-    if (JTAG2::packet.body[JTAG2::MEM_TYPE] == JTAG2::MTYPE_SIGN_JTAG) {
+    if (bit_is_clear(UPDI_CONTROL, UPDI::UPDI_PROG_bp)
+      && JTAG2::packet.body[JTAG2::MEM_TYPE] == JTAG2::MTYPE_SIGN_JTAG) {
       /* Signature reading branches to special processing */
-      return NVM::read_signature((uint16_t)start_addr);
+      JTAG2::packet.body[JTAG2::RSP_DATA] = JTAG2::updi_desc.signature[(uint8_t)start_addr & 3];
+      return true;
     }
     #endif
     #ifdef ENABLE_ADDFEATS_DUMP_SIB
-    if (bit_is_set(UPDI_CONTROL, UPDI::UPDI_PROG_bp)
+    if (bit_is_set(UPDI_CONTROL, UPDI::UPDI_INFO_bp)
       && (_CAPS32(start_addr)->bytes[2] & 0x80) == 0
       && (uint16_t)start_addr < sizeof(JTAG2::updi_desc.sib)) {
       /* If the specified address is the lowest 32 bytes, return SIB */
@@ -321,7 +273,6 @@ bool NVM::write_memory (void) {
     start_addr &= 0xFFFF;
     mem_type = JTAG2::MTYPE_SRAM;
   }
-  set_response(JTAG2::RSP_OK);
 
   /* Can only be written to USERROW on locked devices */
   /* This write is only allowed in multiples of 32 bytes */

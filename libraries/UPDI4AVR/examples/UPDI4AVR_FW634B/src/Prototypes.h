@@ -68,6 +68,7 @@ namespace SYS {
   void WDT_OFF (void);
   void WDT_ON (void);
   void WDT_Short (void);
+  void WDT_Long (void);
   void WDT_REBOOT (void);
 } // end of SYS
 
@@ -366,7 +367,6 @@ namespace NVM {
     , EB_BOOTROW   = 0x1300
   };
 
-  bool read_signature (uint16_t start_addr);
   bool read_memory (uint32_t start_addr, size_t byte_count);
   bool write_memory (void);
 } // end of NVM

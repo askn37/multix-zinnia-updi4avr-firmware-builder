@@ -149,6 +149,8 @@ void SYS::WDT_ON (void) { WDT_SET(WDT_PERIOD_8KCLK_gc); }
 
 void SYS::WDT_Short (void) { WDT_SET(WDT_PERIOD_128CLK_gc); }
 
+void SYS::WDT_Long (void) { WDT_SET(WDT_PERIOD_512CLK_gc); }
+
 void SYS::WDT_REBOOT (void) {
   WDT_SET(WDT_PERIOD_8CLK_gc);
   for (;;);

@@ -21,6 +21,7 @@ namespace JTAG2 {
   updi_device_descriptor updi_desc;
   jtag_packet_t packet;
   jtag_baud_rate_e param_baud_rate_val = BAUD_19200;
+  uint16_t before_seqnum = -1;
 
   const uint16_t BAUD_TABLE[] PROGMEM = {
       BAUD_NOTUSED          // 0: not used dummy
@@ -196,7 +197,6 @@ namespace JTAG2 {
           if (baud) {
             /* If normal, respond and then change speed */
             param_baud_rate_val = (jtag_baud_rate_e) param_val;
-            set_response(RSP_OK);
             answer_transfer();
             flush();
             /* If the division ratio is too small, change to double speed mode */
@@ -224,7 +224,6 @@ namespace JTAG2 {
         break;
       }
     }
-    set_response(RSP_OK);
     return true;
   }
 
@@ -334,10 +333,12 @@ namespace JTAG2 {
     UPDI::_send_buf_clear();
     #endif
     uint8_t message_id = packet.body[MESSAGE_ID];
+    packet.size = 1;
+    packet.body[MESSAGE_ID] = RSP_OK;
     switch (message_id) {
       case CMND_GET_SIGN_ON : {
-        SYS::RTS_Disable();
         SYS::WDT_ON();
+        SYS::RTS_Disable();
         TIM::LED_Stop();
         UPDI::Target_Reset(true);
         openDrainWrite(TRST_PIN, LOW);
@@ -379,7 +380,6 @@ namespace JTAG2 {
           }
           bit_set(UPDI_CONTROL, UPDI::UPDI_INIT_bp);
         }
-        set_response(RSP_OK);
         #ifdef ENABLE_DEBUG_UPDI_SENDER
         UPDI::_send_buf_copy();
         #endif
@@ -392,7 +392,13 @@ namespace JTAG2 {
         break;
       }
       case CMND_WRITE_MEMORY : {
-        if (!UPDI::runtime(UPDI::UPDI_CMD_WRITE_MEMORY)) {
+        /* Received packet error retransmission exception */
+        if (before_seqnum == packet.number) break;
+        if (UPDI::runtime(UPDI::UPDI_CMD_WRITE_MEMORY)) {
+          /* Keep the sequence number if completed successfully */
+          before_seqnum = packet.number;
+        }
+        else {
           set_response(RSP_ILLEGAL_MCU_STATE);
         }
         #ifdef ENABLE_DEBUG_UPDI_SENDER
@@ -401,12 +407,15 @@ namespace JTAG2 {
         break;
       }
       case CMND_XMEGA_ERASE : {
-        /* Current implementation only supports chip erase */
-        set_response(
-          UPDI::runtime(UPDI::UPDI_CMD_ERASE)
-          ? RSP_OK
-          : RSP_ILLEGAL_POWER_STATE
-        );
+        /* Received packet error retransmission exception */
+        if (before_seqnum == packet.number) break;
+        if (UPDI::runtime(UPDI::UPDI_CMD_ERASE)) {
+          /* Keep the sequence number if completed successfully */
+          before_seqnum = packet.number;
+        }
+        else {
+          set_response(RSP_ILLEGAL_POWER_STATE);
+        }
         #ifdef ENABLE_DEBUG_UPDI_SENDER
         UPDI::_send_buf_copy();
         #endif
@@ -422,11 +431,9 @@ namespace JTAG2 {
       case CMND_LEAVE_PROGMODE :
       case CMND_GO :
       case CMND_GET_SYNC : {
-        set_response(RSP_OK);
         break;
       }
       case CMND_SIGN_OFF : {
-        set_response(RSP_OK);
         answer_transfer();
         flush();
         if (bit_is_set(UPDI_CONTROL, UPDI::UPDI_PROG_bp))

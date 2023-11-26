@@ -563,6 +563,9 @@ bool UPDI::chip_erase (void) {
 bool UPDI::enter_updi (bool skip) {
   /* Release the physical reset */
   openDrainWrite(TRST_PIN, HIGH);
+  JTAG2::updi_desc.signature[0] = 0;
+  JTAG2::updi_desc.signature[1] = 0;
+  JTAG2::updi_desc.signature[2] = 0;
 
   /* target reset deactive */
   if (!skip) {
@@ -570,6 +573,9 @@ bool UPDI::enter_updi (bool skip) {
     if (bit_is_set(UPDI_CONTROL, UPDI_FCHV_bp)) {
       HV_Pulse();
       loop_until_sys_stat_is_clear(UPDI_SYS_RSTSYS, 500);
+      JTAG2::updi_desc.signature[0] = 0xff;
+      JTAG2::updi_desc.signature[1] = 0xff;
+      JTAG2::updi_desc.signature[2] = 0xff;
 
       /* send nvmprog_key */
       if (!set_nvmprog_key()) return false;
@@ -584,6 +590,11 @@ bool UPDI::enter_updi (bool skip) {
   if (bit_is_clear(UPDI_CONTROL, UPDI_INFO_bp)) {
     /* Minimize guard time */
     if (!set_cs_ctra(UPDI_GTVAL)) return false;
+
+    JTAG2::updi_desc.signature[0] = 0xff;
+    JTAG2::updi_desc.signature[1] = 0xff;
+    JTAG2::updi_desc.signature[2] = 0xff;
+
     if (is_sys_stat(UPDI_SYS_RSTSYS)) {
       UPDI::Target_Reset(false);
       if (!loop_until_sys_stat_is_clear(UPDI_SYS_RSTSYS, 500)) return false;
@@ -594,6 +605,9 @@ bool UPDI::enter_updi (bool skip) {
     uint8_t* _p = &JTAG2::updi_desc.sib[0];
     if (!read_sib(_p)) return false;
     JTAG2::updi_desc.nvmctrl_version = _p[10];
+    JTAG2::updi_desc.signature[0] = 0x1e;
+    JTAG2::updi_desc.signature[1] = _p[0];
+    JTAG2::updi_desc.signature[2] = _p[10];
     switch (_p[0]) {
       case 'm' : {              // 'megaAVR' series
         /* megaAVR SIB = 'megaAVR P:0D:1-3' */
@@ -613,6 +627,7 @@ bool UPDI::enter_updi (bool skip) {
         /* AVR EA SIB = 'AVR     P:3D:1-3' */
         /* AVR DU SIB = 'AVR     P:4D:1-3' */
         /* AVR EB SIB = 'AVR     P:5D:1-3' */
+        JTAG2::updi_desc.signature[1] = 'A';
         if (JTAG2::updi_desc.nvmctrl_version == '3') {
           // 'AVR_Ex' series
           bit_set(UPDI_NVMCTRL, UPDI_GEN3_bp);
