@@ -22,6 +22,7 @@ namespace NVM {
   uint8_t nvm_wait_v3 (void);
 
   bool write_fuse (uint16_t addr, uint8_t data);
+  uint32_t before_address;
 
   /*********************
    * NVMCTRL operation *
@@ -290,7 +291,7 @@ bool NVM::write_memory (void) {
     case JTAG2::MTYPE_XMEGA_BOOT_FLASH : {    // 0xC1
 
       /* Instructions with mismatched page sizes are rejected */
-      if (JTAG2::updi_desc.flash_page_size != byte_count && 256 != byte_count) {
+      if (JTAG2::updi_desc.flash_page_size != byte_count && 256 != byte_count && 64 != byte_count && 2 != byte_count) {
         /* Kill the process with a strong error */
         set_response(JTAG2::RSP_NO_TARGET_POWER);
         return true;
@@ -298,7 +299,9 @@ bool NVM::write_memory (void) {
 
       /* Page boundaries require special handling */
       bool is_bound = bit_is_clear(UPDI_CONTROL, UPDI::UPDI_ERFM_bp)
+        && before_address != start_addr
         && ((JTAG2::updi_desc.flash_page_size - 1) & (uint16_t)start_addr) == 0;
+      before_address = start_addr;
 
       if (bit_is_set(UPDI_NVMCTRL, UPDI::UPDI_GEN3_bp))
         return write_flash_v3(start_addr, data, byte_count, is_bound);

@@ -72,9 +72,6 @@ void UPDI::setup (void) {
   UPDI_USART.CTRLC = UPDI_USART_CTRLC;
   UPDI_USART.CTRLB = UPDI_USART_ON;
   bit_clear(UPDI_CONTROL, UPDI_CLKU_bp);
-
-  /* Release target from reset state after resetting WDT timeout */
-  if ( bit_is_set(RSTCTRL_RSTFR, RSTCTRL_WDRF_bp) ) Target_Reset(false);
 }
 
 /* This special system reset will log you out of UPDI */

@@ -23,7 +23,7 @@
  *   TCB1 -- LED Control              CLK_TCB1 := CLK_PER
  *
  * [LED control]
- *   Division ratio is based on F_CPU := 20MHz
+ *   Division ratio is based on F_CPU := 10MHz/20MHz
  *
  * [HeartBeat]
  *   CLK_TCA0 -> WOA0 -> CCL1_INSEL0
@@ -46,24 +46,26 @@ void TIM::setup (void) {
   EVSYS_CHANNEL0 = EVSYS_CHANNEL0_CCL_LUT0_gc;
   EVSYS_CHANNEL1 = EVSYS_CHANNEL1_RTC_PIT_DIV128_gc;
   EVSYS_CHANNEL2 = EVSYS_CHANNEL2_CCL_LUT1_gc;
-  EVSYS_CHANNEL3 = EVSYS_CHANNEL3_PORTA_PIN5_gc;
+  EVSYS_CHANNEL3 = EVSYS_CHANNEL3_PORTA_PIN5_gc;  /* <- PA5:LEDY */
   EVSYS_USERTCB0COUNT = EVSYS_USER_CHANNEL1_gc;
   EVSYS_USERTCB1COUNT = EVSYS_USER_CHANNEL1_gc;
-  EVSYS_USERCCLLUT0A  = EVSYS_USER_CHANNEL3_gc;
-  EVSYS_USERCCLLUT1A  = EVSYS_USER_CHANNEL3_gc;
+  EVSYS_USERCCLLUT0A  = EVSYS_USER_CHANNEL3_gc;   /* <- PA5:LEDY */
+  EVSYS_USERCCLLUT1A  = EVSYS_USER_CHANNEL3_gc;   /* <- PA5:LEDY */
+
+  /* When PA5:LEDY of CCL3 is used, the signal output of CCL0 and CCL1 is stopped. */
 
   /* CCL/LUT construction */
 
   /* TRUTH0: 010 is ON */
   CCL_TRUTH0    = CCL_TRUTH_2_bm;
-  CCL_LUT0CTRLC = CCL_INSEL0_EVENTA_gc;
-  CCL_LUT0CTRLB = CCL_INSEL1_TCB1_gc;                       /* IN1:POS */
+  CCL_LUT0CTRLC = CCL_INSEL2_EVENTA_gc;           /* <- IN2:PA5 */
+  CCL_LUT0CTRLB = CCL_INSEL1_TCB1_gc;             /* <- IN1:POS */
   CCL_LUT0CTRLA = CCL_ENABLE_bm;
 
   /* TRUTH1: 001 010 is ON */
   CCL_TRUTH1    = CCL_TRUTH_1_bm | CCL_TRUTH_2_bm;
-  CCL_LUT1CTRLC = CCL_INSEL0_EVENTA_gc;
-  CCL_LUT1CTRLB = CCL_INSEL0_TCA0_gc | CCL_INSEL1_TCB1_gc;  /* IN0:POS IN1:POS */
+  CCL_LUT1CTRLC = CCL_INSEL2_EVENTA_gc;           /* <- IN2:PA5 */
+  CCL_LUT1CTRLB = CCL_INSEL0_TCA0_gc | CCL_INSEL1_TCB1_gc;  /* <- IN0:POS IN1:POS */
   CCL_LUT1CTRLA = CCL_ENABLE_bm;
 
   /* TRUTH3: 001 010 is ON */
@@ -94,20 +96,6 @@ void TIM::setup (void) {
 
   /* TCB1 */
   TCB1_CTRLB = TCB_CNTMODE_PWM8_gc;
-
-  /*
-   * LED mode determined at startup
-   *
-   * Heartbeat with RTS Deactive
-   * Flash if RTS Active
-   */
-
-  if ( digitalRead(RTS_SENSE_PIN) ) {
-    LED_HeartBeat();
-  }
-  else {
-    LED_Flash();
-  }
 }
 
 /*
@@ -213,43 +201,27 @@ void TIM::delay_200ms (void) {
 
 /*
  * SW1 monitoring LEVEL interrupt
- *
- * LOW Active resets UPDI target ON
- * Reset the main unit with Deactive
- * This handler never returns to the main process
  */
 
 ISR(portIntrruptVector(SW_SENSE_PIN), ISR_NAKED) {
-  /* Enable Short WDT */
+  /***
+    This interrupt keeps the target device in reset as long as
+    the low level signal continues. Since the interrupt exits
+    with a system reset, it does not return to main operation.
+  ***/
+
   wdt_reset();
   SYS::WDT_Short();
-
-  /* LED is blinking */
   TIM::LED_Flash();
-
-  /* Target reset ON */
   UPDI::Target_Reset(true);
   UPDI_USART.CTRLB = UPDI_USART_OFF;
-
-  /* Chattering suppression */
   delay_micros(800);
-
-  /* Keep target reset */
   pinMode(UPDI_TDAT_PIN, OUTPUT);
   digitalWrite(UPDI_TDAT_PIN, LOW);
   openDrainWrite(TRST_PIN, LOW);
-
-  /* LED blinks alternately */
   TIM::LED_Blink();
-
-  /* Disable WDT */
   SYS::WDT_OFF();
-
-  /* Waits while pressed */
   while (!digitalRead(SW_SENSE_PIN));
-
-  /* Reset the main unit */
-  // SYS::System_Reset();
   SYS::WDT_REBOOT();
 }
 
@@ -258,66 +230,34 @@ ISR(portIntrruptVector(SW_SENSE_PIN), ISR_NAKED) {
  */
 
 ISR(portIntrruptVector(RTS_SENSE_PIN)) {
+  /***
+    When this interrupt occurs, the WDT is reconfigured and the target
+    device is held in reset. If JTAG communication is not started within
+    the timeout limit, the system will be reset. Typically this is the
+    signal that starts the Arduino bootloader. Therefore, the time limit
+    is set to approximately 250ms.
+  ***/
+
   wdt_reset();
+  SYS::WDT_Short();
+  SYS::RTS_Disable();
   portRegister(RTS_SENSE_PIN).INTFLAGS =
   portRegister(RTS_SENSE_PIN).INTFLAGS;
-
-  if ( digitalRead(RTS_SENSE_PIN) ) {
-    /* Detection HIGH signal level */
-    if (bit_is_clear(UPDI_NVMCTRL, 1)) {
-      /* If no LOW level signal is detected, */
-
-      /* Enable Short WDT */
-      SYS::WDT_Short();
-
-      /* Indicates that the console that was open at the time of POR was closed. */
-      /* Reboot the system with the target in the reset state. */
-      UPDI::Target_Reset(true);
-      SYS::WDT_REBOOT();
-    }
-    /* Otherwise, heartbeat the LED and raise the flag. */
-    bit_set(UPDI_NVMCTRL, 0);
-    TIM::LED_HeartBeat();
-  }
-  else if (bit_is_set(UPDI_NVMCTRL, 0)) {
-    /* Second LOW signal level detected within time limit. */
-    /* I interpret this as a bootloader startup notification. */
-    /* Reboot the system and release the target reset. */
-    SYS::WDT_REBOOT();
-  }
-  else {
-    /* Detection LOW signal level */
-
-    /* Enable Short WDT */
-    SYS::WDT_Short();
-
-    /* The first low level signal keeps the target in reset state */
-    /* and starts counting the time limit. */
-    bit_set(UPDI_NVMCTRL, 1);
-
-    /* Disable UART passthrough */
-    /* Prioritizes reception of JTAG communication */
-    SYS::PG_Enable();
-
-    /* LED blinks alternately */
-    TIM::LED_Flash();
-
-    UPDI::Target_Reset(true);
-    openDrainWrite(TRST_PIN, LOW);
-
-    /* This WDT is released when JTAG communication starts. */
-    /* Once the time is up, the target will be released */
-    /* from the reset state after rebooting the system. */
-  }
+  SYS::PG_Enable();
+  TIM::LED_Flash();
+  UPDI::Target_Reset(true);
+  openDrainWrite(TRST_PIN, LOW);
 }
 
 /*
  * Timeout handler
- *
- * There is no way to return to the interrupt source from here
  */
 
 ISR(TCB0_INT_vect, ISR_NAKED) {
+  /***
+    This interrupt is a global escape due to timeout.
+    There is no return to the source of the interrupt.
+  ***/
   __asm__ __volatile__ ("EOR R1,R1");
   TCB0_CTRLA = 0;
   TCB0_INTFLAGS = TCB_CAPT_bm;

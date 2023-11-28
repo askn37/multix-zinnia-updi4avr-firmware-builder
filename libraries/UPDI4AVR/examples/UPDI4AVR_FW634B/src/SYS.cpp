@@ -117,18 +117,36 @@ void SYS::LED_Invert (void) {
  ***************************************/
 
 void SYS::ready (void) {
+  /* Release target from reset state after resetting WDT timeout */
+  if (bit_is_set(RSTCTRL_RSTFR, RSTCTRL_WDRF_bp))
+    UPDI::Target_Reset(false);
+
   /* Clears the reset state flag. */
   RSTCTRL_RSTFR = RSTCTRL_RSTFR;
-
-  /* Clear asynchronous interrupts detected during initialization */
-  portRegister(RTS_SENSE_PIN).INTFLAGS =
-  portRegister(RTS_SENSE_PIN).INTFLAGS;
 
   /*** Hibernation mode ***/
   set_sleep_mode(SLEEP_MODE_STANDBY);
 
+  /* Clear asynchronous interrupts detected during initialization */
+  while (portRegister(RTS_SENSE_PIN).INTFLAGS) {
+    portRegister(RTS_SENSE_PIN).INTFLAGS =
+    portRegister(RTS_SENSE_PIN).INTFLAGS;
+  }
+
   /* Interrupt permission */
   sei();
+
+  /* Keeps the LED flashing while the RTS maintains a low signal level. */
+  /* This usually indicates that the serial console is still open.      */
+  /* After completion, the system will be reset. */
+  if (!digitalRead(RTS_SENSE_PIN)) {
+    TIM::LED_Flash();
+    while (!digitalRead(RTS_SENSE_PIN)) {
+      sleep_enable();
+    }
+    SYS::WDT_REBOOT();
+  }
+  TIM::LED_HeartBeat();
 
   /* It stays in a low power state until the first interrupt occurs. */
   sleep_enable();
@@ -147,7 +165,7 @@ void SYS::WDT_OFF (void) { WDT_SET(WDT_PERIOD_OFF_gc); }
 
 void SYS::WDT_ON (void) { WDT_SET(WDT_PERIOD_8KCLK_gc); }
 
-void SYS::WDT_Short (void) { WDT_SET(WDT_PERIOD_128CLK_gc); }
+void SYS::WDT_Short (void) { WDT_SET(WDT_PERIOD_256CLK_gc); }
 
 void SYS::WDT_Long (void) { WDT_SET(WDT_PERIOD_512CLK_gc); }
 

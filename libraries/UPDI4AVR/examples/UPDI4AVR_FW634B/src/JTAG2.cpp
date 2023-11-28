@@ -165,7 +165,7 @@ namespace JTAG2 {
    ********************/
 
   void sign_on_response (void) {
-    UPDI_NVMCTRL = 0;
+    NVM::before_address = -1;
     packet.size = sizeof(sign_on_resp);
     for (uint8_t i = 0; i < sizeof(sign_on_resp); i++)
       packet.body[i] = pgm_read_byte( &sign_on_resp[i] );
