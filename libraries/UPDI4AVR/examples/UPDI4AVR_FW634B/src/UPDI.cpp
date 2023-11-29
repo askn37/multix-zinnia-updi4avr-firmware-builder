@@ -83,6 +83,7 @@ bool UPDI::Target_Reset (bool _enable) {
     , UPDI_STCS | UPDI_CS_CTRLB
     , UPDI_SET_UPDIDIS
   };
+  if (!digitalRead(UPDI_TDAT_PIN)) return false;
   BREAK();
   set_ptr[2] = _enable ? UPDI_RSTREQ : UPDI_NOP;
   return send_bytes(set_ptr, sizeof(set_ptr));
@@ -560,19 +561,12 @@ bool UPDI::chip_erase (void) {
 bool UPDI::enter_updi (bool skip) {
   /* Release the physical reset */
   openDrainWrite(TRST_PIN, HIGH);
-  JTAG2::updi_desc.signature[0] = 0;
-  JTAG2::updi_desc.signature[1] = 0;
-  JTAG2::updi_desc.signature[2] = 0;
-
   /* target reset deactive */
   if (!skip) {
     /* HV control forced permission */
     if (bit_is_set(UPDI_CONTROL, UPDI_FCHV_bp)) {
       HV_Pulse();
       loop_until_sys_stat_is_clear(UPDI_SYS_RSTSYS, 500);
-      JTAG2::updi_desc.signature[0] = 0xff;
-      JTAG2::updi_desc.signature[1] = 0xff;
-      JTAG2::updi_desc.signature[2] = 0xff;
 
       /* send nvmprog_key */
       if (!set_nvmprog_key()) return false;
@@ -587,10 +581,7 @@ bool UPDI::enter_updi (bool skip) {
   if (bit_is_clear(UPDI_CONTROL, UPDI_INFO_bp)) {
     /* Minimize guard time */
     if (!set_cs_ctra(UPDI_GTVAL)) return false;
-
-    JTAG2::updi_desc.signature[0] = 0xff;
-    JTAG2::updi_desc.signature[1] = 0xff;
-    JTAG2::updi_desc.signature[2] = 0xff;
+    _CAPS32(JTAG2::updi_desc.signature[0])->dword = -1;
 
     if (is_sys_stat(UPDI_SYS_RSTSYS)) {
       UPDI::Target_Reset(false);
@@ -618,13 +609,13 @@ bool UPDI::enter_updi (bool skip) {
         break;
       }
       case ' ' :                // 'AVR_DA' Regacy
+        JTAG2::updi_desc.signature[1] = 'A';
       case 'A' : {              // 'AVR_Dx/Ex' series
         /* AVR Dx SIB = 'AVR     P:2D:1-3' */
         /* AVR DA SIB = '    AVR P:2D:1-3' (Regacy) */
         /* AVR EA SIB = 'AVR     P:3D:1-3' */
         /* AVR DU SIB = 'AVR     P:4D:1-3' */
         /* AVR EB SIB = 'AVR     P:5D:1-3' */
-        JTAG2::updi_desc.signature[1] = 'A';
         if (JTAG2::updi_desc.nvmctrl_version == '3') {
           // 'AVR_Ex' series
           bit_set(UPDI_NVMCTRL, UPDI_GEN3_bp);
@@ -643,25 +634,6 @@ bool UPDI::enter_updi (bool skip) {
       }
     }
     bit_set(UPDI_CONTROL, UPDI_INFO_bp);
-
-    /* Measure the power supply voltage */
-    bool hvol = SYS::get_vcc() >= 4250
-              // && JTAG2::updi_desc.nvmctrl_version == '2'
-              && bit_is_clear(UPDI_CONTROL, UPDI_ERHV_bp);
-
-    /* Instructs double speed mode if there is sufficient voltage and not after HV control */
-    // if (hvol && !set_cs_asi_ctra(UPDI_SET_UPDICLKSEL_8M)) return false;
-  }
-
-  /* If the double speed mode change is successful, change the speed */
-  if ((get_cs_asi_ctra() & UPDI_SET_UPDICLKSEL_bm)
-                        == UPDI_SET_UPDICLKSEL_8M) {
-    UPDI_USART.BAUD = UPDI_BAUD_CALC >> 1;
-    bit_set(UPDI_CONTROL, UPDI_CLKU_bp);
-  }
-  else {
-    UPDI_USART.BAUD = UPDI_BAUD_CALC;
-    bit_clear(UPDI_CONTROL, UPDI_CLKU_bp);
   }
   return true;
 }
@@ -692,18 +664,21 @@ bool UPDI::enter_prog (void) {
  * UPDI authorization *
  **********************/
 
-bool UPDI::updi_activate (void) {
+bool UPDI::updi_activate (bool hv_active) {
   volatile uint8_t count = 4;
   while (--count && bit_is_clear(UPDI_CONTROL, UPDI_PROG_bp)) {
+    /* For the second lap, forced HV control is enabled by the CMND_RESET parameter */
+    /* For the third lap, forced HV control of JP short is allowed. */
+    if ((count == 2 && hv_active)
+     || (count == 1 && JTAG2::updi_desc.hvupdi_variant != '1' 
+                    && !digitalRead(JP_SENSE_PIN))) {
+      bit_set(UPDI_CONTROL, UPDI_FCHV_bp);
+    }
     if (setjmp(TIM::CONTEXT) == 0) {
       TIM::Timeout_Start(125);
       enter_updi(false) && enter_prog();
     }
     TIM::Timeout_Stop();
-
-    /* After the 2nd lap, forced HV control is allowed for JP short. */
-    if (count < 2 && JTAG2::updi_desc.hvupdi_variant != '1' && !digitalRead(JP_SENSE_PIN))
-      bit_set(UPDI_CONTROL, UPDI_FCHV_bp);
   }
   return bit_is_set(UPDI_CONTROL, UPDI_PROG_bp);
 }

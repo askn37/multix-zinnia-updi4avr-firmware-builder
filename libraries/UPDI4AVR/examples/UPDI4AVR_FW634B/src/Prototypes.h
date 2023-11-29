@@ -264,7 +264,7 @@ namespace UPDI {
   bool chip_erase (void);
   bool enter_updi (bool skip = false);
   bool enter_prog (void);
-  bool updi_activate (void);
+  bool updi_activate (bool hv_active);
   bool runtime (uint8_t updi_cmd);
 } // end of UPDI
 
@@ -598,7 +598,7 @@ namespace JTAG2 {
     uint8_t eeprom_page_size;         // Vaild value 1,8,32,64
     uint8_t signature[3];             // Valid value $1E:$9x:$NN
     /*** Not yet finalized or used after this point ***/
-    uint16_t nvm_signature_offset;    // Valid value 0x1100 or 0x1080
+    // uint16_t nvm_signature_offset;    // Valid value 0x1100 or 0x1080
     // uint16_t nvm_eeprom_offset;       // 0x1400 fixed
     // uint16_t nvm_userrow_offset;
     // uint16_t nvm_bootrow_offset;

@@ -359,16 +359,17 @@ namespace JTAG2 {
         /* Run only the first time */
         if (bit_is_clear(UPDI_CONTROL, UPDI::UPDI_INIT_bp)) {
           uint8_t hv_control = packet.body[RSP_DATA];
+          bool hv_active = false;
           if ((hv_control & '0') == '0') {
             /* If the general reset setting is neither 0 nor 1. */
             /* Accepts special extension settings.              */
             /* This forces HV control.                          */
             updi_desc.hvupdi_variant = hv_control;
             /* '1' must be passed for automatic HV control to be inhibited */
-            if (hv_control != '1') bit_set(UPDI_CONTROL, UPDI::UPDI_FCHV_bp);
+            if (hv_control != '1') hv_active = true;
           }
           /* Here UPDI control is tried */
-          UPDI::updi_activate();
+          UPDI::updi_activate(hv_active);
           if (bit_is_set(UPDI_CONTROL, UPDI::UPDI_TERM_bp)) {
             /* Disable WDT when interactive mode is enabled */
             TIM::LED_Blink();
