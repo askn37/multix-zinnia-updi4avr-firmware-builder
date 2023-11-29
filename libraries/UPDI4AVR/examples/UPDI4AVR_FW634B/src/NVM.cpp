@@ -24,6 +24,14 @@ namespace NVM {
   bool write_fuse (uint16_t addr, uint8_t data);
   uint32_t before_address;
 
+  bool check_pagesize (uint16_t seed, uint16_t test) {
+    while (test != seed) {
+      seed >>= 1;
+      if (seed < 2) return false;
+    }
+    return true;
+  }
+
   /*********************
    * NVMCTRL operation *
    *********************/
@@ -291,14 +299,14 @@ bool NVM::write_memory (void) {
     case JTAG2::MTYPE_XMEGA_BOOT_FLASH : {    // 0xC1
 
       /* Instructions with mismatched page sizes are rejected */
-      if (JTAG2::updi_desc.flash_page_size != byte_count && 256 != byte_count && 64 != byte_count && 2 != byte_count) {
+      if (!check_pagesize(JTAG2::updi_desc.flash_page_size, byte_count)) {
         /* Kill the process with a strong error */
-        set_response(JTAG2::RSP_NO_TARGET_POWER);
+        set_response(JTAG2::RSP_FAILED);
         return true;
       }
 
       /* Page boundaries require special handling */
-      bool is_bound = bit_is_clear(UPDI_CONTROL, UPDI::UPDI_ERFM_bp)
+      const bool is_bound = bit_is_clear(UPDI_CONTROL, UPDI::UPDI_ERFM_bp)
         && before_address != start_addr
         && ((JTAG2::updi_desc.flash_page_size - 1) & (uint16_t)start_addr) == 0;
       before_address = start_addr;
