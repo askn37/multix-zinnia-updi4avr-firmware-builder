@@ -17,14 +17,14 @@
 /* Locked devices return a tentative signature */
 #define ENABLE_ADDFEATS_LOCK_SIG
 
-/* Debug output of further determined internal structure */
-// #define ENABLE_ADDFEATS_LOCK_SIG_DEBUGOUT
-
 /* Enable SIB to be output as IO dump */
 // #define ENABLE_ADDFEATS_DUMP_SIB
 
 /* Includes UPDI communication log when writing NVM in response. */
 // #define ENABLE_DEBUG_UPDI_SENDER
+
+/* EXPERIMENTAL : Use UPDI double speed mode if possible */
+// #define ENABLE_UPDI_DOUBLESPEED
 
 /********************
  * Speed definition *
@@ -110,9 +110,7 @@
 #define UPDI_PMUX_ALT     PORTMUX_USART0_ALT1_gc
 #define UPDI_USART        USART0
 #define UPDI_USART_CTRLA  ( USART_LBME_bm | _BV(1) ) /* Bp1 : undocumented : loopback drive mode auto insert grace bit */
-#define UPDI_USART_ON     ( USART_RXEN_bm \
-                          | USART_TXEN_bm \
-                          | USART_ODME_bm )
+#define UPDI_USART_ON     ( USART_RXEN_bm | USART_TXEN_bm | USART_ODME_bm )
 #define UPDI_USART_OFF    ( USART_ODME_bm )
 #define UPDI_USART_CTRLC  ( USART_CHSIZE_8BIT_gc \
                           | USART_PMODE_EVEN_gc \

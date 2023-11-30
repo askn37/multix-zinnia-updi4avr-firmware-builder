@@ -68,7 +68,6 @@ namespace SYS {
   void WDT_OFF (void);
   void WDT_ON (void);
   void WDT_Short (void);
-  void WDT_Long (void);
   void WDT_REBOOT (void);
 } // end of SYS
 

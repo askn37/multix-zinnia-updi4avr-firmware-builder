@@ -157,6 +157,7 @@ void SYS::ready (void) {
  *****************/
 
 void SYS::WDT_SET (uint8_t _wdt_period) {
+  wdt_reset();
   loop_until_bit_is_clear(WDT_STATUS, WDT_SYNCBUSY_bp);
   _PROTECTED_WRITE(WDT_CTRLA, _wdt_period);
 }
@@ -165,9 +166,7 @@ void SYS::WDT_OFF (void) { WDT_SET(WDT_PERIOD_OFF_gc); }
 
 void SYS::WDT_ON (void) { WDT_SET(WDT_PERIOD_8KCLK_gc); }
 
-void SYS::WDT_Short (void) { WDT_SET(WDT_PERIOD_256CLK_gc); }
-
-void SYS::WDT_Long (void) { WDT_SET(WDT_PERIOD_512CLK_gc); }
+void SYS::WDT_Short (void) { WDT_SET(WDT_PERIOD_512CLK_gc); }
 
 void SYS::WDT_REBOOT (void) {
   WDT_SET(WDT_PERIOD_8CLK_gc);

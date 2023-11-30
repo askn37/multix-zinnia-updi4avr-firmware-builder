@@ -43,7 +43,7 @@ The old `memory "data"` setting will be reused as the base offset for the newly 
 
 ### Reversing memory reference order
 
-Some ``io'' memory reads (specifically, getting the silicon revision value) are forced to occur before the ``signature'' memory read representing the device signature. Although this is not a practical problem at present, it is clearly not based on the `JTAGICE mkII` protocol specifications and there are concerns about maintaining compatibility. In `UPDI4AVR`, the effect of this order reversal becomes apparent during high voltage control, so internal countermeasures were required.
+Some `io` memory reads (specifically, getting the silicon revision value) are forced to occur before the `signature` memory read representing the device signature. Although this is not a practical problem at present, it is clearly not based on the `JTAGICE mkII` protocol specifications and there are concerns about maintaining compatibility. In `UPDI4AVR`, the effect of this order reversal becomes apparent during high voltage control, so internal countermeasures were required.
 
 ## Non-standard extensions
 
@@ -78,6 +78,23 @@ part # Any 'UPDI' device parts
 Then, if you select the correct parts and use the `-eF` option, HV control will be activated when necessary. This is an alternative to the lack of a way to include an `hvupdi_variant` or `hvupdi_variant` value in the current `PP/PDI/SPI` device descriptor. Of course, it is not allowed to write this in non-`UPDI` parts.
 
 > `avrdude.conf.UPDI4AVR` includes this setting without exception. In the future, when the official driver for `UPDI4AVR` is integrated, this alternative will not be necessary.
+
+When writing FUSE assuming HV control to the target device, the following should always be avoided.
+
+- PA0 for tinyAVR and PF7 for others should not be used for GPIO output. Either always for input or only for RESET function.
+- The SUT item of `FUSE.SYSCFG1` should not be anything other than the default value `0b111`. The smaller the value, the lower the success rate of external control.
+
+### Retry control using packet sequence number
+
+A sequence number is placed at the beginning of a `JTAGICE mkII` packet, but only implementations that utilize this correctly will be able to efficiently retry NVM writes.
+
+Two-wire serial communications become relatively unreliable and packet error rates increase as the speed increases (a few Mbps or more) or the distance increases (a few thousand meters or more, or via a wireless bridge). At this time, the sequence number can be used to distinguish in which direction the error occurred. Simply put, the host side requests again a packet with the same sequence number as when the reception error was detected. The end node saves the sequence number used last time and can make the next decision when the same value is sent again.
+
+- Sequence number was retransmitted: The response packet going to the host side was lost.
+   - If it is for a normal response, do not repeat any work and return the same normal response as before.
+   - If it is for an abnormal response, execute the process according to the instruction and respond.
+
+The key to this implementation is whether the host side can distinguish between reception error timeouts and packet loss. Many simple implementations ignore this, so they don't have the same packet retransmission feature, but simply throw it away and regenerate a new request.
 
 ## Custom build options
 
@@ -133,9 +150,7 @@ part
 ;
 ```
 
-### ENABLE_ADDFEATS_LOCK_SIG_DEBUGOUT
-
-When `ENABLE_ADDFEATS_LOCK_SIG` is enabled, the internal information structure of `UPDI4AVR` is returned as additional information of `RSP_MEMORY`.
+> If `0xff 0xff 0xff` is returned, if it is not caused by a wiring error, it may be possible to recover with HV control. However, if `0x00 0x00 0x00` is returned repeatedly, there is a high possibility that HV control for that target device will also fail.
 
 ### ENABLE_ADDFEATS_DUMP_SIB
 

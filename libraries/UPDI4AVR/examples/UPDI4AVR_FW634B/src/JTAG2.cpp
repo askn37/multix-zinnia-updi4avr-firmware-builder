@@ -166,7 +166,7 @@ namespace JTAG2 {
 
   void sign_on_response (void) {
     NVM::before_address = -1;
-    packet.size = sizeof(sign_on_resp);
+    packet.size_word[0] = sizeof(sign_on_resp);
     for (uint8_t i = 0; i < sizeof(sign_on_resp); i++)
       packet.body[i] = pgm_read_byte( &sign_on_resp[i] );
     /* Generate version information from SERNUM */
@@ -333,7 +333,7 @@ namespace JTAG2 {
     UPDI::_send_buf_clear();
     #endif
     uint8_t message_id = packet.body[MESSAGE_ID];
-    packet.size = 1;
+    packet.size_word[0] = 1;
     packet.body[MESSAGE_ID] = RSP_OK;
     switch (message_id) {
       case CMND_GET_SIGN_ON : {
@@ -468,7 +468,7 @@ void JTAG2::setup (void) {
  *****************/
 
 void JTAG2::set_response (jtag_response_e response_code) {
-  packet.size = 4;
+  packet.size_word[0] = 4;
   /* response number */
   packet.body[MESSAGE_ID] = response_code;
   /* Internal status flag */

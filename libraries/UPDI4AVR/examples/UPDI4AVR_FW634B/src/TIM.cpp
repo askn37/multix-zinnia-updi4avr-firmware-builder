@@ -210,7 +210,6 @@ ISR(portIntrruptVector(SW_SENSE_PIN), ISR_NAKED) {
     with a system reset, it does not return to main operation.
   ***/
 
-  wdt_reset();
   SYS::WDT_Short();
   TIM::LED_Flash();
   UPDI::Target_Reset(true);
@@ -238,7 +237,6 @@ ISR(portIntrruptVector(RTS_SENSE_PIN)) {
     is set to approximately 250ms.
   ***/
 
-  wdt_reset();
   SYS::WDT_Short();
   SYS::RTS_Disable();
   portRegister(RTS_SENSE_PIN).INTFLAGS =
