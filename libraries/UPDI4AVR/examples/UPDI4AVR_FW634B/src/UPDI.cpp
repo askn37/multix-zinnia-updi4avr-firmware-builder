@@ -80,6 +80,7 @@ bool UPDI::Target_Reset (bool _enable) {
       UPDI_SYNCH
     , UPDI_STCS | UPDI_CS_ASI_RESET_REQ
     , 0
+    , UPDI_SYNCH
     , UPDI_STCS | UPDI_CS_CTRLB
     , UPDI_SET_UPDIDIS
   };
@@ -593,7 +594,7 @@ bool UPDI::enter_updi (bool skip) {
     #endif
 
     if (is_sys_stat(UPDI_SYS_RSTSYS)) {
-      UPDI::Target_Reset(false);
+      updi_reset(false);
       if (!loop_until_sys_stat_is_clear(UPDI_SYS_RSTSYS, 500)) return false;
     }
 
@@ -662,7 +663,6 @@ bool UPDI::enter_updi (bool skip) {
 
 bool UPDI::enter_prog (void) {
   if (bit_is_clear(UPDI_CONTROL, UPDI_PROG_bp)) {
-    loop_until_sys_stat_is_clear(UPDI_SYS_RSTSYS);
     if (!(UPDI_LASTL & UPDI_SYS_NVMPROG)) {
       if (UPDI_LASTL & UPDI_SYS_LOCKSTATUS) return false;
       if (!is_key_stat(UPDI_KEY_NVMPROG)) {
