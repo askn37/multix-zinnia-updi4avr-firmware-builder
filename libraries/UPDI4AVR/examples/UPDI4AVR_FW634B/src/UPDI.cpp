@@ -76,18 +76,25 @@ void UPDI::setup (void) {
 
 /* This special system reset will log you out of UPDI */
 bool UPDI::Target_Reset (bool _enable) {
-  static uint8_t set_ptr[] = {
+  static uint8_t set_ptr_on[] = {
       UPDI_SYNCH
     , UPDI_STCS | UPDI_CS_ASI_RESET_REQ
-    , 0
+    , UPDI_RSTREQ
+  };
+  static uint8_t set_ptr_off[] = {
+      UPDI_SYNCH
+    , UPDI_STCS | UPDI_CS_ASI_RESET_REQ
+    , UPDI_NOP
     , UPDI_SYNCH
     , UPDI_STCS | UPDI_CS_CTRLB
     , UPDI_SET_UPDIDIS
   };
   if (!digitalRead(UPDI_TDAT_PIN)) return false;
   BREAK();
-  set_ptr[2] = _enable ? UPDI_RSTREQ : UPDI_NOP;
-  return send_bytes(set_ptr, sizeof(set_ptr));
+  if (_enable) 
+    return send_bytes(set_ptr_on, sizeof(set_ptr_on));
+  else
+    return send_bytes(set_ptr_off, sizeof(set_ptr_off));
 }
 
 /* This only does a system reset */
