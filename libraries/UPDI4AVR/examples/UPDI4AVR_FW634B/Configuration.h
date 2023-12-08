@@ -43,8 +43,8 @@
 #define UPDI_BAUD_CALC ((F_CPU / UPDI_BAUD * 8 + 1) / 2)
 
 /* Single wire guard time value */
-#define UPDI_GTVAL     UPDI::UPDI_SET_GTVAL_2
-#define UPDI_GTVAL_RSD UPDI::UPDI_SET_GTVAL_2
+#define UPDI_GTVAL     UPDI::UPDI_SET_GTVAL_16
+#define UPDI_GTVAL_RSD UPDI::UPDI_SET_GTVAL_16|UPDI::UPDI_SET_RSD
 
 /* LED Timer config */
 #define HBEAT_HZ   (0.5)

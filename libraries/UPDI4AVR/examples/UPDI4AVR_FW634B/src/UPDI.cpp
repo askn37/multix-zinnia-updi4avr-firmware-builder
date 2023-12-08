@@ -80,6 +80,9 @@ bool UPDI::Target_Reset (bool _enable) {
       UPDI_SYNCH
     , UPDI_STCS | UPDI_CS_ASI_RESET_REQ
     , UPDI_RSTREQ
+    , UPDI_SYNCH
+    , UPDI_STCS | UPDI_CS_CTRLB
+    , UPDI_SET_CCDETDIS
   };
   static uint8_t set_ptr_off[] = {
       UPDI_SYNCH
@@ -233,7 +236,7 @@ bool UPDI::sts8rsd (uint32_t addr, uint8_t *data, uint8_t len) {
   _set_repeat[4] = UPDI_PTR_INC|UPDI_ST|UPDI_DATA1;
   if (!send_bytes(_set_ptr_l, sizeof(_set_ptr_l) - 1)) return false;
   if (UPDI_ACK != RECV()) return false;
-  if (!set_cs_ctra(UPDI_SET_RSD|UPDI_GTVAL_RSD)) return false;
+  if (!set_cs_ctra(UPDI_GTVAL_RSD)) return false;
   if (!send_bytes(_set_repeat, sizeof(_set_repeat))) return false;
   do {              /* Repeat byte send */
     SEND(*data++);  /* Submission errors must be ignored */
@@ -249,7 +252,7 @@ bool UPDI::sts16rsd (uint32_t addr, uint8_t *data, size_t len) {
   _set_repeat[4] = UPDI_PTR_INC|UPDI_ST|UPDI_DATA2;
   if (!send_bytes(_set_ptr_l, sizeof(_set_ptr_l) - 1)) return false;
   if (UPDI_ACK != RECV()) return false;
-  if (!set_cs_ctra(UPDI_SET_RSD|UPDI_GTVAL_RSD)) return false;
+  if (!set_cs_ctra(UPDI_GTVAL_RSD)) return false;
   if (!send_bytes(_set_repeat, sizeof(_set_repeat))) return false;
   do {              /* Repeat word send */
     SEND(*data++);  /* Submission errors must be ignored */
@@ -326,6 +329,10 @@ bool UPDI::set_cs_stat (uint8_t code, uint8_t data) {
 
 bool UPDI::set_cs_ctra (uint8_t data) {
   return set_cs_stat(UPDI_CS_CTRLA, data);
+}
+
+bool UPDI::set_cs_ctrb (uint8_t data) {
+  return set_cs_stat(UPDI_CS_CTRLB, data);
 }
 
 bool UPDI::set_cs_asi_ctra (uint8_t data) {
@@ -580,6 +587,7 @@ bool UPDI::enter_updi (bool skip) {
     if (bit_is_set(UPDI_CONTROL, UPDI_FCHV_bp)) {
       HV_Pulse();
       loop_until_sys_stat_is_clear(UPDI_SYS_RSTSYS, 500);
+      if (!set_cs_ctrb(UPDI_SET_CCDETDIS)) return false;
 
       /* send nvmprog_key */
       if (!set_nvmprog_key()) return false;
@@ -593,6 +601,7 @@ bool UPDI::enter_updi (bool skip) {
   }
   if (bit_is_clear(UPDI_CONTROL, UPDI_INFO_bp)) {
     /* Minimize guard time */
+    if (!set_cs_ctrb(UPDI_SET_CCDETDIS)) return false;
     if (!set_cs_ctra(UPDI_GTVAL)) return false;
     _CAPS32(JTAG2::updi_desc.signature[0])->dword = -1;
 

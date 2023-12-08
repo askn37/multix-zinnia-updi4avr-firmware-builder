@@ -210,17 +210,34 @@ ISR(portIntrruptVector(SW_SENSE_PIN), ISR_NAKED) {
     with a system reset, it does not return to main operation.
   ***/
 
+  /***
+    The LED flashes rapidly while the UPDI data line is LOW.
+    If there is no response for 1 second,
+    the process will be aborted and the system will restart.
+  ***/
+  SYS::WDT_SET(WDT_PERIOD_1KCLK_gc);
+  TIM::LED_Fast();
+  while (!digitalRead(UPDI_TDAT_PIN));
+
+  /***
+    If UPDI can be communicated, attempt to reset the target.
+  ***/
   SYS::WDT_Short();
-  TIM::LED_Flash();
   UPDI::Target_Reset(true);
+
+  /* Attempt to reset the target hardware. */
   UPDI_USART.CTRLB = UPDI_USART_OFF;
   delay_micros(800);
   pinMode(UPDI_TDAT_PIN, OUTPUT);
   digitalWrite(UPDI_TDAT_PIN, LOW);
   openDrainWrite(TRST_PIN, LOW);
+
+  /* The LED will blink and wait while the button is pressed. */
   TIM::LED_Blink();
   SYS::WDT_OFF();
   while (!digitalRead(SW_SENSE_PIN));
+
+  /* The system will be restarted. */
   SYS::WDT_REBOOT();
 }
 

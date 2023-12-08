@@ -247,6 +247,7 @@ namespace UPDI {
   bool is_key_stat (uint8_t check);
   bool set_cs_stat (uint8_t code, uint8_t data);
   bool set_cs_ctra (uint8_t data);
+  bool set_cs_ctrb (uint8_t data);
   bool set_cs_asi_ctra (uint8_t data);
   uint8_t get_cs_asi_ctra (void);
   bool loop_until_sys_stat_is_clear (uint8_t bitmap, uint16_t limit = 0);
