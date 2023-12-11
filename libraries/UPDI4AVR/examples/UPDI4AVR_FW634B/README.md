@@ -63,7 +63,7 @@ Device ID:                       UPDI4AVR
 
 ### HV制御の有効化
 
-既存の`AVRDUDE`で`UPDI4AVR`のHV制御機能を有効化するには、以下の後世ファイル設定を使うように変更された。該当する`part`セクションに、本来の用途ではない`idr`記述子が必要とされる。
+既存の`AVRDUDE`で`UPDI4AVR`のHV制御機能を有効化するには、以下の構成ファイル設定を使うように変更された。該当する`part`セクションに、本来の用途ではない`idr`記述子が必要とされる。
 
 ```sh
 part # Any 'UPDI' device parts

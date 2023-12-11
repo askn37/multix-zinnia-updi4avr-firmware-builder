@@ -63,7 +63,7 @@ HV control can be forced with an additional parameter in the reset command befor
 
 ### Enabling HV control
 
-To enable the HV control function of `UPDI4AVR` in an existing `AVRDUDE`, it has been changed to use the following posterity file settings. An `idr` descriptor is required in the corresponding `part` section, which is not its intended purpose.
+To enable the HV control function of `UPDI4AVR` in an existing `AVRDUDE`, it has been changed to use the following configuration file settings. An `idr` descriptor is required in the corresponding `part` section, which is not its intended purpose.
 
 ```sh
 part # Any 'UPDI' device parts
