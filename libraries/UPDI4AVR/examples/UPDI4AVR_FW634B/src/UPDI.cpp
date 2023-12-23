@@ -646,12 +646,15 @@ bool UPDI::enter_updi (bool skip) {
           // 'AVR_Ex' series
           bit_set(UPDI_NVMCTRL, UPDI_GEN3_bp);
         }
+        else if (JTAG2::updi_desc.nvmctrl_version == '4') {
+          // 'AVR_DU' series
+          bit_set(UPDI_NVMCTRL, UPDI_GEN4_bp);
+        }
         else if (JTAG2::updi_desc.nvmctrl_version == '5') {
           // 'AVR_EB' series
           bit_set(UPDI_NVMCTRL, UPDI_GEN5_bp);
           bit_set(UPDI_NVMCTRL, UPDI_GEN3_bp);
         }
-        /* Version 4 is now considered the same as 2. */
         bit_set(UPDI_NVMCTRL, UPDI_GEN2_bp);
         break;
       }

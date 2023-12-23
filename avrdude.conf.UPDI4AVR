@@ -3113,16 +3113,6 @@ part
         # Not referenced in UPDI implementation
         offset             = 0x01000000;
     ;
-
-    memory "io"
-        size               = 4160;
-        readsize           = 1;
-    ;
-
-    memory "sib"
-        size               = 32;
-        readsize           = 1;
-    ;
 ;
 
 #------------------------------------------------------------
@@ -3181,4 +3171,255 @@ part parent "avr16eb14"
         "AVR16EB32-VQFN/TQFP: VQFN32, Fmax=20 MHz, T=[-40 C, 125 C], Vcc=[1.8 V, 5.5 V]";
     mcuid                  = 383;
     signature              = 0x1e 0x94 0x3e;
+;
+
+#------------------------------------------------------------
+# AVR-DU family common values
+#------------------------------------------------------------
+
+part
+    desc                   = "AVR-DU family common values";
+    id                     = ".avrdu";
+    family_id              = "AVR    ";
+    prog_modes             = PM_SPM | PM_UPDI;
+    n_boot_sections        = 1;
+    boot_section_size      = 512;
+    # Shared UPDI pin, HV on _RESET
+    hvupdi_variant         = 4;
+    nvm_base               = 0x1000;
+    ocd_base               = 0x0f80;
+    idr                    = 0x34;  # substitute hvupdi_variant
+
+    memory "boot"
+        size               = 0;
+        offset             = 0x800000;
+    ;
+
+    memory "flash"
+        page_size          = 512;
+        offset             = 0x800000;
+        readsize           = 256;
+    ;
+
+    memory "eeprom"
+        size               = 256;
+        page_size          = 8;
+        offset             = 0x1400;
+        readsize           = 256;
+    ;
+
+    memory "fuse0"
+        size               = 1;
+        initval            = 0x00;
+        offset             = 0x1050;
+        readsize           = 1;
+    ;
+
+    memory "wdtcfg"
+        alias "fuse0";
+    ;
+
+    memory "fuse1"
+        size               = 1;
+        initval            = 0x00;
+        offset             = 0x1051;
+        readsize           = 1;
+    ;
+
+    memory "bodcfg"
+        alias "fuse1";
+    ;
+
+    memory "fuse2"
+        size               = 1;
+        initval            = 0x00;
+        bitmask            = 0x07;
+        offset             = 0x1052;
+        readsize           = 1;
+    ;
+
+    memory "osccfg"
+        alias "fuse2";
+    ;
+
+    memory "fuse5"
+        size               = 1;
+        initval            = 0xc0;
+        bitmask            = 0xed;
+        offset             = 0x1055;
+        readsize           = 1;
+    ;
+
+    memory "syscfg0"
+        alias "fuse5";
+    ;
+
+    memory "fuse6"
+        size               = 1;
+        initval            = 0x08;
+        bitmask            = 0x1f;
+        offset             = 0x1056;
+        readsize           = 1;
+    ;
+
+    memory "syscfg1"
+        alias "fuse6";
+    ;
+
+    memory "fuse7"
+        size               = 1;
+        initval            = 0x00;
+        offset             = 0x1057;
+        readsize           = 1;
+    ;
+
+    memory "codesize"
+        alias "fuse7";
+    ;
+
+    memory "append"
+        alias "fuse7";
+    ;
+
+    memory "fuse8"
+        size               = 1;
+        initval            = 0x00;
+        offset             = 0x1058;
+        readsize           = 1;
+    ;
+
+    memory "bootsize"
+        alias "fuse8";
+    ;
+
+    memory "bootend"
+        alias "fuse8";
+    ;
+
+    memory "fusea"
+        size               = 2;
+        initval            = 0x03;
+        bitmask            = 0xfff3;
+        offset             = 0x105a;
+        readsize           = 1;
+    ;
+
+    memory "pdicfg"
+        alias "fusea";
+    ;
+
+    # *** CAUTION ***
+    # The 'fuses' of the AVR_EB series is originally 11 bytes, 
+    # but is limited to 9 bytes here to avoid irrecoverable failures. 
+    # To overwrite the last two bytes added, 
+    # explicitly specify 'fusea' or 'pdicfg'.
+    memory "fuses"
+        size               = 9;
+        page_size          = 16;
+        offset             = 0x1050;
+        readsize           = 16;
+    ;
+
+    memory "lock"
+        size               = 4;
+        offset             = 0x1040;
+        initval            = 0x5cc5c55c;
+        readsize           = 4;
+    ;
+
+    memory "tempsense"
+        size               = 2;
+        offset             = 0x1084;
+        readsize           = 1;
+    ;
+
+    memory "signature"
+        size               = 3;
+        offset             = 0x1080;
+        readsize           = 3;
+    ;
+
+    memory "prodsig"
+        size               = 125;
+        page_size          = 125;
+        offset             = 0x1083;
+        readsize           = 125;
+    ;
+
+    memory "sernum"
+        size               = 16;
+        offset             = 0x1090;
+        readsize           = 1;
+    ;
+
+    memory "userrow"
+        size               = 512;
+        page_size          = 512;
+        offset             = 0x1200;
+        readsize           = 512;
+    ;
+
+    memory "usersig"
+        alias "userrow";
+    ;
+
+    memory "eeprom"
+        size               = 512;
+        page_size          = 2;
+        offset             = 0x1400;
+        readsize           = 256;
+    ;
+
+    memory "bootrow"
+        size               = 256;
+        page_size          = 256;
+        offset             = 0x1100;
+        readsize           = 256;
+    ;
+
+    memory "io"
+        size               = 4159;
+        readsize           = 1;
+    ;
+
+    memory "sib"
+        size               = 32;
+        readsize           = 1;
+    ;
+
+    memory "data"
+        # SRAM, only used to supply the offset
+        # Not referenced in UPDI implementation
+        offset             = 0x01000000;
+    ;
+;
+
+#------------------------------------------------------------
+# AVR64EU28
+#------------------------------------------------------------
+
+part parent ".avreb"
+    desc                   = "AVR64EU28";
+    id                     = "avr64eu28";
+    mcuid                  = 380;
+    signature              = 0x1e 0x96 0x22;
+
+    memory "flash"
+        size               = 0x10000;
+    ;
+;
+
+#------------------------------------------------------------
+# AVR64EU32
+#------------------------------------------------------------
+
+part parent ".avreb"
+    desc                   = "AVR64EU32";
+    id                     = "avr64eu32";
+    mcuid                  = 380;
+    signature              = 0x1e 0x96 0x21;
+
+    memory "flash"
+        size               = 0x10000;
+    ;
 ;

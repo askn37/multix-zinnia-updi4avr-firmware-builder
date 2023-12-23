@@ -9,6 +9,75 @@
 - 専用HV制御回路を含むオープンソースハードウェアとして設計された __UPDI4AVR Programmer__
 - その専用ハードウェア用に作成された __UPDI4AVR Firmware__
 
+## 対象AVR
+
+### [megaAVR] tinyAVR-0/1/2
+
+|系統|pin|2KiB|4KiB|8KiB|16KiB|32KiB
+|-|-|-|-|-|-|-|
+|tinyAVR-0
+||8 |__ATtiny202__|ATtiny402
+||14|ATtiny204|ATtiny404|ATtiny804|ATtiny1604
+||20|         |ATtiny406|ATtiny806|ATtiny1606
+||24|         |         |ATtiny807|ATtiny1607
+|tinyAVR-1
+||8 |ATtiny212|__ATtiny412__
+||14|ATtiny214|ATtiny414|__ATtiny814__|__ATtiny1614__
+||20|         |ATtiny416|ATtiny816|__ATtiny1616__|__ATtiny3216__
+||24|         |ATtiny417|ATtiny817|ATtiny1617|ATtiny3217
+|tinyAVR-2
+||14|         |ATtiny424|__ATtiny824__|ATtiny1624|ATtiny3224
+||20|         |ATtiny426|ATtiny826|__ATtiny1626__|ATtiny3226
+||24|         |ATtiny427|ATtiny827|ATtiny1627|ATtiny3227
+
+> __太字__ は実物確認済
+
+### [megaAVR] megaAVR-0
+
+|系統|pin|8KiB|16KiB|32KiB|48KiB
+|-|-|-|-|-|-|
+|megaAVR-0
+||28|ATmega808|ATmega1608|ATmega3208|__ATmega4808__
+||32|ATmega808|ATmega1608|ATmega3208|__ATmega4808__
+||40|         |          |          |__ATmega4809__
+||48|ATmega809|ATmega1609|ATmega3209|__ATmega4809__
+
+> __太字__ は実物確認済
+
+### [modernAVR] AVR DA/DB/DD/EA
+
+|系統|pin|8KiB|16KiB|32KiB|64KiB|128KiB
+|-|-|-|-|-|-|-|
+|AVR_DA
+||28|        |         |AVR32DA28|AVR64DA28|__AVR128DA28__
+||32|        |         |__AVR32DA32__|AVR64DA32|AVR128DA32
+||48|        |         |AVR32DA48|AVR64DA48|AVR128DA48
+||64|        |         |         |AVR64DA64|AVR128DA64
+|AVR_DB
+||28|        |         |AVR32DB28|AVR64DB28|AVR128DB28
+||32|        |         |AVR32DB32|AVR64DB32|__AVR128DB32__
+||48|        |         |AVR32DB48|AVR64DB48|__AVR128DB48__
+||64|        |         |         |AVR64DB64|AVR128DB64
+|AVR_DD
+||14|        |AVR16DD14|__AVR32DD14__|AVR64DD14
+||20|        |AVR16DD20|AVR32DD20|AVR64DD20
+||28|        |AVR16DD28|AVR32DD28|AVR64DD28
+||32|        |AVR16DD32|AVR32DD32|__AVR64DD32__
+|AVR_DU
+||28||||*AVR64DU28*
+||32||||*AVR64DU32*
+|AVR_EA
+||28||AVR16EA28|AVR32EA28|AVR64EA28
+||32||AVR16EA32|AVR32EA32|__AVR64EA32__
+||48||AVR16EA48|AVR32EA48|AVR64EA48
+|AVR_EB
+||14||*AVR16EB14*|*AVR32EB14*
+||20||*AVR16EB20*|*AVR32EB20*
+||28||*AVR16EB28*|*AVR32EB28*
+||32||*AVR16EB32*|*AVR32EB32*
+
+> __太字__ は実物確認済、*斜体* は暫定対応
+
 ## 導入方法
 
 - Arduino IDE の「環境設定」「追加のボードマネージャーのURL」に以下のリンクを追加
@@ -123,14 +192,14 @@ Vtarget         : 5.2 V
 
 - __megaTinyCore - Arduino support for all tinyAVR 0/1/2-Series__ [->HERE](https://github.com/SpenceKonde/megaTinyCore)
 
-## AVR_EB系統のメモリマップ変更
+## AVR_DU/EB系統のメモリマップ変更
 
-AVR_EB系統では新たな不揮発メモリとして`BOOTROW`が設定された。
+AVR_DU/EB系統では新たな不揮発メモリとして`BOOTROW`が設定された。
 これは 64byteの`Flash`メモリにして`FUSE`に追加された保護ビットにより
 フラッシュ消去と連動消去するか保護されるか選べるものである。
 そしてその配置アドレスは従来の`SIGNATURE`領域を指している。
 
-|Symbol|tinyAVR / megaAVR|AVR_DA/DB/DD/EA|AVR_EB|
+|Symbol|tinyAVR / megaAVR|AVR_DA/DB/DD/EA|DU/EB|
 |-|-|-|-|
 |SIGNATURES_START / SIGNATURE_0|0x1100|0x1100|0x1080|
 |USER_SIGNATURES_START (USERROW)|0x1300|0x1080|0x1200|
@@ -148,8 +217,8 @@ AVR_EA以前とは互換性があるように振る舞う。
 一方で`USERROW`は0x1080のままであるため正常に処理できない。
 `PRODSIG`も`BOOTROW`から読み出される。
 
-一方で本リポジトリに付属の *avrdude.conf.updi* での配置アドレス指定は、
-AVR_EB ネイティブである。
+一方で本リポジトリに付属の *avrdude.conf.UPDI4AVR* での配置アドレス指定は、
+AVR_DU/EB ネイティブである。
 これは`BOOTROW`を特殊ではないメモリアクセスと、
 `USERROW`への正しいメモリアクセスを保証する。
 
@@ -161,6 +230,7 @@ AVR_EB ネイティブである。
 
 - v0.2.10 (23/12/20)
   - `7.3.0-avr8-gnu-toolchain-231214`に更新。
+    - __AVR64DU28/32__ に暫定対応。
 
 - v0.2.9 (23/12/08)
   - 制御困難デバイスに対するリセット処理の調整。

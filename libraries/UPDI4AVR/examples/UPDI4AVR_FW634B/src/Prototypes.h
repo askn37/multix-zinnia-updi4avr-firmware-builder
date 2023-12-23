@@ -100,8 +100,8 @@ namespace UPDI {
     , UPDI_INIT_bp  = 7   /* 0x80 Initialization completion     */
   };
   enum updi_nvmctrl_p {   /* UPDI_NVMCTRL bitposition (true)    */
-      UPDI_GEN5_bp  = 3   /*    8 BOOTROW exists (AVR_EB)       */
-    , UPDI_GEN4_bp  = 4   /* 0x10 AVR_DU?                       */
+      UPDI_GEN5_bp  = 3   /*    8 AVR_EB BOOTROW exists         */
+    , UPDI_GEN4_bp  = 4   /* 0x10 AVR_DU BOOTROW exists         */
     , UPDI_GEN3_bp  = 5   /* 0x20 AVR_Ex or later               */
     , UPDI_GEN2_bp  = 6   /* 0x40 AVR_Dx or later HV=8.2V       */
     , UPDI_LOWF_bp  = 7   /* 0x80 High-Flash starts with 0x4000（=megaAVR）*/
