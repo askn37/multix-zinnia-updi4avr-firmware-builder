@@ -2,8 +2,8 @@
  * @file Prototypes.h
  * @author askn (K.Sato) multix.jp
  * @brief
- * @version 0.2
- * @date 2023-11-11
+ * @version 0.3
+ * @date 2023-12-24
  *
  * @copyright Copyright (c) 2023 askn37 at github.com
  *
@@ -269,8 +269,8 @@ namespace UPDI {
 } // end of UPDI
 
 namespace NVM {
-  /* NVMCTRL version 0,2,4 */
-  enum nvm_register_v024_e {
+  /* NVMCTRL version 0,2 */
+  enum nvm_register_v02_e {
     /* register */
       NVMCTRL_REG_CTRLA     = 0x1000
     , NVMCTRL_REG_CTRLB     = 0x1001
@@ -298,9 +298,28 @@ namespace NVM {
     , NVMCTRL_V3_REG_DATAL    = 0x1008
     , NVMCTRL_V3_REG_DATAH    = 0x1009
     , NVMCTRL_V3_REG_ADDR     = 0x100C
-    , NVMCTRL_V3_REG_ADDRL    = 0x100C
-    , NVMCTRL_V3_REG_ADDRH    = 0x100D
-    , NVMCTRL_V3_REG_ADDRZ    = 0x100E
+    , NVMCTRL_V3_REG_ADDR0    = 0x100C
+    , NVMCTRL_V3_REG_ADDR1    = 0x100D
+    , NVMCTRL_V3_REG_ADDR2    = 0x100E
+  };
+  /* NVMCTRL version 4 */
+  enum nvm_register_v4_e {
+    /* register */
+      NVMCTRL_V4_REG_CTRLA    = 0x1000
+    , NVMCTRL_V4_REG_CTRLB    = 0x1001
+    , NVMCTRL_V4_REG_CTRLC    = 0x1002
+    , NVMCTRL_V4_REG_INTCTRL  = 0x1004
+    , NVMCTRL_V4_REG_INTFLAGS = 0x1005
+    , NVMCTRL_V4_REG_STATUS   = 0x1006
+    , NVMCTRL_V4_REG_DATA     = 0x1008
+    , NVMCTRL_V4_REG_DATA0    = 0x1008
+    , NVMCTRL_V4_REG_DATA1    = 0x1009
+    , NVMCTRL_V4_REG_DATA2    = 0x100A
+    , NVMCTRL_V4_REG_DATA3    = 0x100B
+    , NVMCTRL_V4_REG_ADDR     = 0x100C
+    , NVMCTRL_V4_REG_ADDR0    = 0x100C
+    , NVMCTRL_V4_REG_ADDR1    = 0x100D
+    , NVMCTRL_V4_REG_ADDR2    = 0x100E
   };
   /* NVMCTRL version 0 */
   enum nvm_control_v0_e {
@@ -314,7 +333,7 @@ namespace NVM {
     , NVM_CMD_WFU   = 7   /* Write FUSE */
   };
   /* NVMCTRL version 2,4 */
-  enum nvm_control_v2_e {
+  enum nvm_control_v24_e {
       NVM_V2_CMD_NOCMD        = 0x00  /* No command */
     , NVM_V2_CMD_NOOP         = 0x01  /* No oparation */
     , NVM_V2_CMD_FLWR         = 0x02  /* Flash Write */
@@ -336,7 +355,7 @@ namespace NVM {
     , NVM_V2_CMD_EECHER       = 0x30  /* EEPROM Chip Erase */
   };
   /* NVMCTRL version 3,5 */
-  enum nvm_control_v3_e {
+  enum nvm_control_v35_e {
     /* command */
       NVM_V3_CMD_NOCMD        = 0x00  /* No command */
     , NVM_V3_CMD_NOOP         = 0x01  /* No oparation */
@@ -356,12 +375,12 @@ namespace NVM {
     , NVM_V3_CMD_CHER         = 0x20  /* Chip Erase */
     , NVM_V3_CMD_EECHER       = 0x30  /* EEPROM Chip Erase */
   };
-  enum avr_base_addr_e {
+  enum avr_base_v023_addr_e {
       BASE_NVMCTRL = 0x1000
     , BASE_FUSE    = 0x1050
     , BASE_SIGROW  = 0x1100
   };
-  enum avr_base_eb_addr_e {
+  enum avr_base_v45_addr_e {
       EB_SIGROW    = 0x1080
     , EB_USERROW   = 0x1200
     , EB_BOOTROW   = 0x1300

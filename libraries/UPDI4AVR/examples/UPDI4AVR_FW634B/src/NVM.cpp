@@ -2,8 +2,8 @@
  * @file NVM.cpp
  * @author askn (K.Sato) multix.jp
  * @brief
- * @version 0.2
- * @date 2023-11-11
+ * @version 0.3
+ * @date 2023-12-24
  *
  * @copyright Copyright (c) 2023 askn37 at github.com
  *
@@ -36,7 +36,7 @@ namespace NVM {
    * NVMCTRL operation *
    *********************/
 
-  /* NVMCTRL version 0,2,4 */
+  /* NVMCTRL version 0,2 */
   uint8_t nvm_wait (void) {
     #ifdef ENABLE_DEBUG_UPDI_SENDER
     uint16_t _back = UPDI::_send_ptr;
@@ -50,7 +50,7 @@ namespace NVM {
     return UPDI_LASTL;
   }
 
-  /* NVMCTRL version 3,5 */
+  /* NVMCTRL version 3,4,5 */
   uint8_t nvm_wait_v3 (void) {
     #ifdef ENABLE_DEBUG_UPDI_SENDER
     uint16_t _back = UPDI::_send_ptr;
@@ -64,12 +64,12 @@ namespace NVM {
     return UPDI_LASTL;
   }
 
-  /* NVMCTRL version 0 (,2,3,5) */
+  /* NVMCTRL version 0,2,3,4,5 */
   bool nvm_ctrl (uint8_t nvmcmd) {
     return UPDI::st8(NVMCTRL_REG_CTRLA, nvmcmd);
   }
 
-  /* NVMCTRL version 2,3,5 */
+  /* NVMCTRL version 2,3,4,5 */
   bool nvm_ctrl_change (uint8_t nvmcmd) {
     if (UPDI::ld8(NVMCTRL_REG_CTRLA) == nvmcmd) return true;
     if (!nvm_ctrl(NVM_CMD_NOCMD)) return false;
@@ -77,13 +77,13 @@ namespace NVM {
     return true;
   }
 
-  /* NVMCTRL version 2,4 */
+  /* NVMCTRL version 2 */
   bool nvm_ctrl_v2 (uint8_t nvmcmd) {
     nvm_wait();
     return nvm_ctrl_change(nvmcmd);
   }
 
-  /* NVMCTRL version 3,5 */
+  /* NVMCTRL version 3,4,5 */
   bool nvm_ctrl_v3 (uint8_t nvmcmd) {
     nvm_wait_v3();
     return nvm_ctrl_change(nvmcmd);
@@ -109,6 +109,23 @@ namespace NVM {
    * EEPROM region word type writing *
    ***********************************/
 
+  bool write_eeprom_v4 (uint32_t start_addr, uint8_t *data, size_t byte_count) {
+    /* NVMCTRL version 4 */
+    /* This version cannot be written in bulk transfer */
+    /* Only 2 bytes (1 word) can be written at a time */
+    if (byte_count > 2) {
+      /* If the limit is exceeded, it will fall back and force a Single-byte write */
+      set_response(JTAG2::RSP_ILLEGAL_MEMORY_RANGE);
+      return true;
+    }
+    if (!nvm_ctrl_v3(NVM_V2_CMD_EEERWR)) return false;
+
+    if (byte_count == 1) UPDI::st8(start_addr, *data);
+    else UPDI::sts8(start_addr, data, byte_count);
+
+    return nvm_ctrl_v3(NVM_V2_CMD_NOCMD);
+  }
+
   bool write_eeprom_v3 (uint32_t start_addr, uint8_t *data, size_t byte_count) {
     /* NVMCTRL version 3 or 5 */
     /* This version can write 8 bytes in bulk */
@@ -126,7 +143,7 @@ namespace NVM {
   }
 
   bool write_eeprom_v2 (uint32_t start_addr, uint8_t *data, size_t byte_count) {
-    /* NVMCTRL version 2 or 4 */
+    /* NVMCTRL version 2 */
     /* This version cannot be written in bulk transfer */
     /* Only 2 bytes (1 word) can be written at a time */
     if (byte_count > 2) {
@@ -164,6 +181,24 @@ namespace NVM {
 
   /*** No version guarantees the results of non-word writes that cross page boundaries ***/
 
+  bool write_flash_v4 (uint32_t start_addr, uint8_t *data, size_t byte_count, bool is_bound) {
+    /* NVMCTRL version 4 */
+    /* If the chip is not erased, erase the page. */
+    /* However, only when the beginning of the page boundary is addressed */
+    if (is_bound) {
+      if (!nvm_ctrl_v3(NVM_V2_CMD_FLPER)) return false;
+      if (!UPDI::st8(start_addr, 0xFF)) return false;
+    }
+    if (!nvm_ctrl_v3(NVM_V2_CMD_FLWR)) return false;
+
+    /* This version allows bulk writes of 512 bytes */
+    if (byte_count == 1) UPDI::st8(start_addr, *data);
+    else if ((byte_count - 1) >> 8) UPDI::sts16rsd(start_addr, data, byte_count);
+    else UPDI::sts8rsd(start_addr, data, byte_count);
+
+    return nvm_ctrl_v3(NVM_V2_CMD_NOCMD);
+  }
+
   bool write_flash_v3 (uint32_t start_addr, uint8_t *data, size_t byte_count, bool is_bound) {
     /* NVMCTRL version 3 or 5 */
     /* If the chip is not erased, erase the page. */
@@ -183,7 +218,7 @@ namespace NVM {
   }
 
   bool write_flash_v2 (uint32_t start_addr, uint8_t *data, size_t byte_count, bool is_bound) {
-    /* NVMCTRL version 2 or 4 */
+    /* NVMCTRL version 2 */
     /* If the chip is not erased, erase the page. */
     /* However, only when the beginning of the page boundary is addressed */
     if (is_bound) {
@@ -311,7 +346,9 @@ bool NVM::write_memory (void) {
         && ((JTAG2::updi_desc.flash_page_size - 1) & (uint16_t)start_addr) == 0;
       before_address = start_addr;
 
-      if (bit_is_set(UPDI_NVMCTRL, UPDI::UPDI_GEN3_bp))
+      if (bit_is_set(UPDI_NVMCTRL, UPDI::UPDI_GEN4_bp))
+        return write_flash_v4(start_addr, data, byte_count, is_bound);
+      else if (bit_is_set(UPDI_NVMCTRL, UPDI::UPDI_GEN3_bp))
         return write_flash_v3(start_addr, data, byte_count, is_bound);
       else if (bit_is_set(UPDI_NVMCTRL, UPDI::UPDI_GEN2_bp))
         return write_flash_v2(start_addr, data, byte_count, is_bound);
@@ -347,7 +384,9 @@ bool NVM::write_memory (void) {
     case JTAG2::MTYPE_XMEGA_EEPROM :          // 0xC4
     case JTAG2::MTYPE_EEPROM_PAGE :           // 0xB1
     case JTAG2::MTYPE_EEPROM : {              // 0x22
-      if (bit_is_set(UPDI_NVMCTRL, UPDI::UPDI_GEN3_bp))
+      if (bit_is_set(UPDI_NVMCTRL, UPDI::UPDI_GEN4_bp))
+        return write_eeprom_v4(start_addr, data, byte_count);
+      else if (bit_is_set(UPDI_NVMCTRL, UPDI::UPDI_GEN3_bp))
         return write_eeprom_v3(start_addr, data, byte_count);
       else if (bit_is_set(UPDI_NVMCTRL, UPDI::UPDI_GEN2_bp))
         return write_eeprom_v2(start_addr, data, byte_count);
