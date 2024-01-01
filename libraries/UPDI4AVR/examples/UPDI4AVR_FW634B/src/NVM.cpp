@@ -22,7 +22,7 @@ namespace NVM {
   uint8_t nvm_wait_v3 (void);
 
   bool write_fuse (uint16_t addr, uint8_t data);
-  uint32_t before_address;
+  uint16_t before_addr = ~0;
 
   bool check_pagesize (uint16_t seed, uint16_t test) {
     while (test != seed) {
@@ -340,12 +340,17 @@ bool NVM::write_memory (void) {
         return true;
       }
 
-      /* Page boundaries require special handling */
-      const bool is_bound = bit_is_clear(UPDI_CONTROL, UPDI::UPDI_ERFM_bp)
-        && before_address != start_addr
-        && ((JTAG2::updi_desc.flash_page_size - 1) & (uint16_t)start_addr) == 0;
-      before_address = start_addr;
+      /* A page block must be erased before writing to a new page block.
+         The new AVRDUDE splits large page blocks into multiple queries to read-modify-write.
+         This prevents atomic operations and requires special handling. */
+      bool is_bound = bit_is_clear(UPDI_CONTROL, UPDI::UPDI_ERFM_bp);
+      if (is_bound) {
+        uint16_t block_addr = (start_addr >> 1) & ~((JTAG2::updi_desc.flash_page_size - 1) >> 1);
+        is_bound = before_addr != block_addr;
+        before_addr = block_addr;
+      }
 
+      /* NVMCTRL processing steps vary depending on the version. */
       if (bit_is_set(UPDI_NVMCTRL, UPDI::UPDI_GEN4_bp))
         return write_flash_v4(start_addr, data, byte_count, is_bound);
       else if (bit_is_set(UPDI_NVMCTRL, UPDI::UPDI_GEN3_bp))
@@ -384,6 +389,7 @@ bool NVM::write_memory (void) {
     case JTAG2::MTYPE_XMEGA_EEPROM :          // 0xC4
     case JTAG2::MTYPE_EEPROM_PAGE :           // 0xB1
     case JTAG2::MTYPE_EEPROM : {              // 0x22
+      /* NVMCTRL processing steps vary depending on the version. */
       if (bit_is_set(UPDI_NVMCTRL, UPDI::UPDI_GEN4_bp))
         return write_eeprom_v4(start_addr, data, byte_count);
       else if (bit_is_set(UPDI_NVMCTRL, UPDI::UPDI_GEN3_bp))
