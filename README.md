@@ -228,51 +228,51 @@ AVR_DU/EB ネイティブである。
 
 ## 更新履歴
 
-- v0.2.10 (23/12/20)
+- 0.2.10 (23/12/20)
   - `7.3.0-avr8-gnu-toolchain-231214`に更新。
     - __AVR64DU28/32__ に暫定対応。
 
-- v0.2.9 (23/12/08)
+- 0.2.9 (23/12/08)
   - 制御困難デバイスに対するリセット処理の調整。
 
-- v0.2.8 (23/11/24)
+- 0.2.8 (23/11/24)
   - `7.3.0-avr8-gnu-toolchain-231113`に更新。
   - UPDI4AVR Firmware を`UPDI4AVR_FW634B`に変更。
     - `AVRDUDE 7.3`仕様に準拠。
     - HV制御は添付の`avrdude.conf.UPDI4AVR`を使用した場合に有効。
 
-- v0.2.7 (23/10/18)
+- 0.2.7 (23/10/18)
   - `dryrun`を書込器選択に追加。
   - `avrdude.conf`参照ルールの変更。
     - `arduino`/`UPDI4VAR`/`TPI4AVR`/`dryrun`を書込器に指定した場合のみ、ローカルの特別な設定ファイルを参照する。それ以外は規定の（tools/avrdude/etc内の）`avrdude.conf`を参照する。
     - この変更により、AVR_EA系統のようにまだ他の書込器で未対応／未検証のパーツ設定が分離された。
 
-- v0.2.6 (23/10/16)
+- 0.2.6 (23/10/16)
   - `7.2-arduino.1`に更新。
   - `7.3.0-avr8-gnu-toolchain-231004`に更新。
 
-- v0.2.5 (23/10/09)
+- 0.2.5 (23/10/09)
   - AVR_EB系統の対応準備
   - *avrdude.conf.updi* 記述を avrdude 7.1 準拠に改正
   - 前述に対応したNVM制御の修正
   - 規定の動作主クロックを10Mhz→20MHzに変更
     - 4.5V未満でのNVM書換は未だ可能であるが非推奨とする
 
-- v0.2.4 (23/09/09)
+- 0.2.4 (23/09/09)
   - `7.3.0-avr8-gnu-toolchain-230831`に更新。
   - `programmers.txt`を改正。
     - `SerialUPDI`の`-xrtsdtr=High`オプションを有効化。
 
-- v0.2.3 (23/07/09)
+- 0.2.3 (23/07/09)
   - `7.3.0-avr8-gnu-toolchain-230628`に更新。
 
-- v0.2.2 (23/05/23)
+- 0.2.2 (23/05/23)
   - `7.1-arduino.1`に更新。
 
-- v0.2.1 (23/04/29)
+- 0.2.1 (23/04/29)
   - AVR_DA初期ロット(RIVID=A6/A7)対応
 
-- v0.2.0 (23/04/10)
+- 0.2.0 (23/04/10)
   - 新規公開
 
 ## 許諾
@@ -290,6 +290,7 @@ AVR_DU/EB ネイティブである。
 ## 著作表示
 
 Twitter: [@askn37](https://twitter.com/askn37) \
+BlueSky Social: [@multix.jp](https://bsky.app/profile/multix.jp) \
 GitHub: [https://github.com/askn37/](https://github.com/askn37/) \
 Product: [https://askn37.github.io/](https://askn37.github.io/)
 
