@@ -375,15 +375,19 @@ namespace NVM {
     , NVM_V3_CMD_CHER         = 0x20  /* Chip Erase */
     , NVM_V3_CMD_EECHER       = 0x30  /* EEPROM Chip Erase */
   };
-  enum avr_base_v023_addr_e {
+  enum avr_base_addr_e {
       BASE_NVMCTRL = 0x1000
     , BASE_FUSE    = 0x1050
+    , BASE_USERROW = 0x1080
     , BASE_SIGROW  = 0x1100
-  };
-  enum avr_base_v45_addr_e {
-      EB_SIGROW    = 0x1080
-    , EB_USERROW   = 0x1200
-    , EB_BOOTROW   = 0x1300
+    , BASE_EEPROM  = 0x1400
+
+    , BASE23_FUSE    = 0x1280
+    , BASE23_USERROW = 0x1300
+
+    , BASE45_SIGROW  = 0x1080
+    , BASE45_BOOTROW = 0x1100
+    , BASE45_USERROW = 0x1200
   };
   extern uint32_t before_address;
   bool read_memory (uint32_t start_addr, size_t byte_count);

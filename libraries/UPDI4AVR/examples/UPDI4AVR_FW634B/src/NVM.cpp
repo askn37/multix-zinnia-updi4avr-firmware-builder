@@ -321,7 +321,9 @@ bool NVM::write_memory (void) {
   /* Can only be written to USERROW on locked devices */
   /* This write is only allowed in multiples of 32 bytes */
   if (bit_is_set(UPDI_CONTROL, UPDI::UPDI_INFO_bp)
-   && mem_type == JTAG2::MTYPE_XMEGA_USERSIG) // 0xC5
+   && mem_type == JTAG2::MTYPE_XMEGA_USERSIG  // 0xC5
+   && start_addr <  NVM::BASE45_BOOTROW       // 0x10ff
+   && start_addr >= NVM::BASE45_USERROW)      // 0x1200
     return UPDI::write_userrow(start_addr, data, byte_count);
 
   /* From this point on, only program mode is allowed. */
@@ -331,7 +333,8 @@ bool NVM::write_memory (void) {
   switch (mem_type) {
     case JTAG2::MTYPE_FLASH_PAGE :            // 0xB0
     case JTAG2::MTYPE_XMEGA_APP_FLASH :       // 0xC0
-    case JTAG2::MTYPE_XMEGA_BOOT_FLASH : {    // 0xC1
+    case JTAG2::MTYPE_XMEGA_BOOT_FLASH :      // 0xC1
+    case JTAG2::MTYPE_XMEGA_USERSIG : {       // 0xC5
 
       /* Instructions with mismatched page sizes are rejected */
       if (!check_pagesize(JTAG2::updi_desc.flash_page_size, byte_count)) {
