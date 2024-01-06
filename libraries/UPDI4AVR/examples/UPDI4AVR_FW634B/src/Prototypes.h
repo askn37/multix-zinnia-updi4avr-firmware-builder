@@ -389,7 +389,6 @@ namespace NVM {
     , BASE45_BOOTROW = 0x1100
     , BASE45_USERROW = 0x1200
   };
-  extern uint32_t before_address;
   bool read_memory (uint32_t start_addr, size_t byte_count);
   bool write_memory (void);
 } // end of NVM
