@@ -389,6 +389,7 @@ namespace NVM {
     , BASE45_BOOTROW = 0x1100
     , BASE45_USERROW = 0x1200
   };
+  bool chip_erase (void);
   bool read_memory (uint32_t start_addr, size_t byte_count);
   bool write_memory (void);
 } // end of NVM

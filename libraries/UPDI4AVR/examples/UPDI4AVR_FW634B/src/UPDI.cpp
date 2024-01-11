@@ -23,11 +23,11 @@
 #define UPDI_BAUD_SHORT_BREAK (F_CPU / 10000)
 
 namespace UPDI {
-  static uint8_t nvmprog_key[10] =
+  static uint8_t nvmprog_key[10] =    /* "NVMProg " */
     {UPDI_SYNCH, UPDI_KEY_64, 0x20, 0x67, 0x6F, 0x72, 0x50, 0x4D, 0x56, 0x4E};
-  static uint8_t erase_key[10] =
+  static uint8_t erase_key[10] =      /* "NVMErase" */
     {UPDI_SYNCH, UPDI_KEY_64, 0x65, 0x73, 0x61, 0x72, 0x45, 0x4D, 0x56, 0x4E};
-  static uint8_t urowwrite_key[10] =
+  static uint8_t urowwrite_key[10] =  /* "NVMUs&te" */
     {UPDI_SYNCH, UPDI_KEY_64, 0x65, 0x74, 0x26, 0x73, 0x55, 0x4D, 0x56, 0x4E};
 
   static uint8_t _set_ptr_l[] = {
@@ -482,6 +482,9 @@ void UPDI::HV_Pulse (void) {
  *****************************************/
 
 bool UPDI::write_userrow (const uint32_t start_addr, uint8_t *data, const size_t byte_count) {
+  /* If UPDI is not accessible, the operation cannot continue. */
+  if (bit_is_clear(UPDI_CONTROL, UPDI::UPDI_INFO_bp)) return false;
+
   /* Only data lengths that are multiples of 32 bytes are allowed. */
   if (byte_count == 0 || byte_count & 0x1F) {
     JTAG2::packet.body[JTAG2::MESSAGE_ID] = JTAG2::RSP_ILLEGAL_MEMORY_RANGE;
@@ -536,11 +539,23 @@ bool UPDI::write_userrow (const uint32_t start_addr, uint8_t *data, const size_t
  * Delete all chips at once *
  ****************************/
 
+/* This operation is valid when program mode is disabled. */
+/* Otherwise you should use NVM::chip_erase().            */
+
 // __attribute__((optimize("O0")))
 bool UPDI::chip_erase (void) {
   /* If UPDI is prohibited, try HV control */
   if (bit_is_clear(UPDI_CONTROL, UPDI_INFO_bp)) {
     HV_Pulse();
+  }
+  else {
+    loop_until_sys_stat_is_clear(UPDI_SYS_RSTSYS);
+  }
+
+  /* Set the NVMPROG key. This is useful when CRCSCAN is activated. */
+  if (get_cs_stat(UPDI_CS_ASI_CRC_STATUS) & UPDI_CRC_STATUS_gm) {
+    /* Communication errors are not checked. */
+    set_nvmprog_key();
   }
 
   /* Transition to CHIPERASE mode by system reset */
@@ -548,6 +563,9 @@ bool UPDI::chip_erase (void) {
 
   /* Issue a system reset */
   if (!updi_reset(true) || !updi_reset(false)) return false;
+
+  /* If RSTSYS is true, it is still not accessible */
+  loop_until_sys_stat_is_clear(UPDI_SYS_RSTSYS);
 
   /* If LOCKSTATUS is clear, the chip is unlocked */
   loop_until_sys_stat_is_clear(UPDI_SYS_LOCKSTATUS);
@@ -560,10 +578,12 @@ bool UPDI::chip_erase (void) {
 
   /* Once the HV control and device is successfully unlocked, */
   /* you should be able to enter program mode. */
-  if (!set_nvmprog_key()) return false;
-  if (!updi_reset(true) || !updi_reset(false)) return false;
-  loop_until_sys_stat_is_clear(UPDI_SYS_LOCKSTATUS);
-  loop_until_sys_stat_is_set(UPDI_SYS_NVMPROG);
+  if (!is_sys_stat(UPDI_SYS_NVMPROG)) {
+    if (!set_nvmprog_key()) return false;
+    if (!updi_reset(true) || !updi_reset(false)) return false;
+    loop_until_sys_stat_is_clear(UPDI_SYS_LOCKSTATUS);
+    loop_until_sys_stat_is_set(UPDI_SYS_NVMPROG);
+  }
 
   /* After performing HV control, it is necessary to obtain SIB */
   bit_clear(UPDI_CONTROL, UPDI_INFO_bp);
@@ -682,11 +702,8 @@ bool UPDI::enter_updi (bool skip) {
 
 bool UPDI::enter_prog (void) {
   if (bit_is_clear(UPDI_CONTROL, UPDI_PROG_bp)) {
-    if (!(UPDI_LASTL & UPDI_SYS_NVMPROG)) {
-      if (UPDI_LASTL & UPDI_SYS_LOCKSTATUS) return false;
-      if (!is_key_stat(UPDI_KEY_NVMPROG)) {
-        if (!set_nvmprog_key()) return false;
-      }
+    if (!is_sys_stat(UPDI_SYS_NVMPROG)) {
+      if (!set_nvmprog_key()) return false;
       if (!updi_reset(true) || !updi_reset(false)) return false;
       loop_until_sys_stat_is_clear(UPDI_SYS_RSTSYS);
       loop_until_sys_stat_is_set(UPDI_SYS_NVMPROG);
@@ -741,7 +758,11 @@ bool UPDI::runtime (uint8_t updi_cmd) {
       }
       case UPDI_CMD_ERASE : {
         if (JTAG2::packet.body[JTAG2::MEM_TYPE] == JTAG2::XMEGA_ERASE_CHIP) {
-          _result = chip_erase();
+          #ifdef ENABLE_ALWAYS_CHIPERASE_ASI
+          _result = UPDI::chip_erase();
+          #else
+          _result = bit_is_set(UPDI_CONTROL, UPDI_PROG_bp) ? NVM::chip_erase() : UPDI::chip_erase();
+          #endif
         }
         break;
       }

@@ -431,15 +431,15 @@ namespace JTAG2 {
       case CMND_LEAVE_PROGMODE :
       case CMND_GO :
       case CMND_GET_SYNC : {
+        set_response(RSP_OK);
         break;
       }
       case CMND_SIGN_OFF : {
         answer_transfer();
         flush();
-        if (bit_is_set(UPDI_CONTROL, UPDI::UPDI_PROG_bp))
+        if (bit_is_set(UPDI_CONTROL, UPDI::UPDI_INFO_bp))
           UPDI::runtime(UPDI::UPDI_CMD_GO);
         /* After all processing is completed, reset itself */
-        // SYS::WDT_REBOOT();
         SYS::System_Reset();
       }
       /* Returns negation for unknown commands */
@@ -473,7 +473,7 @@ void JTAG2::set_response (jtag_response_e response_code) {
   /* Internal status flag */
   packet.body[RSP_DATA    ] = UPDI_CONTROL;
   packet.body[RSP_DATA + 1] = UPDI_NVMCTRL;
-  packet.body[RSP_DATA + 2] = UPDI_LASTL;
+  packet.body[RSP_DATA + 2] = updi_desc.hvupdi_variant;
 }
 
 /*************

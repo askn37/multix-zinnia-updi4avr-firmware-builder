@@ -44,7 +44,7 @@
 
 > __太字__ は実物確認済
 
-### [modernAVR] AVR DA/DB/DD/EA
+### [modernAVR] AVR DA/DB/DD/DU/EA/EB
 
 |系統|pin|8KiB|16KiB|32KiB|64KiB|128KiB
 |-|-|-|-|-|-|-|
@@ -71,10 +71,10 @@
 ||32||AVR16EA32|AVR32EA32|__AVR64EA32__
 ||48||AVR16EA48|AVR32EA48|AVR64EA48
 |AVR_EB
-||14||*AVR16EB14*|*AVR32EB14*
-||20||*AVR16EB20*|*AVR32EB20*
-||28||*AVR16EB28*|*AVR32EB28*
-||32||*AVR16EB32*|*AVR32EB32*
+||14||AVR16EB14|*AVR32EB14*
+||20||AVR16EB20|*AVR32EB20*
+||28||AVR16EB28|*AVR32EB28*
+||32||__AVR16EB32__|*AVR32EB32*
 
 > __太字__ は実物確認済、*斜体* は暫定対応
 
@@ -192,7 +192,16 @@ Vtarget         : 5.2 V
 
 - __megaTinyCore - Arduino support for all tinyAVR 0/1/2-Series__ [->HERE](https://github.com/SpenceKonde/megaTinyCore)
 
-## AVR_DU/EB系統のメモリマップ変更
+## AVR_DU/EA/EB 系統への対応
+
+- __AVR_EA/EB__ 系統の正式サポートには *avrdude 7.3* 以降のリリースが必要
+  - ただし __AVR_EB__ の BOOTROW 書き込みには書込器側ファームウェア対応の制約がある。
+- __AVR_DU__ 系統の正式サポートには *avrdude 7.4* 以降のリリースが必要（計画）
+
+23/12現在、*avrdude 7.2* 内蔵の [__SerialUPDI__](https://avrdudes.github.io/avrdude/7.2/avrdude_19.html#index-SerialUPDI/) は、AVR_DU/EA/EB 系統を正しく操作することができない。暫定的に AVR_DU/EB/EA 系統の不揮発メモリを読み書きできるプログラムライターは、[__UPDI4AVR__](https://askn37.github.io/product/UPDI4AVR/)、[__JTAG2UPDI(Clone)__](https://github.com/askn37/jtag2updi) と __PICkit4/5__ （要 Firmware アップグレード）だけである。
+本SDKに付属の *avrdude.conf.UPDI4AVR* は [__UPDI4AVR__](https://askn37.github.io/product/UPDI4AVR/) および [__JTAG2UPDI(Clone)__](https://github.com/askn37/jtag2updi) でのみ正しく動作する記述であることに注意されたい。
+
+### AVR_DU/EB系統のメモリマップ変更
 
 AVR_DU/EB系統では新たな不揮発メモリとして`BOOTROW`が設定された。
 これは 64byteの`Flash`メモリにして`FUSE`に追加された保護ビットにより
@@ -226,11 +235,23 @@ AVR_DU/EB ネイティブである。
 `BOOTROW`と`SIGNATURE`は別の領域である。
 `PRODSIG`も`SIGNATURE`の次アドレスから正しく読み出される。
 
+### AVR_EA 系統の制約
+
+- FUSE_SYSCFG0.CRCSRC を既定値の NOCRC 値以外に変更してはならない。初期生産ロット(B1)は回路の不具合により正常な動作をしない。この不具合は二次生産ロット(B2)以降で解消されている。
+
+### AVR_EB 系統の制約
+
+- 初期生産ロット(A0)は、LOCK.KEY または FUSE.PDICFG を既定値以外に変更すると、以後の UPDI NVMPROG 制御が（HV制御と無関係に）全面的に困難または不可能となる。これは公開データシートの記述と異なる挙動である。
+- FUSE_SYSCFG0.CRCSRC を既定値の NOCRC 以外に変更してはならない。初期生産ロット(A0)は回路の不具合により正常な動作をしない。
+- HV制御の推奨投入電圧が 7.5V に変更（低下）した。RESET/PF6 パッドの絶対定格は 8.5V なので、AVR_DD 用に設計された HV制御回路では電圧が高すぎる恐れがある。
+
 ## 更新履歴
 
-- 0.2.10 (23/12/20)
+- 0.2.10 (23/01/11)
   - `7.3.0-avr8-gnu-toolchain-231214`に更新。
     - __AVR64DU28/32__ に暫定対応。
+    - __AVR_EB__ の一部に対応。AVR16EB32 を動作確認済表に追加。
+  - Bootloader を FWV=3.71 に更新。
 
 - 0.2.9 (23/12/08)
   - 制御困難デバイスに対するリセット処理の調整。

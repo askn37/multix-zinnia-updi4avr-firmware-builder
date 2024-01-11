@@ -20,6 +20,10 @@
 /* Enable SIB to be output as IO dump */
 // #define ENABLE_ADDFEATS_DUMP_SIB
 
+/* Always execute chip erase command in ASI */
+/* When disabled, priority is given to chip erasing with NVMCTRL. */
+// #define ENABLE_ALWAYS_CHIPERASE_ASI
+
 /* Includes UPDI communication log when writing NVM in response. */
 // #define ENABLE_DEBUG_UPDI_SENDER
 

@@ -254,6 +254,31 @@ namespace NVM {
 
 /*** Global functions ***/
 
+/* Perform a chip erase using NVMCTRL.             */
+/* To do this, you must first enable program mode. */
+/* Otherwise, you must use UPDI::chip_erase().     */
+
+bool NVM::chip_erase (void) {
+  /* NVMCTRL processing steps vary depending on the version. */
+  if (bit_is_set(UPDI_NVMCTRL, UPDI::UPDI_GEN4_bp)
+    || bit_is_set(UPDI_NVMCTRL, UPDI::UPDI_GEN3_bp)) {
+    /* version 3,4,5 */
+    if (!nvm_ctrl_v3(NVM_V2_CMD_CHER)) return false;
+    if (!nvm_ctrl_v3(NVM_V2_CMD_NOCMD)) return false;
+  }
+  else if (bit_is_set(UPDI_NVMCTRL, UPDI::UPDI_GEN2_bp)) {
+    /* version 2 */
+    if (!nvm_ctrl_v2(NVM_V2_CMD_CHER)) return false;
+    if (!nvm_ctrl_v2(NVM_V2_CMD_NOCMD)) return false;
+  }
+  else {
+    /* version 1 */
+    if (!nvm_ctrl_v2(NVM_CMD_CHER)) return false;
+    if (!nvm_ctrl_v2(NVM_CMD_NOCMD)) return false;
+  }
+  return true;
+}
+
 /***********************
  * Memory reading core *
  ***********************/
@@ -321,13 +346,20 @@ bool NVM::write_memory (void) {
   /* Can only be written to USERROW on locked devices */
   /* This write is only allowed in multiples of 32 bytes */
   if (bit_is_set(UPDI_CONTROL, UPDI::UPDI_INFO_bp)
-   && mem_type == JTAG2::MTYPE_XMEGA_USERSIG  // 0xC5
-   && start_addr <  NVM::BASE45_BOOTROW       // 0x10ff
-   && start_addr >= NVM::BASE45_USERROW)      // 0x1200
+   && mem_type == JTAG2::MTYPE_XMEGA_USERSIG) // 0xC5
     return UPDI::write_userrow(start_addr, data, byte_count);
 
   /* From this point on, only program mode is allowed. */
-  if (bit_is_clear(UPDI_CONTROL, UPDI::UPDI_PROG_bp)) return false;
+  if (bit_is_clear(UPDI_CONTROL, UPDI::UPDI_PROG_bp)) {
+    switch (mem_type) {
+      /* If you are instructed to write to the fuse, try High-Voltage control. */
+      case JTAG2::MTYPE_LOCK_BITS :           // 0xB3
+      case JTAG2::MTYPE_FUSE_BITS : {         // 0xB2
+        if (UPDI::enter_updi(false) && UPDI::enter_prog()) break;
+      }
+      default : return false;
+    }
+  }
 
   /* About flash regions */
   switch (mem_type) {
