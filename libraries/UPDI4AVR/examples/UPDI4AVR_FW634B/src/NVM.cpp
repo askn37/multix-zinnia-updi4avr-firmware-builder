@@ -265,6 +265,10 @@ bool NVM::chip_erase (void) {
     /* version 3,4,5 */
     if (!nvm_ctrl_v3(NVM_V2_CMD_CHER)) return false;
     if (!nvm_ctrl_v3(NVM_V2_CMD_NOCMD)) return false;
+    if (!nvm_ctrl_v3(NVM_V3_CMD_FLPBCLR)) return false;
+    if (!nvm_ctrl_v3(NVM_V2_CMD_NOCMD)) return false;
+    if (!nvm_ctrl_v3(NVM_V3_CMD_EEPBCLR)) return false;
+    if (!nvm_ctrl_v3(NVM_V2_CMD_NOCMD)) return false;
   }
   else if (bit_is_set(UPDI_NVMCTRL, UPDI::UPDI_GEN2_bp)) {
     /* version 2 */
@@ -272,8 +276,9 @@ bool NVM::chip_erase (void) {
     if (!nvm_ctrl_v2(NVM_V2_CMD_NOCMD)) return false;
   }
   else {
-    /* version 1 */
+    /* version 0 */
     if (!nvm_ctrl_v2(NVM_CMD_CHER)) return false;
+    if (!nvm_ctrl_v2(NVM_CMD_PBC)) return false;
     if (!nvm_ctrl_v2(NVM_CMD_NOCMD)) return false;
   }
   return true;
