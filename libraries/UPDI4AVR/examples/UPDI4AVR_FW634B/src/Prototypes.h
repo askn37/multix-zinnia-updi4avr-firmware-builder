@@ -225,6 +225,7 @@ namespace UPDI {
   void setup (void);
   bool Target_Reset (bool _enable);
   bool updi_reset (bool logic);
+  void drain (void);
 
   uint8_t RECV (void);
   bool SEND (uint8_t _data);

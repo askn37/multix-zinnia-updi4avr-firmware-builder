@@ -111,6 +111,17 @@ bool UPDI::updi_reset (bool logic) {
  * UPDI reception
  */
 
+void UPDI::drain (void) {
+  uint8_t j = 0;
+  do {
+    if (bit_is_set(UPDI_USART.STATUS, USART_RXCIF_bp)) {
+      UPDI_LASTH = UPDI_USART.RXDATAH ^ 0x80;
+      UPDI_LASTL = UPDI_USART.RXDATAL;
+      j = 0;
+    }
+  } while (--j);
+}
+
 uint8_t UPDI::RECV (void) {
   loop_until_bit_is_set(UPDI_USART.STATUS, USART_RXCIF_bp);
   UPDI_LASTH = UPDI_USART.RXDATAH ^ 0x80;
@@ -466,15 +477,13 @@ void UPDI::HV_Pulse (void) {
   TIM::HV_Pulse_OFF();
 
   /* Keep the UPDI signal low for as long as necessary */
-  UPDI_USART.BAUD = UPDI_BAUD_SHORT_BREAK;
+  // UPDI_USART.BAUD = UPDI_BAUD_SHORT_BREAK;
+  UPDI_USART.BAUD = UPDI_BAUD_BREAK;
   SEND(UPDI_NOP);
   UPDI_USART.BAUD = UPDI_BAUD_CALC;
 
   bit_clear(UPDI_CONTROL, UPDI_CLKU_bp);
   bit_set(UPDI_CONTROL, UPDI_ERHV_bp);
-
-  /* Wait for system reset to finish */
-  loop_until_sys_stat_is_clear(UPDI_SYS_RSTSYS);
 }
 
 /*****************************************
@@ -490,6 +499,8 @@ bool UPDI::write_userrow (const uint32_t start_addr, uint8_t *data, const size_t
     JTAG2::packet.body[JTAG2::MESSAGE_ID] = JTAG2::RSP_ILLEGAL_MEMORY_RANGE;
     return true;
   }
+  drain();
+  if (!loop_until_sys_stat_is_clear(UPDI_SYS_RSTSYS, 500)) return false;
 
   /* Send the authentication key */
   if (!set_urowwrite_key()) return false;
@@ -498,7 +509,7 @@ bool UPDI::write_userrow (const uint32_t start_addr, uint8_t *data, const size_t
   if (!updi_reset(true) || !updi_reset(false)) return false;
 
   /* Wait for system reset to finish */
-  loop_until_sys_stat_is_clear(UPDI_SYS_RSTSYS);
+  if (!loop_until_sys_stat_is_clear(UPDI_SYS_RSTSYS, 500)) return false;
 
   /* Make sure you are in USERROW mode */
   loop_until_sys_stat_is_set(UPDI_SYS_UROWPROG);
@@ -548,9 +559,8 @@ bool UPDI::chip_erase (void) {
   if (bit_is_clear(UPDI_CONTROL, UPDI_INFO_bp)) {
     HV_Pulse();
   }
-  else {
-    loop_until_sys_stat_is_clear(UPDI_SYS_RSTSYS);
-  }
+  drain();
+  if (!loop_until_sys_stat_is_clear(UPDI_SYS_RSTSYS, 500)) return false;
 
   /* Set the NVMPROG key. This is useful when CRCSCAN is activated. */
   if (get_cs_stat(UPDI_CS_ASI_CRC_STATUS) & UPDI_CRC_STATUS_gm) {
@@ -606,7 +616,7 @@ bool UPDI::enter_updi (bool skip) {
     /* HV control forced permission */
     if (bit_is_set(UPDI_CONTROL, UPDI_FCHV_bp)) {
       HV_Pulse();
-      loop_until_sys_stat_is_clear(UPDI_SYS_RSTSYS, 500);
+      if (!loop_until_sys_stat_is_clear(UPDI_SYS_RSTSYS, 500)) return false;
       if (!set_cs_ctrb(UPDI_SET_CCDETDIS)) return false;
 
       /* send nvmprog_key */
@@ -614,7 +624,7 @@ bool UPDI::enter_updi (bool skip) {
 
       /* restart target : change mode */
       if (!updi_reset(true) || !updi_reset(false)) return false;
-      loop_until_sys_stat_is_clear(UPDI_SYS_RSTSYS);
+      if (!loop_until_sys_stat_is_clear(UPDI_SYS_RSTSYS, 500)) return false;
     }
     else
       BREAK();
@@ -702,10 +712,11 @@ bool UPDI::enter_updi (bool skip) {
 
 bool UPDI::enter_prog (void) {
   if (bit_is_clear(UPDI_CONTROL, UPDI_PROG_bp)) {
+    if (!loop_until_sys_stat_is_clear(UPDI_SYS_RSTSYS, 500)) return false;
     if (!is_sys_stat(UPDI_SYS_NVMPROG)) {
       if (!set_nvmprog_key()) return false;
       if (!updi_reset(true) || !updi_reset(false)) return false;
-      loop_until_sys_stat_is_clear(UPDI_SYS_RSTSYS);
+      if (!loop_until_sys_stat_is_clear(UPDI_SYS_RSTSYS, 500)) return false;
       loop_until_sys_stat_is_set(UPDI_SYS_NVMPROG);
     }
     bit_set(UPDI_CONTROL, UPDI_INFO_bp);
@@ -775,6 +786,7 @@ bool UPDI::runtime (uint8_t updi_cmd) {
   TIM::Timeout_Stop();
   UPDI_USART.CTRLB = UPDI_USART_ON;
   wdt_reset();
+  if (!_result) drain();
   return _result;
 }
 
