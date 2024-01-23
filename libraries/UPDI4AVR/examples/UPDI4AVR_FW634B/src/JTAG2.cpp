@@ -172,8 +172,8 @@ namespace JTAG2 {
     uint8_t* p = (uint8_t*) &SIGROW_SERNUM0;
     uint8_t* q = (uint8_t*) &SIGROW_SERNUM4;
     uint8_t* r = (uint8_t*) &packet.body[10];
-      *r++ = *q++ ^ *p++ ^ *p++;
-      *r++ = *q++ ^ *p++ ^ *p++;
+      *r = *q++ ^ *p++; *r++ ^= *p++;
+      *r = *q++ ^ *p++; *r++ ^= *p++;
       *r++ = *q++;
       *r++ = *q++;
       *r++ = *q++;

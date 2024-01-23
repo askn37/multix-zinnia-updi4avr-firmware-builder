@@ -64,7 +64,7 @@
  *******************/
 
 /**********************
- * MZU2306B (ATtiny*26/*27) GPIO Layout
+ * MZU2306B (ATtiny*26,*27) GPIO Layout
  *
  * PA0 -- UPDI
  * PA1 IO U0TDAT LUTnIN0_U0TXD (USART0_ALT)

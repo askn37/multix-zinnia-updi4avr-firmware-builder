@@ -23,12 +23,12 @@
 |tinyAVR-1
 ||8 |ATtiny212|__ATtiny412__
 ||14|ATtiny214|ATtiny414|__ATtiny814__|__ATtiny1614__
-||20|         |ATtiny416|ATtiny816|__ATtiny1616__|__ATtiny3216__
+||20|         |__ATtiny416__|ATtiny816|__ATtiny1616__|__ATtiny3216__
 ||24|         |ATtiny417|ATtiny817|ATtiny1617|ATtiny3217
 |tinyAVR-2
 ||14|         |ATtiny424|__ATtiny824__|ATtiny1624|ATtiny3224
 ||20|         |ATtiny426|ATtiny826|__ATtiny1626__|ATtiny3226
-||24|         |ATtiny427|ATtiny827|ATtiny1627|ATtiny3227
+||24|         |ATtiny427|ATtiny827|__ATtiny1627__|ATtiny3227
 
 > __太字__ は実物確認済
 
@@ -138,14 +138,14 @@ Vtarget         : 5.2 V
   - 各種信号の制御は、多様なチップで共通する機能のみで行う。
   - JTAG2プロトコルサブバージョンは __6系__ で、JTAG2UPDIと同じ。
   - シリアル番号、制御電圧情報はダミー。
-  - 近日、__UPDI4AVR Firmware__ からのバックポートを予定している。
-  - JTAG2UPDIへもバックポートされたクローンの公開も予定している。
+  - ~~近日、__UPDI4AVR Firmware__ からのバックポートを予定している。~~完了。
+  - ~~JTAG2UPDI(clone)へもバックポートされたクローンの公開も予定している。~~完了。
 - __UPDI4AVR Firmware__ は Macro/Micro_API環境で記述され、専用設計のハードウェア向けに書かれている。
   - USB-UARTのRTS信号のレベル検出ができるため状態遷移が高速。
   - 各種信号の制御にほぼ GPIOを使わず、CCL/LUT を活用している。
   - ~~FW753Bでは JTAG2プロトコルサブバージョンは __7系__ で、*avrdude* から対象デバイスの追加情報を取得できる。
   よってHV制御電圧の自動切換えと、USERROW特殊書込は __UPDI4AVR Firmware__ にしか実装されていない。~~
-  - FW634Bでは JTAG2プロトコルサブバージョンは __6系__ で、JTAG2UPDIと同じに戻った。HV制御電圧の自動切換えは *avrdude.conf* に制御情報を追記することで対応する。USERROW特殊書込はより汎用性の高い実装に変更された。
+  - FW634Bでは JTAG2プロトコルサブバージョンは __6系__ で、JTAG2UPDIと同じに戻った。HV制御電圧の自動切換えは *avrdude.conf* に制御情報を追記することで対応する。つまり標準の構成ファイルでは、HV制御は有効化されない。USERROW特殊書込はより汎用性の高い実装に変更された。
 
 ## ファームウェアビルド＆アップロード
 
@@ -247,11 +247,10 @@ AVR_DU/EB ネイティブである。
 
 ## 更新履歴
 
-- 0.2.10 (23/01/11)
+- 0.2.10 (23/01/16)
   - `7.3.0-avr8-gnu-toolchain-231214`に更新。
     - __AVR64DU28/32__ に暫定対応。
-    - __AVR_EB__ の一部に対応。AVR16EB32 を動作確認済表に追加。
-  - Bootloader を FWV=3.71 に更新。
+    - 動作確認済に __AVR64EA32__、 __AVR64EA48__、 __AVR16EB32__、__ATtiny1627__, __ATtiny416__ を追加。
 
 - 0.2.9 (23/12/08)
   - 制御困難デバイスに対するリセット処理の調整。

@@ -281,7 +281,7 @@ bool NVM::chip_erase (void) {
     if (!nvm_ctrl_v2(NVM_CMD_PBC)) return false;
     if (!nvm_ctrl_v2(NVM_CMD_NOCMD)) return false;
   }
-  bit_set(UPDI_CONTROL, UPDI_ERFM_bp);
+  bit_set(UPDI_CONTROL, UPDI::UPDI_ERFM_bp);
   return true;
 }
 
