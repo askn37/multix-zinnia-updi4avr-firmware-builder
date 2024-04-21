@@ -9,6 +9,8 @@
 - 専用HV制御回路を含むオープンソースハードウェアとして設計された __UPDI4AVR Programmer__
 - その専用ハードウェア用に作成された __UPDI4AVR Firmware__
 
+(0.2.11以降) __SERIAL/UPDI-MANAGER(SUM)__ のファームウェアもこのSDKで同時に提供される。
+
 ## 対象AVR
 
 ### [megaAVR] tinyAVR-0/1/2
@@ -54,14 +56,14 @@
 ||48|        |         |AVR32DA48|AVR64DA48|AVR128DA48
 ||64|        |         |         |AVR64DA64|AVR128DA64
 |AVR_DB
-||28|        |         |AVR32DB28|AVR64DB28|AVR128DB28
+||28|        |         |AVR32DB28|AVR64DB28|__AVR128DB28__
 ||32|        |         |AVR32DB32|AVR64DB32|__AVR128DB32__
 ||48|        |         |AVR32DB48|AVR64DB48|__AVR128DB48__
 ||64|        |         |         |AVR64DB64|AVR128DB64
 |AVR_DD
 ||14|        |AVR16DD14|__AVR32DD14__|AVR64DD14
 ||20|        |AVR16DD20|AVR32DD20|AVR64DD20
-||28|        |AVR16DD28|AVR32DD28|AVR64DD28
+||28|        |AVR16DD28|AVR32DD28|__AVR64DD28__
 ||32|        |AVR16DD32|AVR32DD32|__AVR64DD32__
 |AVR_DU
 ||28||||*AVR64DU28*
@@ -245,9 +247,25 @@ AVR_DU/EB ネイティブである。
 - FUSE_SYSCFG0.CRCSRC を既定値の NOCRC 以外に変更してはならない。初期生産ロット(A0)は回路の不具合により正常な動作をしない。
 - HV制御の推奨投入電圧が 7.5V に変更（低下）した。RESET/PF6 パッドの絶対定格は 8.5V なので、AVR_DD 用に設計された HV制御回路では電圧が高すぎる恐れがある。
 
+## SERIAL/UPDI-MANAGER(SUM)
+
+SERIAL/UPDI-MANAGER(SUM)は、SerialUPDIプログラム機能を混載した UARTパススルー対応 USBシリアル変換アダプタだ。高度な機能は持たないが、UPDI4AVR に近い操作性を低コストで提供する。
+
+- UARTパススルーと tinyAVR リセット機能（URP）を専用FWで実現している。
+- 対応する AVRDUDE は、v7.3以降を推奨（v7.1以降も一部制約付きで使用可能）
+- pymcuprg も使用可能（UPDI固定モード使用時）
+- ハードウェアの制約により、HV機能には非対応。
+- AVRDUDE の実装上の都合により `-D`による部分領域書き換えは非対応。
+
+24/04/21 現在のFWバージョンは、FW2401Aである。
+
 ## 更新履歴
 
-- 0.2.10 (23/01/16)
+- 0.2.11 (24/04/21)
+  - 動作確認済に __AVR128DB28__、__AVR64DD28__ を追加。
+  - __SERIAL/UPDI-MANAGER(SUM)__ のファームウェア対応を同梱。
+
+- 0.2.10 (24/01/16)
   - `7.3.0-avr8-gnu-toolchain-231214`に更新。
     - __AVR64DU28/32__ に暫定対応。
     - 動作確認済に __AVR64EA32__、 __AVR64EA48__、 __AVR16EB32__、__ATtiny1627__, __ATtiny416__ を追加。

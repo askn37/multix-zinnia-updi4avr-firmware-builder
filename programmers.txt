@@ -26,6 +26,13 @@
 13_serialupdi.program.tool=avrdude
 13_serialupdi.program.extra_params=-P {serial.port} -xrtsdtr=high
 
+14_serialupdi.name=SerialUPDI over UART with force mode
+14_serialupdi.communication=serial
+14_serialupdi.protocol=serialupdi
+14_serialupdi.program.protocol=serialupdi
+14_serialupdi.program.tool=avrdude
+14_serialupdi.program.extra_params=-P {serial.port} -xrtsdtr=high -F
+
 21_pickit4_updi.name=PICkit4 over USB (UPDI)
 21_pickit4_updi.communication=usb
 21_pickit4_updi.protocol=pickit4_updi
