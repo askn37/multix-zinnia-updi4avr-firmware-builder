@@ -1,5 +1,5 @@
 name=MultiX Zinnia UPDI4AVR Firmware Builder
-version=0.2.12
+version=0.2.13
 
 archive_file_path={build.path}/{archive_file}
 bootloader.tool=avrdude

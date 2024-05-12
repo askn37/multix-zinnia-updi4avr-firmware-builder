@@ -250,6 +250,7 @@ extern "C" {
 #endif
 
 inline void initVariant (void) {
+  _CLKCTRL_SETUP();
 
   // /* I want to write this, but the result is not good */
   // register8_t *ports[] = {&PORTA_PIN0CTRL, &PORTB_PIN0CTRL, &PORTC_PIN0CTRL};
@@ -273,8 +274,6 @@ inline void initVariant (void) {
         "r" ((uint8_t)PORT_ISC_INPUT_DISABLE_gc)
       : "r24", "r25"
   );
-
-  _CLKCTRL_SETUP();
 }
 
 #ifdef __cplusplus
