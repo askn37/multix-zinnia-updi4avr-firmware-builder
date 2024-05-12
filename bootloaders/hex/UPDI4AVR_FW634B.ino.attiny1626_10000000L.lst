@@ -1,5 +1,5 @@
 
-/var/folders/mz/_z9vt_y13rdf9tt_4qkvv0k40000gn/T/arduino_build_518893/UPDI4AVR_FW634B.ino.elf:     file format elf32-avr
+/var/folders/mz/_z9vt_y13rdf9tt_4qkvv0k40000gn/T/arduino_build_676789/UPDI4AVR_FW634B.ino.elf:     file format elf32-avr
 
 
 Disassembly of section .data:
@@ -1398,7 +1398,7 @@ bool UPDI::loop_until_key_stat_is_set (uint8_t bitmap, uint16_t limit) {
     if (is_key_stat(bitmap)) return true;
      540:	87 e0       	ldi	r24, 0x07	; 7
      542:	99 de       	rcall	.-718    	; 0x276 <UPDI::get_cs_stat(unsigned char)>
-/Users/askn/Library/Arduino15/packages/MultiX-Zinnia/hardware/UPDI4AVR/0.2.10/cores/megaAVR/api/delay_busywait.h:31
+/Users/askn/Library/Arduino15/packages/MultiX-Zinnia/hardware/UPDI4AVR/0.2.13/cores/megaAVR/api/delay_busywait.h:31
 static __inline__ __attribute__((__always_inline__)) void delay_micros (uint32_t _us);
 static __inline__ __attribute__((__always_inline__)) void delay_millis (uint32_t _ms);
 
@@ -1503,7 +1503,7 @@ bool UPDI::loop_until_sys_stat_is_set (uint8_t bitmap, uint16_t limit) {
      58a:	18 17       	cp	r17, r24
      58c:	59 f0       	breq	.+22     	; 0x5a4 <UPDI::loop_until_sys_stat_is_set(unsigned char, unsigned int) [clone .constprop.26]+0x2c>
 delay_micros():
-/Users/askn/Library/Arduino15/packages/MultiX-Zinnia/hardware/UPDI4AVR/0.2.10/cores/megaAVR/api/delay_busywait.h:31
+/Users/askn/Library/Arduino15/packages/MultiX-Zinnia/hardware/UPDI4AVR/0.2.13/cores/megaAVR/api/delay_busywait.h:31
      58e:	86 ea       	ldi	r24, 0xA6	; 166
      590:	8a 95       	dec	r24
      592:	f1 f7       	brne	.-4      	; 0x590 <UPDI::loop_until_sys_stat_is_set(unsigned char, unsigned int) [clone .constprop.26]+0x18>
@@ -1559,7 +1559,7 @@ void TIM::HV_Pulse_ON (void) {
 HV_Pulse_ON():
      5b2:	80 93 01 0a 	sts	0x0A01, r24	; 0x800a01 <__RODATA_PM_OFFSET__+0x7f8a01>
 _ZN4UPDI8HV_PulseEv():
-/Users/askn/Library/Arduino15/packages/MultiX-Zinnia/hardware/UPDI4AVR/0.2.10/cores/megaAVR/api/delay_busywait.h:31
+/Users/askn/Library/Arduino15/packages/MultiX-Zinnia/hardware/UPDI4AVR/0.2.13/cores/megaAVR/api/delay_busywait.h:31
      5b6:	21 9a       	sbi	0x04, 1	; 4
 delay_micros():
      5b8:	86 ea       	ldi	r24, 0xA6	; 166
@@ -1574,7 +1574,7 @@ delay_micros():
   openDrainWrite(TRST_PIN, HIGH);
      5be:	00 c0       	rjmp	.+0      	; 0x5c0 <UPDI::HV_Pulse()+0x18>
 _ZN4UPDI8HV_PulseEv():
-/Users/askn/Library/Arduino15/packages/MultiX-Zinnia/hardware/UPDI4AVR/0.2.10/cores/megaAVR/api/delay_busywait.h:31
+/Users/askn/Library/Arduino15/packages/MultiX-Zinnia/hardware/UPDI4AVR/0.2.13/cores/megaAVR/api/delay_busywait.h:31
      5c0:	21 98       	cbi	0x04, 1	; 4
 delay_micros():
      5c2:	8f ec       	ldi	r24, 0xCF	; 207
@@ -1593,7 +1593,7 @@ _ZN4UPDI8HV_PulseEv():
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW634B/src/UPDI.cpp:465
     digitalWrite(HV12_PIN, HIGH);
      5d2:	80 33       	cpi	r24, 0x30	; 48
-/Users/askn/Library/Arduino15/packages/MultiX-Zinnia/hardware/UPDI4AVR/0.2.10/cores/megaAVR/api/delay_busywait.h:31
+/Users/askn/Library/Arduino15/packages/MultiX-Zinnia/hardware/UPDI4AVR/0.2.13/cores/megaAVR/api/delay_busywait.h:31
      5d4:	f9 f4       	brne	.+62     	; 0x614 <UPDI::HV_Pulse()+0x6c>
      5d6:	0e 9a       	sbi	0x01, 6	; 1
 delay_micros():
@@ -1701,7 +1701,7 @@ bool UPDI::loop_until_sys_stat_is_clear (uint8_t bitmap, uint16_t limit) {
     if (!is_sys_stat(bitmap)) return true;
      624:	eb 01       	movw	r28, r22
 is_cs_stat():
-/Users/askn/Library/Arduino15/packages/MultiX-Zinnia/hardware/UPDI4AVR/0.2.10/cores/megaAVR/api/delay_busywait.h:31
+/Users/askn/Library/Arduino15/packages/MultiX-Zinnia/hardware/UPDI4AVR/0.2.13/cores/megaAVR/api/delay_busywait.h:31
      626:	8b e0       	ldi	r24, 0x0B	; 11
      628:	26 de       	rcall	.-948    	; 0x276 <UPDI::get_cs_stat(unsigned char)>
      62a:	81 23       	and	r24, r17
@@ -2229,7 +2229,7 @@ _ZN3NVM11nvm_wait_v3Ev():
      7ce:	66 e0       	ldi	r22, 0x06	; 6
      7d0:	70 e1       	ldi	r23, 0x10	; 16
      7d2:	80 e0       	ldi	r24, 0x00	; 0
-/Users/askn/Library/Arduino15/packages/MultiX-Zinnia/hardware/UPDI4AVR/0.2.10/cores/megaAVR/api/delay_busywait.h:31
+/Users/askn/Library/Arduino15/packages/MultiX-Zinnia/hardware/UPDI4AVR/0.2.13/cores/megaAVR/api/delay_busywait.h:31
      7d4:	90 e0       	ldi	r25, 0x00	; 0
      7d6:	ca dd       	rcall	.-1132   	; 0x36c <UPDI::ld8(unsigned long)>
      7d8:	83 70       	andi	r24, 0x03	; 3
@@ -2297,7 +2297,7 @@ _ZN3NVM8nvm_waitEv():
      7fc:	90 e0       	ldi	r25, 0x00	; 0
      7fe:	b6 dd       	rcall	.-1172   	; 0x36c <UPDI::ld8(unsigned long)>
      800:	83 70       	andi	r24, 0x03	; 3
-/Users/askn/Library/Arduino15/packages/MultiX-Zinnia/hardware/UPDI4AVR/0.2.10/cores/megaAVR/api/delay_busywait.h:31
+/Users/askn/Library/Arduino15/packages/MultiX-Zinnia/hardware/UPDI4AVR/0.2.13/cores/megaAVR/api/delay_busywait.h:31
      802:	29 f0       	breq	.+10     	; 0x80e <__DATA_REGION_LENGTH__+0xe>
 delay_micros():
      804:	86 ea       	ldi	r24, 0xA6	; 166
@@ -4123,7 +4123,7 @@ bool UPDI::loop_until_key_stat_is_clear (uint8_t bitmap, uint16_t limit) {
     if (!is_key_stat(bitmap)) return true;
      e74:	70 e0       	ldi	r23, 0x00	; 0
      e76:	60 e0       	ldi	r22, 0x00	; 0
-/Users/askn/Library/Arduino15/packages/MultiX-Zinnia/hardware/UPDI4AVR/0.2.10/cores/megaAVR/api/delay_busywait.h:31
+/Users/askn/Library/Arduino15/packages/MultiX-Zinnia/hardware/UPDI4AVR/0.2.13/cores/megaAVR/api/delay_busywait.h:31
      e78:	81 e0       	ldi	r24, 0x01	; 1
      e7a:	d0 db       	rcall	.-2144   	; 0x61c <UPDI::loop_until_sys_stat_is_clear(unsigned char, unsigned int)>
      e7c:	10 e0       	ldi	r17, 0x00	; 0
@@ -4664,7 +4664,7 @@ delay_micros():
     1030:	00 c0       	rjmp	.+0      	; 0x1032 <__vector_7+0x28>
     1032:	00 00       	nop
 __vector_7():
-/Users/askn/Library/Arduino15/packages/MultiX-Zinnia/hardware/UPDI4AVR/0.2.10/cores/megaAVR/api/delay_busywait.h:31
+/Users/askn/Library/Arduino15/packages/MultiX-Zinnia/hardware/UPDI4AVR/0.2.13/cores/megaAVR/api/delay_busywait.h:31
     1034:	01 9a       	sbi	0x00, 1	; 0
     1036:	10 92 11 04 	sts	0x0411, r1	; 0x800411 <__RODATA_PM_OFFSET__+0x7f8411>
     103a:	09 98       	cbi	0x01, 1	; 1
@@ -4728,38 +4728,38 @@ void SYS::WDT_Short (void) { WDT_SET(WDT_PERIOD_128CLK_gc); }
 void SYS::WDT_REBOOT (void) {
   WDT_SET(WDT_PERIOD_8CLK_gc);
     105e:	f8 94       	cli
-initVariant():
-    1060:	24 e0       	ldi	r18, 0x04	; 4
-    1062:	e0 e1       	ldi	r30, 0x10	; 16
-    1064:	f4 e0       	ldi	r31, 0x04	; 4
-/Users/askn/Library/Arduino15/packages/MultiX-Zinnia/hardware/UPDI4AVR/0.2.10/variants/tinyAVR2_20/variant.h:281
-    "   DEC  R24     \n"
-    "   BRNE 2b        " /* 3 loop PORTA to PORTC */
-    : : "z" ((register8_t*)&PORTA_PIN0CTRL),
-        "r" ((uint8_t)PORT_ISC_INPUT_DISABLE_gc)
-      : "r24", "r25"
-  );
-    1066:	83 e0       	ldi	r24, 0x03	; 3
-    1068:	98 e0       	ldi	r25, 0x08	; 8
-    106a:	21 93       	st	Z+, r18
-    106c:	9a 95       	dec	r25
-    106e:	e9 f7       	brne	.-6      	; 0x106a <main+0x16>
-    1070:	78 96       	adiw	r30, 0x18	; 24
-    1072:	8a 95       	dec	r24
-    1074:	c9 f7       	brne	.-14     	; 0x1068 <main+0x14>
 _CLKCTRL_SETUP():
-/Users/askn/Library/Arduino15/packages/MultiX-Zinnia/hardware/UPDI4AVR/0.2.10/cores/megaAVR/api/CLKCTRL_megaAVR.h:127
+    1060:	88 ed       	ldi	r24, 0xD8	; 216
+    1062:	21 e0       	ldi	r18, 0x01	; 1
+    1064:	30 e0       	ldi	r19, 0x00	; 0
+/Users/askn/Library/Arduino15/packages/MultiX-Zinnia/hardware/UPDI4AVR/0.2.13/cores/megaAVR/api/CLKCTRL_megaAVR.h:127
   // _PROTECTED_WRITE(CLKCTRL.MCLKCTRLA, CLKCTRL_CLKSEL_OSC20M_gc);
 
 #else
 
   #if defined(_CLKCTRL_PDIV_)
   _PROTECTED_WRITE(CLKCTRL_MCLKCTRLB, _CLKCTRL_PDIV_ | CLKCTRL_PEN_bm);
-    1076:	88 ed       	ldi	r24, 0xD8	; 216
-    1078:	41 e0       	ldi	r20, 0x01	; 1
-    107a:	50 e0       	ldi	r21, 0x00	; 0
-    107c:	84 bf       	out	0x34, r24	; 52
-    107e:	40 93 61 00 	sts	0x0061, r20	; 0x800061 <__RODATA_PM_OFFSET__+0x7f8061>
+    1066:	84 bf       	out	0x34, r24	; 52
+    1068:	20 93 61 00 	sts	0x0061, r18	; 0x800061 <__RODATA_PM_OFFSET__+0x7f8061>
+initVariant():
+/Users/askn/Library/Arduino15/packages/MultiX-Zinnia/hardware/UPDI4AVR/0.2.13/variants/tinyAVR2_20/variant.h:282
+    "   DEC  R24     \n"
+    "   BRNE 2b        " /* 3 loop PORTA to PORTC */
+    : : "z" ((register8_t*)&PORTA_PIN0CTRL),
+        "r" ((uint8_t)PORT_ISC_INPUT_DISABLE_gc)
+      : "r24", "r25"
+  );
+    106c:	24 e0       	ldi	r18, 0x04	; 4
+    106e:	e0 e1       	ldi	r30, 0x10	; 16
+    1070:	f4 e0       	ldi	r31, 0x04	; 4
+    1072:	83 e0       	ldi	r24, 0x03	; 3
+    1074:	98 e0       	ldi	r25, 0x08	; 8
+    1076:	21 93       	st	Z+, r18
+    1078:	9a 95       	dec	r25
+    107a:	e9 f7       	brne	.-6      	; 0x1076 <main+0x22>
+    107c:	78 96       	adiw	r30, 0x18	; 24
+    107e:	8a 95       	dec	r24
+    1080:	c9 f7       	brne	.-14     	; 0x1074 <main+0x20>
 setup():
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW634B/src/SYS.cpp:17
 #include <avr/io.h>

@@ -1,5 +1,5 @@
 
-/var/folders/mz/_z9vt_y13rdf9tt_4qkvv0k40000gn/T/arduino_build_784895/SUM_FW2401A.ino.elf:     file format elf32-avr
+/var/folders/mz/_z9vt_y13rdf9tt_4qkvv0k40000gn/T/arduino_build_643970/SUM_FW2401A.ino.elf:     file format elf32-avr
 
 
 Disassembly of section .text:
@@ -16,7 +16,7 @@ __vectors():
    8:	41 c0       	rjmp	.+130    	; 0x8c <__bad_interrupt>
    a:	00 00       	nop
 ../../../../crt1/gcrt1.S:69
-   c:	19 c1       	rjmp	.+562    	; 0x240 <__vector_3>
+   c:	13 c1       	rjmp	.+550    	; 0x234 <__vector_3>
    e:	00 00       	nop
 ../../../../crt1/gcrt1.S:70
   10:	eb c0       	rjmp	.+470    	; 0x1e8 <__vector_4>
@@ -115,9 +115,9 @@ __trampolines_start():
 ../../../../crt1/gcrt1.S:237
   86:	de bf       	out	0x3e, r29	; 62
 ../../../../crt1/gcrt1.S:314
-  88:	e1 d0       	rcall	.+450    	; 0x24c <main>
+  88:	db d0       	rcall	.+438    	; 0x240 <main>
 ../../../../crt1/gcrt1.S:315
-  8a:	70 c1       	rjmp	.+736    	; 0x36c <_exit>
+  8a:	67 c1       	rjmp	.+718    	; 0x35a <_exit>
 
 0000008c <__bad_interrupt>:
 __vector_22():
@@ -125,7 +125,7 @@ __vector_22():
 
 0000008e <updi_send(unsigned char)>:
 _Z9updi_sendh():
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:255
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:255
 
 /**********
  * UPDI communication is implemented as a single wire UART
@@ -135,20 +135,20 @@ void updi_send (uint8_t _data) {
   8e:	90 91 04 08 	lds	r25, 0x0804	; 0x800804 <__RODATA_PM_OFFSET__+0x7f8804>
   92:	95 ff       	sbrs	r25, 5
   94:	fc cf       	rjmp	.-8      	; 0x8e <updi_send(unsigned char)>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:256
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:256
   USART0_STATUS  = USART_TXCIF_bm;
   96:	90 e4       	ldi	r25, 0x40	; 64
   98:	90 93 04 08 	sts	0x0804, r25	; 0x800804 <__RODATA_PM_OFFSET__+0x7f8804>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:257
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:257
   USART0_TXDATAL = _data;
   9c:	80 93 02 08 	sts	0x0802, r24	; 0x800802 <__RODATA_PM_OFFSET__+0x7f8802>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:258
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:258
 }
   a0:	08 95       	ret
 
 000000a2 <switch_pass_through_mode()>:
 _Z24switch_pass_through_modev():
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:213
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:213
 /**********
  * The operating mode is determined by the DTR and DIP switch combination.
  */
@@ -157,14 +157,14 @@ bool is_pass_through_mode_of_uart (void) {
   if (digitalReadMacro(PIN_PB1)) {
   a2:	31 9b       	sbis	0x06, 1	; 6
   a4:	0e c0       	rjmp	.+28     	; 0xc2 <switch_pass_through_mode()+0x20>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:215
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:215
     /* SW2-3=HIGH is UART mode */
     return digitalReadMacro(PIN_PB5);
   a6:	86 b1       	in	r24, 0x06	; 6
   a8:	85 fb       	bst	r24, 5
   aa:	88 27       	eor	r24, r24
   ac:	80 f9       	bld	r24, 0
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:228
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:228
 
 /*********
  * Configure the multiplexer/demultiplexer depending on the operating mode
@@ -173,19 +173,19 @@ void switch_pass_through_mode (void) {
   if (is_pass_through_mode_of_uart()) {
   ae:	88 23       	and	r24, r24
   b0:	61 f0       	breq	.+24     	; 0xca <switch_pass_through_mode()+0x28>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:231
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:231
     /* PC3:TxD -> PA7:HTCR */
     /* PA6:HRCT -> PB2:RxD */
     PORTMUX_CTRLA = PORTMUX_CTRLA_DEF;
   b2:	82 e1       	ldi	r24, 0x12	; 18
   b4:	80 93 00 02 	sts	0x0200, r24	; 0x800200 <__RODATA_PM_OFFSET__+0x7f8200>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:232
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:232
     openDrainWriteMacro(PIN_PC1, HIGH); // TDAT opendrain input
   b8:	41 98       	cbi	0x08, 1	; 8
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:233
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:233
     EVSYS_ASYNCUSER9 = EVSYS_ASYNCUSER9_ASYNCCH0_gc;
   ba:	83 e0       	ldi	r24, 0x03	; 3
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:240
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:240
   else {
     /* PC3:TxD -> PC1:TDAT */
     /* PC2:TDAT -> PB2:RxD */
@@ -193,11 +193,11 @@ void switch_pass_through_mode (void) {
     openDrainWriteMacro(PIN_PC1, LOW);  // TDAT opendrain output
     EVSYS_ASYNCUSER9 = EVSYS_ASYNCUSER9_ASYNCCH2_gc;
   bc:	80 93 9b 01 	sts	0x019B, r24	; 0x80019b <__RODATA_PM_OFFSET__+0x7f819b>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:242
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:242
   }
 }
   c0:	08 95       	ret
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:220
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:220
     return digitalReadMacro(PIN_PB5);
   }
   /* auto change mode */
@@ -208,7 +208,7 @@ void switch_pass_through_mode (void) {
   c4:	80 95       	com	r24
   c6:	81 70       	andi	r24, 0x01	; 1
   c8:	f2 cf       	rjmp	.-28     	; 0xae <switch_pass_through_mode()+0xc>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:238
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:238
     EVSYS_ASYNCUSER9 = EVSYS_ASYNCUSER9_ASYNCCH0_gc;
   }
   else {
@@ -217,17 +217,17 @@ void switch_pass_through_mode (void) {
     PORTMUX_CTRLA = PORTMUX_CTRLA_ALT;
   ca:	82 e3       	ldi	r24, 0x32	; 50
   cc:	80 93 00 02 	sts	0x0200, r24	; 0x800200 <__RODATA_PM_OFFSET__+0x7f8200>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:239
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:239
     openDrainWriteMacro(PIN_PC1, LOW);  // TDAT opendrain output
   d0:	41 9a       	sbi	0x08, 1	; 8
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:240
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:240
     EVSYS_ASYNCUSER9 = EVSYS_ASYNCUSER9_ASYNCCH2_gc;
   d2:	85 e0       	ldi	r24, 0x05	; 5
   d4:	f3 cf       	rjmp	.-26     	; 0xbc <switch_pass_through_mode()+0x1a>
 
 000000d6 <send_reset_updi()>:
 _Z15send_reset_updiv():
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:264
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:264
 
 /**********
  * Reset the target AVR via UPDI communication
@@ -235,89 +235,89 @@ _Z15send_reset_updiv():
 void send_reset_updi (void) {
   openDrainWriteMacro(PIN_PA5, LOW);  // TRST negate (LOW)
   d6:	05 9a       	sbi	0x00, 5	; 0
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:266
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:266
 
   EVSYS_ASYNCUSER9 = EVSYS_ASYNCUSER9_OFF_gc;
   d8:	10 92 9b 01 	sts	0x019B, r1	; 0x80019b <__RODATA_PM_OFFSET__+0x7f819b>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:267
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:267
   PORTMUX_CTRLA = PORTMUX_CTRLA_DEF;  // LUT1_OUT -> PA7
   dc:	82 e1       	ldi	r24, 0x12	; 18
   de:	80 93 00 02 	sts	0x0200, r24	; 0x800200 <__RODATA_PM_OFFSET__+0x7f8200>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:271
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:271
 
   /* Three GPIOs are connected to the TDAT pin. */
   /* You must ensure that all items are unused. */
   openDrainWriteMacro(PIN_PC1, HIGH); // TDAT opendrain input
   e2:	41 98       	cbi	0x08, 1	; 8
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:272
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:272
   openDrainWriteMacro(PIN_PC2, HIGH); // TDAT opendrain input
   e4:	42 98       	cbi	0x08, 2	; 8
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:273
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:273
   openDrainWriteMacro(PIN_PA1, HIGH); // TDAT opendrain input
   e6:	01 98       	cbi	0x00, 1	; 0
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:277
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:277
   /* These macros expand into a single IO operation instruction */
 
   /* CCL disable */
   CCL_CTRLA = 0;
   e8:	10 92 c0 01 	sts	0x01C0, r1	; 0x8001c0 <__RODATA_PM_OFFSET__+0x7f81c0>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:280
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:280
 
   /* enter UPDI setup */
   USART0_CTRLB = UPDI_USART_ON;       // USART0 enable
   ec:	88 e4       	ldi	r24, 0x48	; 72
   ee:	80 93 06 08 	sts	0x0806, r24	; 0x800806 <__RODATA_PM_OFFSET__+0x7f8806>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:281
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:281
   USART0_BAUD = ((F_CPU / UPDI_BREAK * 8 + 1) / 2); // slow rate
   f2:	88 eb       	ldi	r24, 0xB8	; 184
   f4:	92 e2       	ldi	r25, 0x22	; 34
   f6:	80 93 08 08 	sts	0x0808, r24	; 0x800808 <__RODATA_PM_OFFSET__+0x7f8808>
   fa:	90 93 09 08 	sts	0x0809, r25	; 0x800809 <__RODATA_PM_OFFSET__+0x7f8809>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:282
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:282
   updi_send(0x00);      // UPDI_BREAK
   fe:	80 e0       	ldi	r24, 0x00	; 0
  100:	c6 df       	rcall	.-116    	; 0x8e <updi_send(unsigned char)>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:283
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:283
   loop_until_bit_is_set(USART0_STATUS, USART_TXCIF_bp); // send wait
  102:	80 91 04 08 	lds	r24, 0x0804	; 0x800804 <__RODATA_PM_OFFSET__+0x7f8804>
  106:	86 ff       	sbrs	r24, 6
  108:	fc cf       	rjmp	.-8      	; 0x102 <__EEPROM_REGION_LENGTH__+0x2>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:284
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:284
   USART0_BAUD = ((F_CPU / UPDI_BAUD * 8 + 1) / 2);  // normal rate
  10a:	80 eb       	ldi	r24, 0xB0	; 176
  10c:	90 e0       	ldi	r25, 0x00	; 0
  10e:	80 93 08 08 	sts	0x0808, r24	; 0x800808 <__RODATA_PM_OFFSET__+0x7f8808>
  112:	90 93 09 08 	sts	0x0809, r25	; 0x800809 <__RODATA_PM_OFFSET__+0x7f8809>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:285
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:285
   while (!digitalReadMacro(PIN_PC2)); // target setup wait
  116:	52 9b       	sbis	0x0a, 2	; 10
  118:	fe cf       	rjmp	.-4      	; 0x116 <__EEPROM_REGION_LENGTH__+0x16>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:288
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:288
 
   /* UPDI reset command */
   updi_send(0x55);      // UPDI_SYNCH
  11a:	85 e5       	ldi	r24, 0x55	; 85
  11c:	b8 df       	rcall	.-144    	; 0x8e <updi_send(unsigned char)>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:289
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:289
   updi_send(0xC8);      // UPDI_STCS | UPDI_CS_ASI_RESET_REQ
  11e:	88 ec       	ldi	r24, 0xC8	; 200
  120:	b6 df       	rcall	.-148    	; 0x8e <updi_send(unsigned char)>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:290
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:290
   updi_send(0x59);      // UPDI_RSTREQ
  122:	89 e5       	ldi	r24, 0x59	; 89
  124:	b4 df       	rcall	.-152    	; 0x8e <updi_send(unsigned char)>
  126:	90 e0       	ldi	r25, 0x00	; 0
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:293
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:293
 
   /* While SW1 is pressed, blink the LED and wait */
   uint16_t cnt = 0;
  128:	80 e0       	ldi	r24, 0x00	; 0
  12a:	14 99       	sbic	0x02, 4	; 2
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:294
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:294
   while (!digitalRead(PIN_PA4)) {
  12c:	0f c0       	rjmp	.+30     	; 0x14c <__EEPROM_REGION_LENGTH__+0x4c>
  12e:	9c 01       	movw	r18, r24
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:295
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:295
     if (cnt++ == 0) pinControlRegister(PIN_PA3) ^= PORT_INVEN_bm;
  130:	2f 5f       	subi	r18, 0xFF	; 255
  132:	3f 4f       	sbci	r19, 0xFF	; 255
@@ -332,67 +332,67 @@ void send_reset_updi (void) {
  148:	c9 01       	movw	r24, r18
  14a:	ef cf       	rjmp	.-34     	; 0x12a <__EEPROM_REGION_LENGTH__+0x2a>
  14c:	84 e8       	ldi	r24, 0x84	; 132
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:297
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:297
   }
   pinControlRegister(PIN_PA3) = LED_ON;
  14e:	80 93 13 04 	sts	0x0413, r24	; 0x800413 <__RODATA_PM_OFFSET__+0x7f8413>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:300
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:300
 
   /* UPDI not-reset command */
   updi_send(0x55);      // UPDI_SYNCH
  152:	85 e5       	ldi	r24, 0x55	; 85
  154:	9c df       	rcall	.-200    	; 0x8e <updi_send(unsigned char)>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:301
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:301
   updi_send(0xC8);      // UPDI_STCS | UPDI_CS_ASI_RESET_REQ
  156:	88 ec       	ldi	r24, 0xC8	; 200
  158:	9a df       	rcall	.-204    	; 0x8e <updi_send(unsigned char)>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:302
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:302
   updi_send(0x00);      // UPDI_NOP
  15a:	80 e0       	ldi	r24, 0x00	; 0
  15c:	98 df       	rcall	.-208    	; 0x8e <updi_send(unsigned char)>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:305
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:305
 
   /* UPDI exit command */
   updi_send(0x55);      // UPDI_SYNCH
  15e:	85 e5       	ldi	r24, 0x55	; 85
  160:	96 df       	rcall	.-212    	; 0x8e <updi_send(unsigned char)>
  162:	83 ec       	ldi	r24, 0xC3	; 195
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:306
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:306
   updi_send(0xC3);      // UPDI_STCS | UPDI_CS_CTRLB
  164:	94 df       	rcall	.-216    	; 0x8e <updi_send(unsigned char)>
  166:	84 e0       	ldi	r24, 0x04	; 4
  168:	92 df       	rcall	.-220    	; 0x8e <updi_send(unsigned char)>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:307
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:307
   updi_send(0x04);      // UPDI_SET_UPDIDIS
  16a:	80 91 04 08 	lds	r24, 0x0804	; 0x800804 <__RODATA_PM_OFFSET__+0x7f8804>
  16e:	86 ff       	sbrs	r24, 6
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:310
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:310
 
   /* USART disable */
   loop_until_bit_is_set(USART0_STATUS, USART_TXCIF_bp); // send wait
  170:	fc cf       	rjmp	.-8      	; 0x16a <__EEPROM_REGION_LENGTH__+0x6a>
  172:	10 92 06 08 	sts	0x0806, r1	; 0x800806 <__RODATA_PM_OFFSET__+0x7f8806>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:311
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:311
   USART0_CTRLB = 0;
  176:	81 e4       	ldi	r24, 0x41	; 65
  178:	80 93 c0 01 	sts	0x01C0, r24	; 0x8001c0 <__RODATA_PM_OFFSET__+0x7f81c0>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:312
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:312
   CCL_CTRLA = CCL_ENABLE_bm | CCL_RUNSTDBY_bm;  // CCL restart
  17c:	05 98       	cbi	0x00, 5	; 0
  17e:	91 cf       	rjmp	.-222    	; 0xa2 <switch_pass_through_mode()>
 
 00000180 <__vector_5>:
 __vector_5():
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:313
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:313
   openDrainWriteMacro(PIN_PA5, HIGH); // TRST assert (pull-up)
  180:	1f 92       	push	r1
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:316
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:316
 
   /* Restore operating mode */
   switch_pass_through_mode();
  182:	0f 92       	push	r0
  184:	0f b6       	in	r0, 0x3f	; 63
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:341
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:341
   switch_pass_through_mode();
 }
 
@@ -416,31 +416,31 @@ ISR(portIntrruptVector(PIN_PC0)) {
  1a2:	ff 93       	push	r31
  1a4:	c1 e0       	ldi	r28, 0x01	; 1
  1a6:	c0 93 49 04 	sts	0x0449, r28	; 0x800449 <__RODATA_PM_OFFSET__+0x7f8449>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:342
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:342
   PORTC_INTFLAGS = PIN0_bm;
  1aa:	96 b1       	in	r25, 0x06	; 6
  1ac:	86 b1       	in	r24, 0x06	; 6
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:343
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:343
   bool sw2_2 = digitalReadMacro(PIN_PB1); // ON is false
  1ae:	91 ff       	sbrs	r25, 1
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:344
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:344
   bool sw2_3 = digitalReadMacro(PIN_PB5); // ON is false
  1b0:	17 c0       	rjmp	.+46     	; 0x1e0 <__vector_5+0x60>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:346
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:346
   /* UART fixed mode only */
   if (sw2_2 && sw2_3) {         // DIP 2-OFF and 3-OFF
  1b2:	85 ff       	sbrs	r24, 5
  1b4:	03 c0       	rjmp	.+6      	; 0x1bc <__vector_5+0x3c>
  1b6:	8f df       	rcall	.-226    	; 0xd6 <send_reset_updi()>
  1b8:	c0 93 29 04 	sts	0x0429, r28	; 0x800429 <__RODATA_PM_OFFSET__+0x7f8429>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:347
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:347
     send_reset_updi();          // This process takes time.
  1bc:	ff 91       	pop	r31
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:348
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:348
     PORTB_INTFLAGS = PIN0_bm;   // Therefore, DTR events are ignored.
  1be:	ef 91       	pop	r30
  1c0:	cf 91       	pop	r28
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:356
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:356
   else if (!sw2_2 || sw2_3) {   // DIP 2-ON or 3-OFF 
     openDrainWriteMacro(PIN_PA5, LOW);  // TRST negate (LOW)
     nop();                              // GPIO change wait
@@ -465,7 +465,7 @@ ISR(portIntrruptVector(PIN_PC0)) {
  1e0:	05 9a       	sbi	0x00, 5	; 0
  1e2:	00 00       	nop
  1e4:	05 98       	cbi	0x00, 5	; 0
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:352
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:352
     send_reset_updi();          // This process takes time.
     PORTB_INTFLAGS = PIN0_bm;   // Therefore, DTR events are ignored.
   }
@@ -476,14 +476,14 @@ ISR(portIntrruptVector(PIN_PC0)) {
 
 000001e8 <__vector_4>:
 __vector_4():
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:353
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:353
     nop();                              // GPIO change wait
  1e8:	1f 92       	push	r1
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:354
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:354
     openDrainWriteMacro(PIN_PA5, HIGH); // TRST assert (pull-up)
  1ea:	0f 92       	push	r0
  1ec:	0f b6       	in	r0, 0x3f	; 63
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:331
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:331
 
 /* The order in which the following events occur together is unknown. */
 
@@ -506,337 +506,326 @@ ISR(portIntrruptVector(PIN_PB0)) {
  208:	ff 93       	push	r31
  20a:	81 e0       	ldi	r24, 0x01	; 1
  20c:	80 93 29 04 	sts	0x0429, r24	; 0x800429 <__RODATA_PM_OFFSET__+0x7f8429>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:332
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:332
   PORTB_INTFLAGS = PIN0_bm;
- 210:	34 99       	sbic	0x06, 4	; 6
- 212:	04 c0       	rjmp	.+8      	; 0x21c <__vector_4+0x34>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:334
-  /* Reboot if external reset is requested */
-  if (!digitalRead(PIN_PB4)) _PROTECTED_WRITE(RSTCTRL_SWRR, RSTCTRL_SWRE_bm);
- 214:	98 ed       	ldi	r25, 0xD8	; 216
- 216:	94 bf       	out	0x34, r25	; 52
- 218:	80 93 41 00 	sts	0x0041, r24	; 0x800041 <__RODATA_PM_OFFSET__+0x7f8041>
- 21c:	42 df       	rcall	.-380    	; 0xa2 <switch_pass_through_mode()>
- 21e:	ff 91       	pop	r31
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:336
+ 210:	48 df       	rcall	.-368    	; 0xa2 <switch_pass_through_mode()>
+ 212:	ff 91       	pop	r31
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:336
+  // /* Reboot if external reset is requested */
+  // if (!digitalRead(PIN_PB4)) _PROTECTED_WRITE(RSTCTRL_SWRR, RSTCTRL_SWRE_bm);
   /* Otherwise switch the operating mode */
   switch_pass_through_mode();
- 220:	ef 91       	pop	r30
- 222:	bf 91       	pop	r27
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:337
+ 214:	ef 91       	pop	r30
+ 216:	bf 91       	pop	r27
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:337
 }
- 224:	af 91       	pop	r26
- 226:	9f 91       	pop	r25
- 228:	8f 91       	pop	r24
- 22a:	7f 91       	pop	r23
- 22c:	6f 91       	pop	r22
- 22e:	5f 91       	pop	r21
- 230:	4f 91       	pop	r20
- 232:	3f 91       	pop	r19
- 234:	2f 91       	pop	r18
- 236:	0f 90       	pop	r0
- 238:	0f be       	out	0x3f, r0	; 63
- 23a:	0f 90       	pop	r0
- 23c:	1f 90       	pop	r1
- 23e:	18 95       	reti
+ 218:	af 91       	pop	r26
+ 21a:	9f 91       	pop	r25
+ 21c:	8f 91       	pop	r24
+ 21e:	7f 91       	pop	r23
+ 220:	6f 91       	pop	r22
+ 222:	5f 91       	pop	r21
+ 224:	4f 91       	pop	r20
+ 226:	3f 91       	pop	r19
+ 228:	2f 91       	pop	r18
+ 22a:	0f 90       	pop	r0
+ 22c:	0f be       	out	0x3f, r0	; 63
+ 22e:	0f 90       	pop	r0
+ 230:	1f 90       	pop	r1
+ 232:	18 95       	reti
 
-00000240 <__vector_3>:
+00000234 <__vector_3>:
 __vector_3():
- 240:	4a df       	rcall	.-364    	; 0xd6 <send_reset_updi()>
- 242:	88 ed       	ldi	r24, 0xD8	; 216
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:323
+ 234:	50 df       	rcall	.-352    	; 0xd6 <send_reset_updi()>
+ 236:	88 ed       	ldi	r24, 0xD8	; 216
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:323
 
 /* PORTA_INT : sense SW1 / LEVEL */
 /* SW1 controls the reset of the target MCU. */
 /* It will reset itself after the operation. */
 ISR(portIntrruptVector(PIN_PA4), ISR_NAKED) {
   send_reset_updi();
- 244:	91 e0       	ldi	r25, 0x01	; 1
- 246:	84 bf       	out	0x34, r24	; 52
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:324
+ 238:	91 e0       	ldi	r25, 0x01	; 1
+ 23a:	84 bf       	out	0x34, r24	; 52
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:324
   _PROTECTED_WRITE(RSTCTRL_SWRR, RSTCTRL_SWRE_bm);  // system reset
- 248:	90 93 41 00 	sts	0x0041, r25	; 0x800041 <__RODATA_PM_OFFSET__+0x7f8041>
+ 23c:	90 93 41 00 	sts	0x0041, r25	; 0x800041 <__RODATA_PM_OFFSET__+0x7f8041>
 
-0000024c <main>:
+00000240 <main>:
 main():
- 24c:	88 ed       	ldi	r24, 0xD8	; 216
- 24e:	21 e0       	ldi	r18, 0x01	; 1
- 250:	30 e0       	ldi	r19, 0x00	; 0
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:47
+ 240:	88 ed       	ldi	r24, 0xD8	; 216
+ 242:	21 e0       	ldi	r18, 0x01	; 1
+ 244:	30 e0       	ldi	r19, 0x00	; 0
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:47
 /**********
  * setup main clock and port configuration
  */
 void setup_system (void) {
   /* CLK_PER = 10MHz (3.3V upper limit speed) */
   _PROTECTED_WRITE(CLKCTRL_MCLKCTRLB, CLKCTRL_PDIV_2X_gc | CLKCTRL_PEN_bm);
- 252:	84 bf       	out	0x34, r24	; 52
- 254:	20 93 61 00 	sts	0x0061, r18	; 0x800061 <__RODATA_PM_OFFSET__+0x7f8061>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:59
+ 246:	84 bf       	out	0x34, r24	; 52
+ 248:	20 93 61 00 	sts	0x0061, r18	; 0x800061 <__RODATA_PM_OFFSET__+0x7f8061>
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:59
   uint8_t pin_dig = PORT_ISC_INPUT_DISABLE_gc;
   // uint8_t pin_res = PORT_ISC_INTDISABLE_gc; // reset default
 
   /* Cannot proceed if external reset is required. */
   /* This keeps all pins Hi-Z except reset.        */
   pinControlRegister(PIN_PB4) = pin_fal;  // I:DBG_RESET
- 258:	8b e0       	ldi	r24, 0x0B	; 11
- 25a:	80 93 34 04 	sts	0x0434, r24	; 0x800434 <__RODATA_PM_OFFSET__+0x7f8434>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:60
-  while (!digitalRead(PIN_PB4));
- 25e:	34 9b       	sbis	0x06, 4	; 6
- 260:	fe cf       	rjmp	.-4      	; 0x25e <main+0x12>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:68
+ 24c:	3b e0       	ldi	r19, 0x0B	; 11
+ 24e:	30 93 34 04 	sts	0x0434, r19	; 0x800434 <__RODATA_PM_OFFSET__+0x7f8434>
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:68
   /* Some signals are connected to multiple (DUP) pins. */
   /* TxD and RxD are signal names on the CH340X side,   */
   /* so they may seem reversed.                         */
 
   // pinControlRegister(PIN_PA0) = pin_dig; // -:notused
-  pinControlRegister(PIN_PA1) = pin_def;    // IO:TDAT:USART0_TXD (DUP)
- 262:	88 e0       	ldi	r24, 0x08	; 8
- 264:	80 93 11 04 	sts	0x0411, r24	; 0x800411 <__RODATA_PM_OFFSET__+0x7f8411>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:69
-  pinControlRegister(PIN_PA2) = pin_def;    // -:notused(DBG_HTCR)
- 268:	80 93 12 04 	sts	0x0412, r24	; 0x800412 <__RODATA_PM_OFFSET__+0x7f8412>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:70
+  pinControlRegister(PIN_PA1) = pin_pup;    // IO:TDAT:USART0_TXD (DUP)
+ 252:	88 e0       	ldi	r24, 0x08	; 8
+ 254:	80 93 11 04 	sts	0x0411, r24	; 0x800411 <__RODATA_PM_OFFSET__+0x7f8411>
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:69
+  pinControlRegister(PIN_PA2) = pin_pup;    // -:notused(DBG_HTCR)
+ 258:	80 93 12 04 	sts	0x0412, r24	; 0x800412 <__RODATA_PM_OFFSET__+0x7f8412>
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:70
   pinControlRegister(PIN_PA3) = LED_ON;     // O:LED:TCB1_WO
- 26c:	94 e8       	ldi	r25, 0x84	; 132
- 26e:	90 93 13 04 	sts	0x0413, r25	; 0x800413 <__RODATA_PM_OFFSET__+0x7f8413>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:71
+ 25c:	94 e8       	ldi	r25, 0x84	; 132
+ 25e:	90 93 13 04 	sts	0x0413, r25	; 0x800413 <__RODATA_PM_OFFSET__+0x7f8413>
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:71
   pinControlRegister(PIN_PA4) = pin_lvl;    // I:SW1:PORTA_INT
- 272:	9d e0       	ldi	r25, 0x0D	; 13
- 274:	90 93 14 04 	sts	0x0414, r25	; 0x800414 <__RODATA_PM_OFFSET__+0x7f8414>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:72
-  pinControlRegister(PIN_PA5) = pin_def;    // IO:TRST:opendrain
- 278:	80 93 15 04 	sts	0x0415, r24	; 0x800415 <__RODATA_PM_OFFSET__+0x7f8415>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:73
-  pinControlRegister(PIN_PA6) = pin_def;    // I:HRCT:sense
- 27c:	80 93 16 04 	sts	0x0416, r24	; 0x800416 <__RODATA_PM_OFFSET__+0x7f8416>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:74
+ 262:	9d e0       	ldi	r25, 0x0D	; 13
+ 264:	90 93 14 04 	sts	0x0414, r25	; 0x800414 <__RODATA_PM_OFFSET__+0x7f8414>
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:72
+  pinControlRegister(PIN_PA5) = pin_pup;    // IO:TRST:opendrain
+ 268:	80 93 15 04 	sts	0x0415, r24	; 0x800415 <__RODATA_PM_OFFSET__+0x7f8415>
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:73
+  pinControlRegister(PIN_PA6) = pin_pup;    // I:HRCT:sense
+ 26c:	80 93 16 04 	sts	0x0416, r24	; 0x800416 <__RODATA_PM_OFFSET__+0x7f8416>
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:74
   pinControlRegister(PIN_PA7) = pin_dig;    // O:HTCR:LUT1_OUT_0
- 280:	94 e0       	ldi	r25, 0x04	; 4
- 282:	90 93 17 04 	sts	0x0417, r25	; 0x800417 <__RODATA_PM_OFFSET__+0x7f8417>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:75
+ 270:	94 e0       	ldi	r25, 0x04	; 4
+ 272:	90 93 17 04 	sts	0x0417, r25	; 0x800417 <__RODATA_PM_OFFSET__+0x7f8417>
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:75
   pinControlRegister(PIN_PB0) = pin_int;    // I:DTR:PORTB_INT
- 286:	29 e0       	ldi	r18, 0x09	; 9
- 288:	20 93 30 04 	sts	0x0430, r18	; 0x800430 <__RODATA_PM_OFFSET__+0x7f8430>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:76
-  pinControlRegister(PIN_PB1) = pin_def;    // I:SW2-2:sense
- 28c:	80 93 31 04 	sts	0x0431, r24	; 0x800431 <__RODATA_PM_OFFSET__+0x7f8431>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:77
+ 276:	29 e0       	ldi	r18, 0x09	; 9
+ 278:	20 93 30 04 	sts	0x0430, r18	; 0x800430 <__RODATA_PM_OFFSET__+0x7f8430>
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:76
+  pinControlRegister(PIN_PB1) = pin_pup;    // I:SW2-2:sense
+ 27c:	80 93 31 04 	sts	0x0431, r24	; 0x800431 <__RODATA_PM_OFFSET__+0x7f8431>
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:77
   pinControlRegister(PIN_PB2) = pin_dig;    // O:RxD:EVOUT1
- 290:	90 93 32 04 	sts	0x0432, r25	; 0x800432 <__RODATA_PM_OFFSET__+0x7f8432>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:78
+ 280:	90 93 32 04 	sts	0x0432, r25	; 0x800432 <__RODATA_PM_OFFSET__+0x7f8432>
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:78
   pinControlRegister(PIN_PB3) = pin_dig;    // -:TxD:notused (DUP)
- 294:	90 93 33 04 	sts	0x0433, r25	; 0x800433 <__RODATA_PM_OFFSET__+0x7f8433>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:80
+ 284:	90 93 33 04 	sts	0x0433, r25	; 0x800433 <__RODATA_PM_OFFSET__+0x7f8433>
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:80
   // pinControlRegister(PIN_PB4) = pin_fal; // I:DBG_RESET
-  pinControlRegister(PIN_PB5) = pin_def;    // I:SW2-3:sense
- 298:	80 93 35 04 	sts	0x0435, r24	; 0x800435 <__RODATA_PM_OFFSET__+0x7f8435>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:81
+  pinControlRegister(PIN_PB5) = pin_pup;    // I:SW2-3:sense
+ 288:	80 93 35 04 	sts	0x0435, r24	; 0x800435 <__RODATA_PM_OFFSET__+0x7f8435>
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:81
   pinControlRegister(PIN_PC0) = pin_fal;    // I:RTS:PORTC_INT
- 29c:	3b e0       	ldi	r19, 0x0B	; 11
- 29e:	30 93 50 04 	sts	0x0450, r19	; 0x800450 <__RODATA_PM_OFFSET__+0x7f8450>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:82
-  pinControlRegister(PIN_PC1) = pin_def;    // O:TDAT:LUT1_OUT_0 (DUP)
- 2a2:	80 93 51 04 	sts	0x0451, r24	; 0x800451 <__RODATA_PM_OFFSET__+0x7f8451>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:84
+ 28c:	30 93 50 04 	sts	0x0450, r19	; 0x800450 <__RODATA_PM_OFFSET__+0x7f8450>
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:82
+  pinControlRegister(PIN_PC1) = pin_pup;    // O:TDAT:LUT1_OUT_0 (DUP)
+ 290:	80 93 51 04 	sts	0x0451, r24	; 0x800451 <__RODATA_PM_OFFSET__+0x7f8451>
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:84
   // pinControlRegister(PIN_PC2) = pin_res; // I:TDAT:async_in (DUP)
-  pinControlRegister(PIN_PC3) = pin_def;    // I:TxD:LUT1_IN0:sense (DUP)
- 2a6:	80 93 53 04 	sts	0x0453, r24	; 0x800453 <__RODATA_PM_OFFSET__+0x7f8453>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:87
+  pinControlRegister(PIN_PC3) = pin_pup;    // I:TxD:LUT1_IN0:sense (DUP)
+ 294:	80 93 53 04 	sts	0x0453, r24	; 0x800453 <__RODATA_PM_OFFSET__+0x7f8453>
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:87
 
   /* output only pin */
   openDrainWriteMacro(PIN_PA3, LOW);
- 2aa:	03 9a       	sbi	0x00, 3	; 0
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:88
+ 298:	03 9a       	sbi	0x00, 3	; 0
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:88
   openDrainWriteMacro(PIN_PA7, LOW);
- 2ac:	07 9a       	sbi	0x00, 7	; 0
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:89
+ 29a:	07 9a       	sbi	0x00, 7	; 0
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:89
   openDrainWriteMacro(PIN_PB2, LOW);
- 2ae:	22 9a       	sbi	0x04, 2	; 4
+ 29c:	22 9a       	sbi	0x04, 2	; 4
 setup_peripheral():
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:99
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:99
  */
 void setup_peripheral (void) {
   /**********
    * PORTMUX
    */
   PORTMUX_CTRLA = PORTMUX_CTRLA_DEF;            // LUT1_OUT -> PA7
- 2b0:	82 e1       	ldi	r24, 0x12	; 18
- 2b2:	80 93 00 02 	sts	0x0200, r24	; 0x800200 <__RODATA_PM_OFFSET__+0x7f8200>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:100
+ 29e:	82 e1       	ldi	r24, 0x12	; 18
+ 2a0:	80 93 00 02 	sts	0x0200, r24	; 0x800200 <__RODATA_PM_OFFSET__+0x7f8200>
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:100
   PORTMUX_CTRLB = PORTMUX_USART0_ALTERNATE_gc;  // USART0_TxD -> PA1
- 2b6:	81 e0       	ldi	r24, 0x01	; 1
- 2b8:	80 93 01 02 	sts	0x0201, r24	; 0x800201 <__RODATA_PM_OFFSET__+0x7f8201>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:117
+ 2a4:	81 e0       	ldi	r24, 0x01	; 1
+ 2a6:	80 93 01 02 	sts	0x0201, r24	; 0x800201 <__RODATA_PM_OFFSET__+0x7f8201>
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:117
    * EVSYS_ASYNCUSER2:CCL_LUT0_EV0 <- EVSYS_ASYNCCH3(TxD)
    * EVSYS_ASYNCUSER3:CCL_LUT0_EV1 <- EVSYS_ASYNCCH0(HRCT)
    * EVSYS_ASYNCUSER9:EVOUT1(RxD) <- EVSYS_ASYNCCH0 or EVSYS_ASYNCCH2
    * EVSYS_ASYNCUSER11:TCB1_COUNT <- EVSYS_ASYNCCH1(CCL_LUT0)
    */
   EVSYS_ASYNCCH0 = EVSYS_ASYNCCH0_PORTA_PIN6_gc;
- 2bc:	30 e1       	ldi	r19, 0x10	; 16
- 2be:	30 93 82 01 	sts	0x0182, r19	; 0x800182 <__RODATA_PM_OFFSET__+0x7f8182>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:118
+ 2aa:	30 e1       	ldi	r19, 0x10	; 16
+ 2ac:	30 93 82 01 	sts	0x0182, r19	; 0x800182 <__RODATA_PM_OFFSET__+0x7f8182>
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:118
   EVSYS_ASYNCCH1 = EVSYS_ASYNCCH1_CCL_LUT0_gc;
- 2c2:	80 93 83 01 	sts	0x0183, r24	; 0x800183 <__RODATA_PM_OFFSET__+0x7f8183>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:119
+ 2b0:	80 93 83 01 	sts	0x0183, r24	; 0x800183 <__RODATA_PM_OFFSET__+0x7f8183>
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:119
   EVSYS_ASYNCCH2 = EVSYS_ASYNCCH2_PORTC_PIN2_gc;
- 2c6:	3c e0       	ldi	r19, 0x0C	; 12
- 2c8:	30 93 84 01 	sts	0x0184, r19	; 0x800184 <__RODATA_PM_OFFSET__+0x7f8184>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:120
+ 2b4:	3c e0       	ldi	r19, 0x0C	; 12
+ 2b6:	30 93 84 01 	sts	0x0184, r19	; 0x800184 <__RODATA_PM_OFFSET__+0x7f8184>
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:120
   EVSYS_ASYNCCH3 = EVSYS_ASYNCCH3_CCL_LUT1_gc;
- 2cc:	32 e0       	ldi	r19, 0x02	; 2
- 2ce:	30 93 85 01 	sts	0x0185, r19	; 0x800185 <__RODATA_PM_OFFSET__+0x7f8185>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:122
+ 2ba:	32 e0       	ldi	r19, 0x02	; 2
+ 2bc:	30 93 85 01 	sts	0x0185, r19	; 0x800185 <__RODATA_PM_OFFSET__+0x7f8185>
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:122
 
   EVSYS_ASYNCUSER2  = EVSYS_ASYNCUSER2_ASYNCCH3_gc;
- 2d2:	46 e0       	ldi	r20, 0x06	; 6
- 2d4:	40 93 94 01 	sts	0x0194, r20	; 0x800194 <__RODATA_PM_OFFSET__+0x7f8194>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:123
+ 2c0:	46 e0       	ldi	r20, 0x06	; 6
+ 2c2:	40 93 94 01 	sts	0x0194, r20	; 0x800194 <__RODATA_PM_OFFSET__+0x7f8194>
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:123
   EVSYS_ASYNCUSER3  = EVSYS_ASYNCUSER3_ASYNCCH0_gc;
- 2d8:	43 e0       	ldi	r20, 0x03	; 3
- 2da:	40 93 95 01 	sts	0x0195, r20	; 0x800195 <__RODATA_PM_OFFSET__+0x7f8195>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:124
+ 2c6:	43 e0       	ldi	r20, 0x03	; 3
+ 2c8:	40 93 95 01 	sts	0x0195, r20	; 0x800195 <__RODATA_PM_OFFSET__+0x7f8195>
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:124
   EVSYS_ASYNCUSER11 = EVSYS_ASYNCUSER11_ASYNCCH1_gc;
- 2de:	90 93 9d 01 	sts	0x019D, r25	; 0x80019d <__RODATA_PM_OFFSET__+0x7f819d>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:129
+ 2cc:	90 93 9d 01 	sts	0x019D, r25	; 0x80019d <__RODATA_PM_OFFSET__+0x7f819d>
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:129
 
   /**********
    * USART0 - updi reset sender for UART mode
    */
   USART0_BAUD  = ((F_CPU / UPDI_BAUD * 8 + 1) / 2);
- 2e2:	40 eb       	ldi	r20, 0xB0	; 176
- 2e4:	50 e0       	ldi	r21, 0x00	; 0
- 2e6:	40 93 08 08 	sts	0x0808, r20	; 0x800808 <__RODATA_PM_OFFSET__+0x7f8808>
- 2ea:	50 93 09 08 	sts	0x0809, r21	; 0x800809 <__RODATA_PM_OFFSET__+0x7f8809>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:130
+ 2d0:	40 eb       	ldi	r20, 0xB0	; 176
+ 2d2:	50 e0       	ldi	r21, 0x00	; 0
+ 2d4:	40 93 08 08 	sts	0x0808, r20	; 0x800808 <__RODATA_PM_OFFSET__+0x7f8808>
+ 2d8:	50 93 09 08 	sts	0x0809, r21	; 0x800809 <__RODATA_PM_OFFSET__+0x7f8809>
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:130
   USART0_CTRLA = ( USART_LBME_bm | USART_RS485_INT_gc );
- 2ee:	9a e0       	ldi	r25, 0x0A	; 10
- 2f0:	90 93 05 08 	sts	0x0805, r25	; 0x800805 <__RODATA_PM_OFFSET__+0x7f8805>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:131
+ 2dc:	9a e0       	ldi	r25, 0x0A	; 10
+ 2de:	90 93 05 08 	sts	0x0805, r25	; 0x800805 <__RODATA_PM_OFFSET__+0x7f8805>
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:131
   USART0_CTRLC = ( USART_CHSIZE_8BIT_gc \
- 2f4:	9b e2       	ldi	r25, 0x2B	; 43
- 2f6:	90 93 07 08 	sts	0x0807, r25	; 0x800807 <__RODATA_PM_OFFSET__+0x7f8807>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:143
+ 2e2:	9b e2       	ldi	r25, 0x2B	; 43
+ 2e4:	90 93 07 08 	sts	0x0807, r25	; 0x800807 <__RODATA_PM_OFFSET__+0x7f8807>
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:143
    *
    * CLK_TCA = 9765.625Hz(10MHz/1024) -> CLK_TCB1
    * 
    * Here we will generate the operating clock for TCB1.
    */
   TCA0_SINGLE_CTRLA = TCA_SINGLE_ENABLE_bm
- 2fa:	9f e0       	ldi	r25, 0x0F	; 15
- 2fc:	90 93 00 0a 	sts	0x0A00, r25	; 0x800a00 <__RODATA_PM_OFFSET__+0x7f8a00>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:164
+ 2e8:	9f e0       	ldi	r25, 0x0F	; 15
+ 2ea:	90 93 00 0a 	sts	0x0A00, r25	; 0x800a00 <__RODATA_PM_OFFSET__+0x7f8a00>
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:164
    * This is achieved by using TCB1's single-shot mode
    * and thinning out successive event occurrences.
    * 
    * The obtained results must be inverted using the port peripheral.
    */
   TCB1_CCMP   = LED_DELAY;
- 300:	40 e9       	ldi	r20, 0x90	; 144
- 302:	51 e0       	ldi	r21, 0x01	; 1
- 304:	40 93 5c 0a 	sts	0x0A5C, r20	; 0x800a5c <__RODATA_PM_OFFSET__+0x7f8a5c>
- 308:	50 93 5d 0a 	sts	0x0A5D, r21	; 0x800a5d <__RODATA_PM_OFFSET__+0x7f8a5d>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:165
+ 2ee:	40 e9       	ldi	r20, 0x90	; 144
+ 2f0:	51 e0       	ldi	r21, 0x01	; 1
+ 2f2:	40 93 5c 0a 	sts	0x0A5C, r20	; 0x800a5c <__RODATA_PM_OFFSET__+0x7f8a5c>
+ 2f6:	50 93 5d 0a 	sts	0x0A5D, r21	; 0x800a5d <__RODATA_PM_OFFSET__+0x7f8a5d>
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:165
   TCB1_EVCTRL = TCB_CAPTEI_bm | TCB_EDGE_bm;
- 30c:	91 e1       	ldi	r25, 0x11	; 17
- 30e:	90 93 54 0a 	sts	0x0A54, r25	; 0x800a54 <__RODATA_PM_OFFSET__+0x7f8a54>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:166
+ 2fa:	91 e1       	ldi	r25, 0x11	; 17
+ 2fc:	90 93 54 0a 	sts	0x0A54, r25	; 0x800a54 <__RODATA_PM_OFFSET__+0x7f8a54>
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:166
   TCB1_CTRLB  = TCB_CNTMODE_SINGLE_gc | TCB_CCMPEN_bm | TCB_ASYNC_bm;
- 312:	96 e5       	ldi	r25, 0x56	; 86
- 314:	90 93 51 0a 	sts	0x0A51, r25	; 0x800a51 <__RODATA_PM_OFFSET__+0x7f8a51>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:167
+ 300:	96 e5       	ldi	r25, 0x56	; 86
+ 302:	90 93 51 0a 	sts	0x0A51, r25	; 0x800a51 <__RODATA_PM_OFFSET__+0x7f8a51>
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:167
   TCB1_CTRLA  = TCB_ENABLE_bm | TCB_CLKSEL_TCA0_gc | TCB_RUNSTDBY_bm;
- 318:	95 e4       	ldi	r25, 0x45	; 69
- 31a:	90 93 50 0a 	sts	0x0A50, r25	; 0x800a50 <__RODATA_PM_OFFSET__+0x7f8a50>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:186
+ 306:	95 e4       	ldi	r25, 0x45	; 69
+ 308:	90 93 50 0a 	sts	0x0A50, r25	; 0x800a50 <__RODATA_PM_OFFSET__+0x7f8a50>
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:186
    *   X |   H |   H
    * 
    * Logic synthesis results are sent to TCB1
    * via EVSYS without using the output port.
    */
   CCL_TRUTH0    = 0b11101110;
- 31e:	9e ee       	ldi	r25, 0xEE	; 238
- 320:	90 93 c8 01 	sts	0x01C8, r25	; 0x8001c8 <__RODATA_PM_OFFSET__+0x7f81c8>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:187
+ 30c:	9e ee       	ldi	r25, 0xEE	; 238
+ 30e:	90 93 c8 01 	sts	0x01C8, r25	; 0x8001c8 <__RODATA_PM_OFFSET__+0x7f81c8>
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:187
   CCL_LUT0CTRLB = CCL_INSEL0_EVENT0_gc | CCL_INSEL1_EVENT1_gc;
- 324:	93 e4       	ldi	r25, 0x43	; 67
- 326:	90 93 c6 01 	sts	0x01C6, r25	; 0x8001c6 <__RODATA_PM_OFFSET__+0x7f81c6>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:188
+ 312:	93 e4       	ldi	r25, 0x43	; 67
+ 314:	90 93 c6 01 	sts	0x01C6, r25	; 0x8001c6 <__RODATA_PM_OFFSET__+0x7f81c6>
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:188
   CCL_LUT0CTRLA = CCL_ENABLE_bm;
- 32a:	80 93 c5 01 	sts	0x01C5, r24	; 0x8001c5 <__RODATA_PM_OFFSET__+0x7f81c5>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:200
+ 318:	80 93 c5 01 	sts	0x01C5, r24	; 0x8001c5 <__RODATA_PM_OFFSET__+0x7f81c5>
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:200
    * CCL0_OUT -> PA7:HTCR or PC1:TDAT(ALT)
    * 
    * Logic synthesis results are output to a dedicated external port.
    * Two ports can be selected with PORTMUX.
    */
   CCL_TRUTH1    = 0b00000010;
- 32e:	30 93 cc 01 	sts	0x01CC, r19	; 0x8001cc <__RODATA_PM_OFFSET__+0x7f81cc>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:201
+ 31c:	30 93 cc 01 	sts	0x01CC, r19	; 0x8001cc <__RODATA_PM_OFFSET__+0x7f81cc>
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:201
   CCL_LUT1CTRLB = CCL_INSEL0_IO_gc;
- 332:	85 e0       	ldi	r24, 0x05	; 5
- 334:	80 93 ca 01 	sts	0x01CA, r24	; 0x8001ca <__RODATA_PM_OFFSET__+0x7f81ca>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:202
+ 320:	85 e0       	ldi	r24, 0x05	; 5
+ 322:	80 93 ca 01 	sts	0x01CA, r24	; 0x8001ca <__RODATA_PM_OFFSET__+0x7f81ca>
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:202
   CCL_LUT1CTRLA = CCL_OUTEN_bm | CCL_ENABLE_bm;
- 338:	20 93 c9 01 	sts	0x01C9, r18	; 0x8001c9 <__RODATA_PM_OFFSET__+0x7f81c9>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:205
+ 326:	20 93 c9 01 	sts	0x01C9, r18	; 0x8001c9 <__RODATA_PM_OFFSET__+0x7f81c9>
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:205
 
   /* CCL enable */
   CCL_CTRLA = CCL_ENABLE_bm | CCL_RUNSTDBY_bm;
- 33c:	81 e4       	ldi	r24, 0x41	; 65
- 33e:	80 93 c0 01 	sts	0x01C0, r24	; 0x8001c0 <__RODATA_PM_OFFSET__+0x7f81c0>
+ 32a:	81 e4       	ldi	r24, 0x41	; 65
+ 32c:	80 93 c0 01 	sts	0x01C0, r24	; 0x8001c0 <__RODATA_PM_OFFSET__+0x7f81c0>
 main():
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:362
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:362
 
 /* main function */
 int main (void) {
   setup_system();
   setup_peripheral();
   switch_pass_through_mode();
- 342:	af de       	rcall	.-674    	; 0xa2 <switch_pass_through_mode()>
-/Users/askn/Arduino/SUM/SUM_FW2401A/main.cpp:363
+ 330:	b8 de       	rcall	.-656    	; 0xa2 <switch_pass_through_mode()>
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/SUM/examples/SUM_FW2401A/main.cpp:363
   sei();
- 344:	78 94       	sei
+ 332:	78 94       	sei
 power_halt():
-/Users/askn/Library/Arduino15/packages/MultiX-Zinnia/hardware/megaAVR/0.2.11/cores/megaAVR/api/cpp/power.cpp:15
+/Users/askn/Library/Arduino15/packages/MultiX-Zinnia/hardware/UPDI4AVR/0.2.13/cores/megaAVR/api/cpp/power.cpp:15
  */
 #include <avr/sleep.h>
 #include <api/power.h>
 
 void power_halt (const uint8_t mode) {
   set_sleep_mode(mode);
- 346:	80 91 50 00 	lds	r24, 0x0050	; 0x800050 <__RODATA_PM_OFFSET__+0x7f8050>
- 34a:	89 7f       	andi	r24, 0xF9	; 249
- 34c:	82 60       	ori	r24, 0x02	; 2
- 34e:	80 93 50 00 	sts	0x0050, r24	; 0x800050 <__RODATA_PM_OFFSET__+0x7f8050>
-/Users/askn/Library/Arduino15/packages/MultiX-Zinnia/hardware/megaAVR/0.2.11/cores/megaAVR/api/cpp/power.cpp:16
+ 334:	80 91 50 00 	lds	r24, 0x0050	; 0x800050 <__RODATA_PM_OFFSET__+0x7f8050>
+ 338:	89 7f       	andi	r24, 0xF9	; 249
+ 33a:	82 60       	ori	r24, 0x02	; 2
+ 33c:	80 93 50 00 	sts	0x0050, r24	; 0x800050 <__RODATA_PM_OFFSET__+0x7f8050>
+/Users/askn/Library/Arduino15/packages/MultiX-Zinnia/hardware/UPDI4AVR/0.2.13/cores/megaAVR/api/cpp/power.cpp:16
   sleep_enable();
- 352:	80 91 50 00 	lds	r24, 0x0050	; 0x800050 <__RODATA_PM_OFFSET__+0x7f8050>
- 356:	81 60       	ori	r24, 0x01	; 1
- 358:	80 93 50 00 	sts	0x0050, r24	; 0x800050 <__RODATA_PM_OFFSET__+0x7f8050>
-/Users/askn/Library/Arduino15/packages/MultiX-Zinnia/hardware/megaAVR/0.2.11/cores/megaAVR/api/cpp/power.cpp:17
+ 340:	80 91 50 00 	lds	r24, 0x0050	; 0x800050 <__RODATA_PM_OFFSET__+0x7f8050>
+ 344:	81 60       	ori	r24, 0x01	; 1
+ 346:	80 93 50 00 	sts	0x0050, r24	; 0x800050 <__RODATA_PM_OFFSET__+0x7f8050>
+/Users/askn/Library/Arduino15/packages/MultiX-Zinnia/hardware/UPDI4AVR/0.2.13/cores/megaAVR/api/cpp/power.cpp:17
   __builtin_avr_sei();
- 35c:	78 94       	sei
-/Users/askn/Library/Arduino15/packages/MultiX-Zinnia/hardware/megaAVR/0.2.11/cores/megaAVR/api/cpp/power.cpp:18
+ 34a:	78 94       	sei
+/Users/askn/Library/Arduino15/packages/MultiX-Zinnia/hardware/UPDI4AVR/0.2.13/cores/megaAVR/api/cpp/power.cpp:18
   sleep_cpu();
- 35e:	88 95       	sleep
-/Users/askn/Library/Arduino15/packages/MultiX-Zinnia/hardware/megaAVR/0.2.11/cores/megaAVR/api/cpp/power.cpp:19
+ 34c:	88 95       	sleep
+/Users/askn/Library/Arduino15/packages/MultiX-Zinnia/hardware/UPDI4AVR/0.2.13/cores/megaAVR/api/cpp/power.cpp:19
   sleep_disable();
- 360:	80 91 50 00 	lds	r24, 0x0050	; 0x800050 <__RODATA_PM_OFFSET__+0x7f8050>
- 364:	8e 7f       	andi	r24, 0xFE	; 254
- 366:	80 93 50 00 	sts	0x0050, r24	; 0x800050 <__RODATA_PM_OFFSET__+0x7f8050>
- 36a:	ed cf       	rjmp	.-38     	; 0x346 <main+0xfa>
+ 34e:	80 91 50 00 	lds	r24, 0x0050	; 0x800050 <__RODATA_PM_OFFSET__+0x7f8050>
+ 352:	8e 7f       	andi	r24, 0xFE	; 254
+ 354:	80 93 50 00 	sts	0x0050, r24	; 0x800050 <__RODATA_PM_OFFSET__+0x7f8050>
+ 358:	ed cf       	rjmp	.-38     	; 0x334 <main+0xf4>
 
-0000036c <_exit>:
+0000035a <_exit>:
 exit():
- 36c:	f8 94       	cli
+ 35a:	f8 94       	cli
 
-0000036e <__stop_program>:
+0000035c <__stop_program>:
 __stop_program():
- 36e:	ff cf       	rjmp	.-2      	; 0x36e <__stop_program>
+ 35c:	ff cf       	rjmp	.-2      	; 0x35c <__stop_program>
 
 Disassembly of section .nvmem:
 
-00000370 <.nvmem>:
+0000035e <.nvmem>:
 	...
