@@ -263,6 +263,9 @@ SERIAL/UPDI-MANAGER(SUM)は、SerialUPDIプログラム機能を混載した UAR
 
 ## 更新履歴
 
+- 0.2.14 (24/06/17)
+  - 各ファイルの MITライセンスリンク対応
+
 - 0.2.13 (24/05/12)
   - `7.3.0-avr8-gnu-toolchain-240510`に更新。
 
