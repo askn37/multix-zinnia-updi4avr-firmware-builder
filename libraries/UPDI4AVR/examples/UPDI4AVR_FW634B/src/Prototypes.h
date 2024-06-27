@@ -46,8 +46,13 @@
 #define UPDI_LASTL   GPIO_GPIOR2
 #define UPDI_LASTH   GPIO_GPIOR3
 
+#ifndef bit_set
 #define bit_set(sfr,bit)    (sfr |= _BV(bit))
+#endif
+
+#ifndef bit_clear
 #define bit_clear(sfr,bit)  (sfr &= ~_BV(bit))
+#endif
 
 /**************
  * Prototypes *
