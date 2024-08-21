@@ -1,5 +1,5 @@
 
-/var/folders/mz/_z9vt_y13rdf9tt_4qkvv0k40000gn/T/arduino_build_676789/UPDI4AVR_FW634B.ino.elf:     file format elf32-avr
+/var/folders/mz/_z9vt_y13rdf9tt_4qkvv0k40000gn/T/arduino_build_509000/UPDI4AVR_FW634B.ino.elf:     file format elf32-avr
 
 
 Disassembly of section .data:
@@ -1398,7 +1398,7 @@ bool UPDI::loop_until_key_stat_is_set (uint8_t bitmap, uint16_t limit) {
     if (is_key_stat(bitmap)) return true;
      540:	87 e0       	ldi	r24, 0x07	; 7
      542:	99 de       	rcall	.-718    	; 0x276 <UPDI::get_cs_stat(unsigned char)>
-/Users/askn/Library/Arduino15/packages/MultiX-Zinnia/hardware/UPDI4AVR/0.2.13/cores/megaAVR/api/delay_busywait.h:31
+/Users/askn/Library/Arduino15/packages/MultiX-Zinnia/hardware/UPDI4AVR/0.2.14/cores/megaAVR/api/delay_busywait.h:33
 static __inline__ __attribute__((__always_inline__)) void delay_micros (uint32_t _us);
 static __inline__ __attribute__((__always_inline__)) void delay_millis (uint32_t _ms);
 
@@ -1503,7 +1503,7 @@ bool UPDI::loop_until_sys_stat_is_set (uint8_t bitmap, uint16_t limit) {
      58a:	18 17       	cp	r17, r24
      58c:	59 f0       	breq	.+22     	; 0x5a4 <UPDI::loop_until_sys_stat_is_set(unsigned char, unsigned int) [clone .constprop.26]+0x2c>
 delay_micros():
-/Users/askn/Library/Arduino15/packages/MultiX-Zinnia/hardware/UPDI4AVR/0.2.13/cores/megaAVR/api/delay_busywait.h:31
+/Users/askn/Library/Arduino15/packages/MultiX-Zinnia/hardware/UPDI4AVR/0.2.14/cores/megaAVR/api/delay_busywait.h:33
      58e:	86 ea       	ldi	r24, 0xA6	; 166
      590:	8a 95       	dec	r24
      592:	f1 f7       	brne	.-4      	; 0x590 <UPDI::loop_until_sys_stat_is_set(unsigned char, unsigned int) [clone .constprop.26]+0x18>
@@ -1559,7 +1559,7 @@ void TIM::HV_Pulse_ON (void) {
 HV_Pulse_ON():
      5b2:	80 93 01 0a 	sts	0x0A01, r24	; 0x800a01 <__RODATA_PM_OFFSET__+0x7f8a01>
 _ZN4UPDI8HV_PulseEv():
-/Users/askn/Library/Arduino15/packages/MultiX-Zinnia/hardware/UPDI4AVR/0.2.13/cores/megaAVR/api/delay_busywait.h:31
+/Users/askn/Library/Arduino15/packages/MultiX-Zinnia/hardware/UPDI4AVR/0.2.14/cores/megaAVR/api/delay_busywait.h:33
      5b6:	21 9a       	sbi	0x04, 1	; 4
 delay_micros():
      5b8:	86 ea       	ldi	r24, 0xA6	; 166
@@ -1574,7 +1574,7 @@ delay_micros():
   openDrainWrite(TRST_PIN, HIGH);
      5be:	00 c0       	rjmp	.+0      	; 0x5c0 <UPDI::HV_Pulse()+0x18>
 _ZN4UPDI8HV_PulseEv():
-/Users/askn/Library/Arduino15/packages/MultiX-Zinnia/hardware/UPDI4AVR/0.2.13/cores/megaAVR/api/delay_busywait.h:31
+/Users/askn/Library/Arduino15/packages/MultiX-Zinnia/hardware/UPDI4AVR/0.2.14/cores/megaAVR/api/delay_busywait.h:33
      5c0:	21 98       	cbi	0x04, 1	; 4
 delay_micros():
      5c2:	8f ec       	ldi	r24, 0xCF	; 207
@@ -1593,7 +1593,7 @@ _ZN4UPDI8HV_PulseEv():
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW634B/src/UPDI.cpp:465
     digitalWrite(HV12_PIN, HIGH);
      5d2:	80 33       	cpi	r24, 0x30	; 48
-/Users/askn/Library/Arduino15/packages/MultiX-Zinnia/hardware/UPDI4AVR/0.2.13/cores/megaAVR/api/delay_busywait.h:31
+/Users/askn/Library/Arduino15/packages/MultiX-Zinnia/hardware/UPDI4AVR/0.2.14/cores/megaAVR/api/delay_busywait.h:33
      5d4:	f9 f4       	brne	.+62     	; 0x614 <UPDI::HV_Pulse()+0x6c>
      5d6:	0e 9a       	sbi	0x01, 6	; 1
 delay_micros():
@@ -1701,7 +1701,7 @@ bool UPDI::loop_until_sys_stat_is_clear (uint8_t bitmap, uint16_t limit) {
     if (!is_sys_stat(bitmap)) return true;
      624:	eb 01       	movw	r28, r22
 is_cs_stat():
-/Users/askn/Library/Arduino15/packages/MultiX-Zinnia/hardware/UPDI4AVR/0.2.13/cores/megaAVR/api/delay_busywait.h:31
+/Users/askn/Library/Arduino15/packages/MultiX-Zinnia/hardware/UPDI4AVR/0.2.14/cores/megaAVR/api/delay_busywait.h:33
      626:	8b e0       	ldi	r24, 0x0B	; 11
      628:	26 de       	rcall	.-948    	; 0x276 <UPDI::get_cs_stat(unsigned char)>
      62a:	81 23       	and	r24, r17
@@ -2229,7 +2229,7 @@ _ZN3NVM11nvm_wait_v3Ev():
      7ce:	66 e0       	ldi	r22, 0x06	; 6
      7d0:	70 e1       	ldi	r23, 0x10	; 16
      7d2:	80 e0       	ldi	r24, 0x00	; 0
-/Users/askn/Library/Arduino15/packages/MultiX-Zinnia/hardware/UPDI4AVR/0.2.13/cores/megaAVR/api/delay_busywait.h:31
+/Users/askn/Library/Arduino15/packages/MultiX-Zinnia/hardware/UPDI4AVR/0.2.14/cores/megaAVR/api/delay_busywait.h:33
      7d4:	90 e0       	ldi	r25, 0x00	; 0
      7d6:	ca dd       	rcall	.-1132   	; 0x36c <UPDI::ld8(unsigned long)>
      7d8:	83 70       	andi	r24, 0x03	; 3
@@ -2297,7 +2297,7 @@ _ZN3NVM8nvm_waitEv():
      7fc:	90 e0       	ldi	r25, 0x00	; 0
      7fe:	b6 dd       	rcall	.-1172   	; 0x36c <UPDI::ld8(unsigned long)>
      800:	83 70       	andi	r24, 0x03	; 3
-/Users/askn/Library/Arduino15/packages/MultiX-Zinnia/hardware/UPDI4AVR/0.2.13/cores/megaAVR/api/delay_busywait.h:31
+/Users/askn/Library/Arduino15/packages/MultiX-Zinnia/hardware/UPDI4AVR/0.2.14/cores/megaAVR/api/delay_busywait.h:33
      802:	29 f0       	breq	.+10     	; 0x80e <__DATA_REGION_LENGTH__+0xe>
 delay_micros():
      804:	86 ea       	ldi	r24, 0xA6	; 166
@@ -2443,10 +2443,10 @@ static __inline__ uint8_t __iCliRetVal(void)
      87e:	80 93 86 0a 	sts	0x0A86, r24	; 0x800a86 <__RODATA_PM_OFFSET__+0x7f8a86>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW634B/src/TIM.cpp:110
     TCB0_INTFLAGS = TCB_CAPT_bm;
-     882:	8f e0       	ldi	r24, 0x0F	; 15
+     882:	2f e0       	ldi	r18, 0x0F	; 15
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW634B/src/TIM.cpp:111
     TCB0_CTRLA = TCB_ENABLE_bm | TCB_CLKSEL_EVENT_gc;
-     884:	80 93 80 0a 	sts	0x0A80, r24	; 0x800a80 <__RODATA_PM_OFFSET__+0x7f8a80>
+     884:	20 93 80 0a 	sts	0x0A80, r18	; 0x800a80 <__RODATA_PM_OFFSET__+0x7f8a80>
 __iRestore():
      888:	9f bf       	out	0x3f, r25	; 63
 _ZN4UPDI7runtimeEh():
@@ -2457,14 +2457,14 @@ _ZN4UPDI7runtimeEh():
 static __inline__ void __iRestore(const  uint8_t *__s)
 {
     SREG = *__s;
-     88a:	8e 81       	ldd	r24, Y+6	; 0x06
+     88a:	9e 81       	ldd	r25, Y+6	; 0x06
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW634B/src/UPDI.cpp:759
     TIM::Timeout_Start(800);
     switch (updi_cmd) {
-     88c:	83 30       	cpi	r24, 0x03	; 3
+     88c:	93 30       	cpi	r25, 0x03	; 3
      88e:	09 f4       	brne	.+2      	; 0x892 <UPDI::runtime(unsigned char)+0x60>
      890:	8d c2       	rjmp	.+1306   	; 0xdac <UPDI::runtime(unsigned char)+0x57a>
-     892:	84 30       	cpi	r24, 0x04	; 4
+     892:	94 30       	cpi	r25, 0x04	; 4
      894:	09 f4       	brne	.+2      	; 0x898 <UPDI::runtime(unsigned char)+0x66>
      896:	22 c3       	rjmp	.+1604   	; 0xedc <UPDI::runtime(unsigned char)+0x6aa>
 write_memory():
@@ -2478,7 +2478,7 @@ bool NVM::write_memory (void) {
   uint8_t mem_type = JTAG2::packet.body[JTAG2::MEM_TYPE];
      89a:	f8 e3       	ldi	r31, 0x38	; 56
 _ZN4UPDI7runtimeEh():
-     89c:	82 30       	cpi	r24, 0x02	; 2
+     89c:	92 30       	cpi	r25, 0x02	; 2
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW634B/src/UPDI.cpp:759
      89e:	09 f4       	brne	.+2      	; 0x8a2 <UPDI::runtime(unsigned char)+0x70>
      8a0:	70 c0       	rjmp	.+224    	; 0x982 <UPDI::runtime(unsigned char)+0x150>
@@ -2532,8 +2532,8 @@ read_memory():
       JTAG2::packet.body[JTAG2::RSP_DATA] = JTAG2::updi_desc.signature[(uint8_t)start_addr & 3];
       return true;
      8ce:	90 e0       	ldi	r25, 0x00	; 0
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW634B/src/UPDI.cpp:781
-          #endif
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW634B/src/UPDI.cpp:785
+          _result = true;
         }
         break;
       }
@@ -2960,7 +2960,7 @@ write_userrow():
         _result = NVM::write_memory();
      a5a:	8e dd       	rcall	.-1252   	; 0x578 <UPDI::loop_until_sys_stat_is_set(unsigned char, unsigned int) [clone .constprop.26]>
 _ZN4UPDI7runtimeEh():
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW634B/src/UPDI.cpp:786
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW634B/src/UPDI.cpp:790
         _result = Target_Reset(true) && Target_Reset(false);
         break;
       }
@@ -2969,23 +2969,23 @@ _ZN4UPDI7runtimeEh():
   TIM::Timeout_Stop();
      a5c:	1d 83       	std	Y+5, r17	; 0x05
      a5e:	ce dc       	rcall	.-1636   	; 0x3fc <TIM::Timeout_Stop()>
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW634B/src/UPDI.cpp:787
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW634B/src/UPDI.cpp:791
   UPDI_USART.CTRLB = UPDI_USART_ON;
      a60:	88 ec       	ldi	r24, 0xC8	; 200
      a62:	80 93 06 08 	sts	0x0806, r24	; 0x800806 <__RODATA_PM_OFFSET__+0x7f8806>
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW634B/src/UPDI.cpp:788
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW634B/src/UPDI.cpp:792
   wdt_reset();
      a66:	a8 95       	wdr
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW634B/src/UPDI.cpp:789
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW634B/src/UPDI.cpp:793
   if (!_result) drain();
      a68:	8d 81       	ldd	r24, Y+5	; 0x05
      a6a:	88 23       	and	r24, r24
      a6c:	09 f4       	brne	.+2      	; 0xa70 <UPDI::runtime(unsigned char)+0x23e>
      a6e:	3e c2       	rjmp	.+1148   	; 0xeec <UPDI::runtime(unsigned char)+0x6ba>
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW634B/src/UPDI.cpp:790
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW634B/src/UPDI.cpp:794
   return _result;
      a70:	8d 81       	ldd	r24, Y+5	; 0x05
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW634B/src/UPDI.cpp:791
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW634B/src/UPDI.cpp:795
 }
      a72:	26 96       	adiw	r28, 0x06	; 6
      a74:	cd bf       	out	0x3d, r28	; 61
@@ -3760,8 +3760,8 @@ write_memory():
       return true;
     }
     if (!nvm_ctrl_v3(NVM_V3_CMD_EEPBCLR)) return false;
-     d2c:	a0 16       	cp	r10, r16
-     d2e:	b1 06       	cpc	r11, r17
+     d2c:	0a 15       	cp	r16, r10
+     d2e:	1b 05       	cpc	r17, r11
      d30:	d9 f6       	brne	.-74     	; 0xce8 <UPDI::runtime(unsigned char)+0x4b6>
      d32:	4e ce       	rjmp	.-868    	; 0x9d0 <UPDI::runtime(unsigned char)+0x19e>
      d34:	ed 9b       	sbis	0x1d, 5	; 29
@@ -3923,9 +3923,9 @@ bool NVM::chip_erase (void) {
     if (!nvm_ctrl_v3(NVM_V2_CMD_CHER)) return false;
      daa:	55 cf       	rjmp	.-342    	; 0xc56 <UPDI::runtime(unsigned char)+0x424>
 _ZN4UPDI7runtimeEh():
-     dac:	80 91 99 38 	lds	r24, 0x3899	; 0x803899 <JTAG2::packet+0x9>
-     db0:	81 11       	cpse	r24, r1
-     db2:	55 ce       	rjmp	.-854    	; 0xa5e <UPDI::runtime(unsigned char)+0x22c>
+     dac:	90 91 99 38 	lds	r25, 0x3899	; 0x803899 <JTAG2::packet+0x9>
+     db0:	91 11       	cpse	r25, r1
+     db2:	90 cd       	rjmp	.-1248   	; 0x8d4 <UPDI::runtime(unsigned char)+0xa2>
 /Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW634B/src/NVM.cpp:267
     if (!nvm_ctrl_v3(NVM_V2_CMD_NOCMD)) return false;
      db4:	e1 9b       	sbis	0x1c, 1	; 28
@@ -4123,7 +4123,7 @@ bool UPDI::loop_until_key_stat_is_clear (uint8_t bitmap, uint16_t limit) {
     if (!is_key_stat(bitmap)) return true;
      e74:	70 e0       	ldi	r23, 0x00	; 0
      e76:	60 e0       	ldi	r22, 0x00	; 0
-/Users/askn/Library/Arduino15/packages/MultiX-Zinnia/hardware/UPDI4AVR/0.2.13/cores/megaAVR/api/delay_busywait.h:31
+/Users/askn/Library/Arduino15/packages/MultiX-Zinnia/hardware/UPDI4AVR/0.2.14/cores/megaAVR/api/delay_busywait.h:33
      e78:	81 e0       	ldi	r24, 0x01	; 1
      e7a:	d0 db       	rcall	.-2144   	; 0x61c <UPDI::loop_until_sys_stat_is_clear(unsigned char, unsigned int)>
      e7c:	10 e0       	ldi	r17, 0x00	; 0
@@ -4238,8 +4238,8 @@ chip_erase():
      eca:	09 f4       	brne	.+2      	; 0xece <UPDI::runtime(unsigned char)+0x69c>
      ecc:	37 cd       	rjmp	.-1426   	; 0x93c <UPDI::runtime(unsigned char)+0x10a>
      ece:	70 e0       	ldi	r23, 0x00	; 0
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW634B/src/UPDI.cpp:781
-          #endif
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW634B/src/UPDI.cpp:785
+          _result = true;
         }
         break;
       }
@@ -4256,7 +4256,7 @@ _ZN4UPDI7runtimeEh():
      ede:	68 da       	rcall	.-2864   	; 0x3b0 <UPDI::Target_Reset(bool)>
      ee0:	88 23       	and	r24, r24
      ee2:	09 f4       	brne	.+2      	; 0xee6 <UPDI::runtime(unsigned char)+0x6b4>
-/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW634B/src/UPDI.cpp:789
+/Users/askn/Documents/Zinnia-tools/Products/hardware/UPDI4AVR/libraries/UPDI4AVR/examples/UPDI4AVR_FW634B/src/UPDI.cpp:793
     }
   }
   TIM::Timeout_Stop();
@@ -4664,7 +4664,7 @@ delay_micros():
     1030:	00 c0       	rjmp	.+0      	; 0x1032 <__vector_7+0x28>
     1032:	00 00       	nop
 __vector_7():
-/Users/askn/Library/Arduino15/packages/MultiX-Zinnia/hardware/UPDI4AVR/0.2.13/cores/megaAVR/api/delay_busywait.h:31
+/Users/askn/Library/Arduino15/packages/MultiX-Zinnia/hardware/UPDI4AVR/0.2.14/cores/megaAVR/api/delay_busywait.h:33
     1034:	01 9a       	sbi	0x00, 1	; 0
     1036:	10 92 11 04 	sts	0x0411, r1	; 0x800411 <__RODATA_PM_OFFSET__+0x7f8411>
     103a:	09 98       	cbi	0x01, 1	; 1
@@ -4732,7 +4732,7 @@ _CLKCTRL_SETUP():
     1060:	88 ed       	ldi	r24, 0xD8	; 216
     1062:	21 e0       	ldi	r18, 0x01	; 1
     1064:	30 e0       	ldi	r19, 0x00	; 0
-/Users/askn/Library/Arduino15/packages/MultiX-Zinnia/hardware/UPDI4AVR/0.2.13/cores/megaAVR/api/CLKCTRL_megaAVR.h:127
+/Users/askn/Library/Arduino15/packages/MultiX-Zinnia/hardware/UPDI4AVR/0.2.14/cores/megaAVR/api/CLKCTRL_megaAVR.h:129
   // _PROTECTED_WRITE(CLKCTRL.MCLKCTRLA, CLKCTRL_CLKSEL_OSC20M_gc);
 
 #else
@@ -4742,7 +4742,7 @@ _CLKCTRL_SETUP():
     1066:	84 bf       	out	0x34, r24	; 52
     1068:	20 93 61 00 	sts	0x0061, r18	; 0x800061 <__RODATA_PM_OFFSET__+0x7f8061>
 initVariant():
-/Users/askn/Library/Arduino15/packages/MultiX-Zinnia/hardware/UPDI4AVR/0.2.13/variants/tinyAVR2_20/variant.h:282
+/Users/askn/Library/Arduino15/packages/MultiX-Zinnia/hardware/UPDI4AVR/0.2.14/variants/tinyAVR2_20/variant.h:282
     "   DEC  R24     \n"
     "   BRNE 2b        " /* 3 loop PORTA to PORTC */
     : : "z" ((register8_t*)&PORTA_PIN0CTRL),

@@ -775,6 +775,10 @@ bool UPDI::runtime (uint8_t updi_cmd) {
           _result = bit_is_set(UPDI_CONTROL, UPDI_PROG_bp) ? NVM::chip_erase() : UPDI::chip_erase();
           #endif
         }
+        else {
+          /* AVRDUDE>=8.0 should not return an error on page erase. */
+          _result = true;
+        }
         break;
       }
       case UPDI_CMD_GO : {
