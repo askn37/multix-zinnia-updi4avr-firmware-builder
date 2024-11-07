@@ -263,6 +263,10 @@ SERIAL/UPDI-MANAGER(SUM)は、SerialUPDIプログラム機能を混載した UAR
 
 ## 更新履歴
 
+- 0.3.0 (24/11/06)
+  - AVRDUDEを`8.0-arduino.1`に更新。
+  - toolchainを`7.3.0-avr8-gnu-toolchain-241029`に更新。
+
 - 0.2.14 (24/06/17)
   - 各ファイルの MITライセンスリンク対応
   - UPDI4AVR: AVRDUDE>=8.0対応の微修正（24/08/22）
